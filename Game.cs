@@ -38,12 +38,12 @@ namespace EndRun
             switch ((States)currentState)
             {
                 case States.menu:
-                    if (Raygui.GuiButton(new Rectangle(360, 300, 200, 80), "Start") == 1)
+                    if (Raygui.GuiButton(new Rectangle(400, 300, 230, 80), "Start") == 1)
                     {
                         player = new Player("Assets/Player.png", 1); //initialize player object
                         currentState = (int)States.play; //change state to play
                     }
-                    else if (Raygui.GuiButton(new Rectangle(580, 300, 200, 80), "Quit") == 1)
+                    else if (Raygui.GuiButton(new Rectangle(650, 300, 230, 80), "Quit") == 1)
                     {
                         Environment.Exit(0); //exit application
                     }
@@ -54,7 +54,7 @@ namespace EndRun
         public static void Draw()
         {
             //draw cursor position for debug purposes
-            Raylib.DrawText(Raylib.GetMouseX() + ", " + Raylib.GetMouseY(), 10, 10, 32, Color.Black);
+            Raylib.DrawText(Raylib.GetMouseX() + ", " + Raylib.GetMouseY(), 10, 10, 18, Color.Black);
 
             switch ((States)currentState)
             {
