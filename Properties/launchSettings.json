@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "EndRun": {
+      "commandName": "Project",
+      "workingDirectory": "$(SolutionDir)"
+    }
+  }
+}

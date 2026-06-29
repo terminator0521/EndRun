@@ -1,27 +1,70 @@
 using Raylib_cs;
 using raygui_cs;
 
-namespace Game;
-public static class Game
+namespace EndRun
 {
-    public static void Main()
+    public static class Game
     {
-        Raylib.InitWindow(1280, 720, "EndRun");
+        static int currentState = (int)States.menu; //start in menu
+        static Player player; //player object
 
-        while(!Raylib.WindowShouldClose())
+        //state enum
+        enum States
         {
-            Update();
-            Draw();
+            menu = 0,
+            play = 1,
+            gameover = 2,
         }
-    }
+        public static void Main()
+        {
+            Raylib.SetTargetFPS(60); //set fps
+            Raylib.InitWindow(1280, 720, "EndRun"); //init window
+            Raygui.GuiSetStyle(0, Raygui.TEXT_SIZE, 32); //set text size
 
-    public static void Update()
-    {
 
-    }
+            while (!Raylib.WindowShouldClose())
+            {
+                Update(); //call updates
 
-    public static void Draw()
-    {
+                Raylib.BeginDrawing(); //start sprite batch
+                Raylib.ClearBackground(Color.LightGray); //clear background
+                Draw(); //call draw
+                Raylib.EndDrawing(); //end sprite batch
+            }
+        }
 
+        public static void Update()
+        {
+            switch ((States)currentState)
+            {
+                case States.menu:
+                    if (Raygui.GuiButton(new Rectangle(360, 300, 200, 80), "Start") == 1)
+                    {
+                        player = new Player("Assets/Player.png", 1); //initialize player object
+                        currentState = (int)States.play; //change state to play
+                    }
+                    else if (Raygui.GuiButton(new Rectangle(580, 300, 200, 80), "Quit") == 1)
+                    {
+                        Environment.Exit(0); //exit application
+                    }
+                    break;
+            }
+        }
+
+        public static void Draw()
+        {
+            //draw cursor position for debug purposes
+            Raylib.DrawText(Raylib.GetMouseX() + ", " + Raylib.GetMouseY(), 10, 10, 32, Color.Black);
+
+            switch ((States)currentState)
+            {
+                case States.menu:
+                    //no logic
+                    break;
+                case States.play:
+                    player.Draw();
+                    break;
+            }
+        }
     }
 }
