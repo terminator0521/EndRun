@@ -48,6 +48,9 @@ namespace EndRun
                         Environment.Exit(0); //exit application
                     }
                     break;
+                case States.play:
+                    player.Update();
+                    break;
             }
         }
 
