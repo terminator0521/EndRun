@@ -1,5 +1,6 @@
 using Raylib_cs;
 using raygui_cs;
+using System.Windows;
 
 namespace EndRun
 {
@@ -7,6 +8,7 @@ namespace EndRun
     {
         static int currentState = (int)States.menu; //start in menu
         static Player player; //player object
+        static Rectangle gameBounds; //game bounds
 
         //state enum
         enum States
@@ -20,6 +22,7 @@ namespace EndRun
             Raylib.SetTargetFPS(60); //set fps
             Raylib.InitWindow(1280, 720, "EndRun"); //init window
             Raygui.GuiSetStyle(0, Raygui.TEXT_SIZE, 32); //set text size
+            gameBounds = new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight()); //set game bounds
 
 
             while (!Raylib.WindowShouldClose())
@@ -40,7 +43,7 @@ namespace EndRun
                 case States.menu:
                     if (Raygui.GuiButton(new Rectangle(400, 300, 230, 80), "Start") == 1)
                     {
-                        player = new Player("Assets/Player.png", 1); //initialize player object
+                        player = new Player("Assets/Player.png", 1, gameBounds); //initialize player object
                         currentState = (int)States.play; //change state to play
                     }
                     else if (Raygui.GuiButton(new Rectangle(650, 300, 230, 80), "Quit") == 1)

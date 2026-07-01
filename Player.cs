@@ -9,8 +9,10 @@ namespace EndRun
         public Vector2 pos = new Vector2(0); //player position
         public Rectangle dest; //sprite dest rect
 
+        private Vector2 origin = new Vector2(0);
         private float vel = 5f; //speed of player
         private Rectangle src; //sprite source rect
+        private Rectangle bounds; //game bounds
         private int health = 0;
 
         private bool up = false;
@@ -18,88 +20,86 @@ namespace EndRun
         private bool left = false;
         private bool right = false;
 
-        public Player(string spriteSheetLocation, int health)
+        public Player(string spriteSheetLocation, int health, Rectangle bounds)
         {
-            this.pos = new Vector2(100, 100);
-            this.texture = Raylib.LoadTexture(spriteSheetLocation); //load player texture
-            this.src = new Rectangle (0, 0, texture.Width, texture.Height); //set up texture src rect
-            this.dest = new Rectangle(pos, texture.Width, texture.Height); //set up texture dest rect
+            texture = Raylib.LoadTexture(spriteSheetLocation); //load player texture
+            origin = new Vector2(texture.Width / 2, texture.Height / 2);
+            pos = new Vector2(100, 100);
+            src = new Rectangle(0, 0, texture.Width, texture.Height); //set up texture src rect
+            dest = new Rectangle(pos, texture.Width, texture.Height); //set up texture dest rect
+            this.bounds = bounds; //set game bounds
             this.health = health; //set health
         }
 
         public void Update()
         {
-            this.Input();
-            this.Move();
+            //reset movement bools
+            up = false;
+            down = false;
+            left = false;
+            right = false;
 
-            //set dest rect pos to pos vector2
-            this.dest.X = this.pos.X;
-            this.dest.Y= this.pos.Y;
+            Input();
+            Move();
+
+            //set position of dest rect
+            dest.X = pos.X; 
+            dest.Y = pos.Y;
         }
 
         public void Draw()
         {
             //draw player sprite
-            Raylib.DrawTexturePro(texture, src, dest, new Vector2(0), 0, Color.White);
+            Raylib.DrawTexturePro(texture, src, dest, origin, 0, Color.White);
         }
 
         //decrement health by 1
         public void RemoveHealth()
         {
-            this.health--;
+            health--;
         }
 
         public void Input()
         {
             //movement
-            if (Raylib.IsKeyDown(KeyboardKey.W))
+            if (Raylib.IsKeyDown(KeyboardKey.W) && pos.Y - origin.Y > bounds.Y)
             {
-                this.up = true;
+                up = true;
             }
-            else
+            if (Raylib.IsKeyDown(KeyboardKey.S) && pos.Y + origin.Y < bounds.Height)
             {
-                this.up = false;
+                down = true;
             }
-            if (Raylib.IsKeyDown(KeyboardKey.S))
+            if (Raylib.IsKeyDown(KeyboardKey.D) && pos.X + origin.X < bounds.Width)
             {
-                this.down = true;
+                right = true;
             }
-            else
+            if (Raylib.IsKeyDown(KeyboardKey.A) && pos.X - origin.X > bounds.X)
             {
-                this.down = false;
-            }
-            if (Raylib.IsKeyDown(KeyboardKey.D))
-            {
-                this.right = true;
-            }
-            else
-            {
-                this.right = false;
-            }
-            if (Raylib.IsKeyDown(KeyboardKey.A))
-            {
-                this.left = true;
-            }
-            else
-            {
-                this.left= false;
+                left = true;
             }
         }
 
+
         void Move()
         {
-            Vector2 pos = new Vector2(0, 0);
+            Vector2 dis = new Vector2(0);
+            Vector2 newPos = pos;
 
             //initial vector2 change
-            pos.X = ((this.right ? 1 : 0) + (this.left ? -1 : 0)) * this.vel;
-            pos.Y = ((this.down ? 1 : 0) + (this.up ? -1 : 0)) * this.vel;
+            dis.X = ((right ? 1 : 0) + (left ? -1 : 0)) * vel;
+            dis.Y = ((down ? 1 : 0) + (up ? -1 : 0)) * vel;
 
             //vector2 normalization = divide by tan 45 deg if the other axis isn't 0
-            pos.X /= pos.Y == 0 ? 1 : (float)Math.Sqrt(2);
-            pos.Y /= pos.X == 0 ? 1 : (float)Math.Sqrt(2);
+            dis.X /= dis.Y == 0 ? 1 : (float)Math.Sqrt(2);
+            dis.Y /= dis.X == 0 ? 1 : (float)Math.Sqrt(2);
 
-            //add local pos to player pos 
-            this.pos += pos;
+
+            //add displacement pos to new pos
+            newPos += dis;
+
+            //set current pos to new pos
+            pos = newPos;
         }
     }
 }
