@@ -1,4 +1,5 @@
-﻿using Raylib_cs;
+﻿using EndRun.Guns;
+using Raylib_cs;
 using System.Numerics;
 
 namespace EndRun
@@ -14,6 +15,8 @@ namespace EndRun
         private Rectangle src; //sprite source rect
         private Rectangle bounds; //game bounds
         private int health = 0;
+        
+        private Gun gun = new HandGun(10);
 
         private bool up = false;
         private bool down = false;
@@ -39,18 +42,28 @@ namespace EndRun
             left = false;
             right = false;
 
+            //take inputs
             Input();
+
+            //actions
+            gun.Update(pos);
             Move();
+            Shoot();
 
             //set position of dest rect
             dest.X = pos.X; 
             dest.Y = pos.Y;
+
+            //Console.WriteLine(gun.angle);
+            Console.WriteLine(Raylib.GetMouseX() - pos.X);
         }
 
         public void Draw()
         {
             //draw player sprite
             Raylib.DrawTexturePro(texture, src, dest, origin, 0, Color.White);
+
+            gun.Draw();
         }
 
         //decrement health by 1
@@ -80,7 +93,10 @@ namespace EndRun
             }
         }
 
+        void Shoot()
+        {
 
+        }
         void Move()
         {
             Vector2 dis = new Vector2(0);

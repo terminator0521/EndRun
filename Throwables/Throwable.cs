@@ -4,9 +4,9 @@ using System.Numerics;
 using System.Text;
 using Raylib_cs;
 
-namespace EndRun
+namespace EndRun.Throwable
 {
-    public class Bullet : IDisposable
+    internal class Throwable : IDisposable
     {
         private Vector2 pos = new Vector2(0); //bullet position
         private Vector2 displacement = new Vector2(0); //bullet displacement vector
@@ -16,7 +16,7 @@ namespace EndRun
         public Rectangle dest; //sprite dest rect
         public bool isActive = true; //is bullet active
 
-        public Bullet(Vector2 playerPos, Vector2 mousePos)
+        public Throwable(Vector2 playerPos, Vector2 mousePos)
         {
             this.pos = playerPos; //set bullet position
             texture = Raylib.LoadTexture("Assets/Player.png"); //load bullet texture

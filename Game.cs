@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace EndRun
 {
-    public static class Game
+    internal static class Game
     {
         static int currentState = (int)States.menu; //start in menu
         static Player player; //player object
