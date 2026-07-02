@@ -25,11 +25,12 @@ namespace EndRun.Guns
             if (Raylib.IsMouseButtonDown(MouseButton.Right))
             {
                 Aiming = true;
-                SetupLaser();
+                Aim();
             }
             else
             {
                 Aiming = false;
+                laser = new Rectangle();
             }
         }
         public virtual void Draw()
@@ -40,7 +41,7 @@ namespace EndRun.Guns
             }
         }
 
-        public virtual void SetupLaser()
+        public virtual void Aim()
         {
             distance = Vector2.Distance(playerOriginPos, Raylib.GetMousePosition());
             angle = MathF.Atan((playerOriginPos.Y - Raylib.GetMouseY()) / (Raylib.GetMouseX() - playerOriginPos.X));

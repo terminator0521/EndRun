@@ -23,7 +23,7 @@ namespace EndRun
         private bool left = false;
         private bool right = false;
 
-        public Player(string spriteSheetLocation, int health, Rectangle bounds)
+        public Player(string spriteSheetLocation, int health, in Rectangle bounds)
         {
             texture = Raylib.LoadTexture(spriteSheetLocation); //load player texture
             origin = new Vector2(texture.Width / 2, texture.Height / 2);
@@ -46,22 +46,19 @@ namespace EndRun
             Input();
 
             //actions
-            gun.Update(pos);
+            gun.Update(pos + origin);
             Move();
             Shoot();
 
             //set position of dest rect
             dest.X = pos.X; 
             dest.Y = pos.Y;
-
-            //Console.WriteLine(gun.angle);
-            Console.WriteLine(Raylib.GetMouseX() - pos.X);
         }
 
         public void Draw()
         {
             //draw player sprite
-            Raylib.DrawTexturePro(texture, src, dest, origin, 0, Color.White);
+            Raylib.DrawTexturePro(texture, src, dest, new Vector2(0), 0, Color.White);
 
             gun.Draw();
         }
@@ -74,20 +71,21 @@ namespace EndRun
 
         public void Input()
         {
+            Console.WriteLine(pos);
             //movement
-            if (Raylib.IsKeyDown(KeyboardKey.W) && pos.Y - origin.Y > bounds.Y)
+            if (Raylib.IsKeyDown(KeyboardKey.W) && pos.Y > bounds.Y)
             {
                 up = true;
             }
-            if (Raylib.IsKeyDown(KeyboardKey.S) && pos.Y + origin.Y < bounds.Height)
+            if (Raylib.IsKeyDown(KeyboardKey.S) && pos.Y + texture.Height < bounds.Y + bounds.Height)
             {
                 down = true;
             }
-            if (Raylib.IsKeyDown(KeyboardKey.D) && pos.X + origin.X < bounds.Width)
+            if (Raylib.IsKeyDown(KeyboardKey.D) && pos.X + texture.Width < bounds.X + bounds.Width)
             {
                 right = true;
             }
-            if (Raylib.IsKeyDown(KeyboardKey.A) && pos.X - origin.X > bounds.X)
+            if (Raylib.IsKeyDown(KeyboardKey.A) && pos.X > bounds.X)
             {
                 left = true;
             }
