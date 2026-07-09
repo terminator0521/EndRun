@@ -12,11 +12,11 @@ namespace EndRun
         /// </summary>
         /// <param name="inner">The rectangle whose edges are to be checked.</param>
         /// <param name="outter">The rectangle that defines the bounds.</param>
-        /// <returns>True if the edges of "inner" are within the bounds of "outter", false otherwise.</returns>
+        /// <returns>false if the edges of "inner" are within the bounds of "outter", true otherwise.</returns>
         /// 
-        public static bool CheckEdges(Rectangle inner, Rectangle outter)
-        {
-            if (inner.X < outter.X || inner.Y < outter.Y || inner.X + inner.Width > outter.X + outter.Width || inner.Y + inner.Height > outter.Y + outter.Height)
+        public static bool CheckCollisionEdges(Rectangle inner, Rectangle outter)
+        { 
+            if (inner.X >= outter.X && inner.Y >= outter.Y && inner.X + inner.Width <= outter.X + outter.Width && inner.Y + inner.Height <= outter.Y + outter.Height)
             {
                 return false;
             }

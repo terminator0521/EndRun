@@ -93,9 +93,6 @@ namespace EndRun
                     zombie.Update(player.pos);
 
                     //collisions
-                    Console.WriteLine(Functions.CheckCollisionsQuad( player.gun.laser, float.DegreesToRadians(player.gun.angle), zombie.dest, 0));
-                    //Console.WriteLine(Raylib.CheckCollisionLines(player.pos, Raylib.GetMousePosition(), new Vector2(1000, 0), new Vector2(1000, 720), ref idk) ? true : false);
-                    //Console.WriteLine(player.gun.angle);
 
                     break;
             }

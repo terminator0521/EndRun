@@ -8,9 +8,12 @@ namespace EndRun
     {
         public Texture2D texture;
         public Vector2 pos = new Vector2(0); //player position
+        public Vector2 lastPos = new Vector2(0); //player's last position
         public Rectangle dest; //sprite dest rect
         public Vector2 origin = new Vector2(0);
         public Gun gun = new HandGun(10);
+
+
 
         private float vel = 5f; //speed of player
         private Rectangle src; //sprite source rect
@@ -26,7 +29,7 @@ namespace EndRun
         {
             texture = Raylib.LoadTexture(spriteSheetLocation); //load player texture
             origin = new Vector2(texture.Width / 2, texture.Height / 2);
-            pos = new Vector2(100, 100);
+            pos = new Vector2(200, 200);
             src = new Rectangle(0, 0, texture.Width, texture.Height); //set up texture src rect
             dest = new Rectangle(pos, texture.Width, texture.Height); //set up texture dest rect
             this.bounds = bounds; //set game bounds
@@ -35,6 +38,7 @@ namespace EndRun
 
         public void Update()
         {
+
             //reset movement bools
             up = false;
             down = false;
@@ -50,8 +54,7 @@ namespace EndRun
             Shoot();
 
             //set position of dest rect
-            dest.X = pos.X;
-            dest.Y = pos.Y;
+            
         }
 
         public void Draw()
@@ -71,19 +74,19 @@ namespace EndRun
         public void Input()
         {
             //movement
-            if (Raylib.IsKeyDown(KeyboardKey.W) && pos.Y > bounds.Y)
+            if (Raylib.IsKeyDown(KeyboardKey.W))
             {
                 up = true;
             }
-            if (Raylib.IsKeyDown(KeyboardKey.S) && pos.Y + texture.Height < bounds.Y + bounds.Height)
+            if (Raylib.IsKeyDown(KeyboardKey.S))
             {
                 down = true;
             }
-            if (Raylib.IsKeyDown(KeyboardKey.D) && pos.X + texture.Width < bounds.X + bounds.Width)
+            if (Raylib.IsKeyDown(KeyboardKey.D))
             {
                 right = true;
             }
-            if (Raylib.IsKeyDown(KeyboardKey.A) && pos.X > bounds.X)
+            if (Raylib.IsKeyDown(KeyboardKey.A))
             {
                 left = true;
             }
@@ -95,23 +98,38 @@ namespace EndRun
         }
         void Move()
         {
+            lastPos = pos;
             Vector2 dis = new Vector2(0);
-            Vector2 newPos = pos;
 
             //initial vector2 change
             dis.X = ((right ? 1 : 0) + (left ? -1 : 0)) * vel;
             dis.Y = ((down ? 1 : 0) + (up ? -1 : 0)) * vel;
 
             //vector2 normalization = divide by tan 45 deg if the other axis isn't 0
-            dis.X /= dis.Y == 0 ? 1 : (float)Math.Sqrt(2);
-            dis.Y /= dis.X == 0 ? 1 : (float)Math.Sqrt(2);
+            dis.X /= dis.Y == 0 ? 1 : (float)MathF.Sqrt(2);
+            dis.Y /= dis.X == 0 ? 1 : (float)MathF.Sqrt(2);
 
+            //add displacement to y-pos
+            pos.Y += dis.Y;
+            dest.Y = pos.Y;
 
-            //add displacement pos to new pos
-            newPos += dis;
+            if (Functions.CheckCollisionEdges(dest, bounds))
+            {
+                pos.Y = lastPos.Y;
+                dest.Y = pos.Y;
+            }
 
-            //set current pos to new pos
-            pos = newPos;
+            //add displacement to x-pos
+            pos.X += dis.X;
+            dest.X = pos.X;
+
+            if (Functions.CheckCollisionEdges(dest, bounds))
+            {
+                pos.X = lastPos.X;
+                dest.X = pos.X;
+            }
+
+            Console.WriteLine(pos);
         }
     }
 }
