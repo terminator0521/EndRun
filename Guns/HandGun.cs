@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EndRun.Guns
 {
-    internal class HandGun : Gun
+    public class HandGun : Gun
     {
         public int ammo;
         public override float AimLaserWidth { get; set; }
@@ -15,7 +15,7 @@ namespace EndRun.Guns
         public HandGun(int ammo)
         {
             this.ammo = ammo;
-            this.AimLaserWidth = 2f;
+            this.AimLaserWidth = 10f;
         }
         
     }

@@ -1,14 +1,9 @@
 ﻿using Raylib_cs;
-using System;
-using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
-using System.Windows.Documents;
-using System.Xml;
 
 namespace EndRun.Guns
 {
-    internal class Gun : IDisposable
+    public class Gun : IDisposable
     {
         public virtual Rectangle laser {get; set;}
         public virtual float AimLaserWidth { get; set; }
@@ -30,7 +25,7 @@ namespace EndRun.Guns
             else
             {
                 Aiming = false;
-                laser = new Rectangle();
+                laser = new Rectangle(0, 0, 0, 0);
             }
         }
         public virtual void Draw()
@@ -46,6 +41,7 @@ namespace EndRun.Guns
 
             distance = Vector2.Distance(playerOriginPos, Raylib.GetMousePosition());
             angle = MathF.Atan((playerOriginPos.Y - Raylib.GetMouseY()) / (Raylib.GetMouseX() - playerOriginPos.X));
+            //Console.WriteLine(float.RadiansToDegrees(angle));
             angle = (angle * 180 / MathF.PI) + (angle < 0 ? 180 : 0) + (playerOriginPos.Y - Raylib.GetMouseY() <= 0 ? 180 : 0) + (angle == 0 ? 180 : 0);
             laser = new Rectangle(playerOriginPos, distance, AimLaserWidth);
         }

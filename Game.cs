@@ -19,6 +19,7 @@ namespace EndRun
         static int interval; //interval of time
         static int maxInterval; //max interval of time
         static int realDistance; //total travelled distance (screen + interval)
+        static Vector2 idk = new Vector2();
 
         //max amount of entities
         static int zombieCount;
@@ -92,6 +93,10 @@ namespace EndRun
                     zombie.Update(player.pos);
 
                     //collisions
+                    Console.WriteLine(Functions.CheckCollisionsQuad( player.gun.laser, float.DegreesToRadians(player.gun.angle), zombie.dest, 0));
+                    //Console.WriteLine(Raylib.CheckCollisionLines(player.pos, Raylib.GetMousePosition(), new Vector2(1000, 0), new Vector2(1000, 720), ref idk) ? true : false);
+                    //Console.WriteLine(player.gun.angle);
+
                     break;
             }
         }

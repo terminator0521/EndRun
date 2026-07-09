@@ -10,13 +10,12 @@ namespace EndRun
         public Vector2 pos = new Vector2(0); //player position
         public Rectangle dest; //sprite dest rect
         public Vector2 origin = new Vector2(0);
+        public Gun gun = new HandGun(10);
 
         private float vel = 5f; //speed of player
         private Rectangle src; //sprite source rect
         private Rectangle bounds; //game bounds
         private int health = 0;
-
-        private Gun gun = new HandGun(10);
 
         private bool up = false;
         private bool down = false;
