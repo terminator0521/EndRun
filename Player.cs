@@ -9,13 +9,13 @@ namespace EndRun
         public Texture2D texture;
         public Vector2 pos = new Vector2(0); //player position
         public Rectangle dest; //sprite dest rect
+        public Vector2 origin = new Vector2(0);
 
-        private Vector2 origin = new Vector2(0);
         private float vel = 5f; //speed of player
         private Rectangle src; //sprite source rect
         private Rectangle bounds; //game bounds
         private int health = 0;
-        
+
         private Gun gun = new HandGun(10);
 
         private bool up = false;
@@ -51,7 +51,7 @@ namespace EndRun
             Shoot();
 
             //set position of dest rect
-            dest.X = pos.X; 
+            dest.X = pos.X;
             dest.Y = pos.Y;
         }
 
@@ -71,7 +71,6 @@ namespace EndRun
 
         public void Input()
         {
-            Console.WriteLine(pos);
             //movement
             if (Raylib.IsKeyDown(KeyboardKey.W) && pos.Y > bounds.Y)
             {

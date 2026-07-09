@@ -17,12 +17,17 @@ namespace EndRun
         /// 
         public static bool CheckEdges(Rectangle inner, Rectangle outter)
         {
-           if (inner.X < outter.X || inner.Y < outter.Y || inner.X + inner.Width > outter.X + outter.Width || inner.Y + inner.Height > outter.Y + outter.Height)
+            if (inner.X < outter.X || inner.Y < outter.Y || inner.X + inner.Width > outter.X + outter.Width || inner.Y + inner.Height > outter.Y + outter.Height)
             {
                 return false;
             }
 
             return true;
+        }
+
+        public static bool SATCheckCollisionRecs()
+        {
+
         }
     }
 }

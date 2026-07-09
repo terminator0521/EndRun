@@ -37,14 +37,16 @@ namespace EndRun.Guns
         {
             if (Aiming)
             {
-                Raylib.DrawRectanglePro(laser, new Vector2(0), -1 * (angle * 180 / MathF.PI) + (angle < 0 ? 180 : 0) + (playerOriginPos.Y - Raylib.GetMouseY() <= 0 ? 180 : 0) + (angle == 0 ? 180 : 0), Color.Red);
+                Raylib.DrawRectanglePro(laser, new Vector2(0), -1 * angle, Color.Red);
             }
         }
 
         public virtual void Aim()
         {
+
             distance = Vector2.Distance(playerOriginPos, Raylib.GetMousePosition());
             angle = MathF.Atan((playerOriginPos.Y - Raylib.GetMouseY()) / (Raylib.GetMouseX() - playerOriginPos.X));
+            angle = (angle * 180 / MathF.PI) + (angle < 0 ? 180 : 0) + (playerOriginPos.Y - Raylib.GetMouseY() <= 0 ? 180 : 0) + (angle == 0 ? 180 : 0);
             laser = new Rectangle(playerOriginPos, distance, AimLaserWidth);
         }
 
