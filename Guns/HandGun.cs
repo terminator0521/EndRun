@@ -1,5 +1,7 @@
-﻿using Raylib_cs;
+﻿using EndRun.Entities;
+using Raylib_cs;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,8 +17,19 @@ namespace EndRun.Guns
         public HandGun(int ammo)
         {
             this.ammo = ammo;
-            this.AimLaserWidth = 10f;
+            AimLaserWidth = 4f;
         }
-        
+
+        public override void Shoot(ArrayList zombies)
+        {
+            if (Raylib.IsMouseButtonPressed(MouseButton.Left))
+            {
+                if (zombies.Count > 0)
+                {
+                    ((Zombie)zombies[0]).Kill();
+                    Console.WriteLine("killded");
+                }
+            }
+        }
     }
 }

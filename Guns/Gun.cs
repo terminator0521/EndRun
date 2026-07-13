@@ -1,4 +1,7 @@
-﻿using Raylib_cs;
+﻿using EndRun.Entities;
+using Raylib_cs;
+using System.Collections;
+using System.IO.Packaging;
 using System.Numerics;
 
 namespace EndRun.Guns
@@ -12,7 +15,7 @@ namespace EndRun.Guns
         public float angle;
         public Vector2 playerOriginPos;
 
-        public virtual void Update(Vector2 playerOriginPos)
+        public void Update(Vector2 playerOriginPos)
         {
 
             this.playerOriginPos = playerOriginPos;
@@ -27,8 +30,9 @@ namespace EndRun.Guns
                 Aiming = false;
                 laser = new Rectangle(0, 0, 0, 0);
             }
+
         }
-        public virtual void Draw()
+        public void Draw()
         {
             if (Aiming)
             {
@@ -36,7 +40,7 @@ namespace EndRun.Guns
             }
         }
 
-        public virtual void Aim()
+        public void Aim()
         {
 
             distance = Vector2.Distance(playerOriginPos, Raylib.GetMousePosition());
@@ -48,6 +52,10 @@ namespace EndRun.Guns
         public virtual void Dispose()
         {
             Console.WriteLine("freed texture");
+        }
+
+        public virtual void Shoot(ArrayList zombies)
+        {
         }
     }
 }

@@ -1,11 +1,10 @@
 using Raylib_cs;
 using raygui_cs;
-using System.Windows;
-using System.Numerics;
-using System.Timers;
 
-using Timer = System.Timers.Timer;
 using EndRun.Entities;
+using System.Collections;
+using EndRun.Guns;
+using System.Windows.Media.Animation;
 
 namespace EndRun
 {
@@ -13,13 +12,14 @@ namespace EndRun
     {
         static int currentState; //current state
         static Player player; //player object
-        static Zombie zombie; //zombie object
+        //static Zombie[] zombie = new Zombie[8]; //zombie objects
         static Rectangle gameBounds; //game bounds
         static int distance; //travelled distance on screen
         static int interval; //interval of time
         static int maxInterval; //max interval of time
         static int realDistance; //total travelled distance (screen + interval)
-        static Vector2 idk = new Vector2();
+
+        static SortedList<int, Zombie> zombieList = new SortedList<int, Zombie>();
 
         //max amount of entities
         static int zombieCount;
@@ -43,8 +43,15 @@ namespace EndRun
             maxInterval = 60;
             gameBounds = new Rectangle(0, 80, Raylib.GetScreenWidth(), Raylib.GetScreenHeight() - 160); //set game bounds
             distance = 0; //set default distance travelled to 0;
-            player = new Player("Assets/Player.png", 1, gameBounds); //initialize player object
-            zombie = new Zombie(1);
+            player = new Player("Assets/Player.png", 1, gameBounds); //add player 
+            zombieCount = 1; //# of zombies
+
+            for (int i = 0; i < zombieCount; i++)
+            {
+                zombieList.Add(i, new Zombie(i));
+            }
+
+
 
             while (!Raylib.WindowShouldClose())
             {
@@ -89,11 +96,15 @@ namespace EndRun
                     //player updates
                     player.Update();
 
+
                     //entity updates
-                    zombie.Update(player.pos);
+                    for (int i = 0; i < zombieCount; i++)
+                    {
+                        zombieList[i].Update(player.pos);
+                    }
 
                     //collisions
-
+                    CollisionChecks();
                     break;
             }
         }
@@ -110,7 +121,7 @@ namespace EndRun
                 case States.menu:
                     //no logic
                     break;
-                case States.play:            
+                case States.play:
                     //draw distance travelled
                     Raylib.DrawText(realDistance.ToString(), 10, 30, 18, Color.Black);
 
@@ -118,12 +129,32 @@ namespace EndRun
                     Raylib.DrawRectangleRec(gameBounds, Color.Beige);
 
                     //draw entity
-                    zombie.Draw();
+                    for (int i = 0; i < zombieCount; i++)
+                    {
+                        zombieList[i].Draw();
+                    }
 
                     //draw player
                     player.Draw();
                     break;
             }
         }
+
+        public static void CollisionChecks()
+        {
+
+            ArrayList collidedZombies = new ArrayList();
+
+            for (int i = 0; i < zombieCount; i++)
+            {
+                if (Functions.CheckCollisionsQuad(player.gun.laser, player.gun.angle * Raylib.DEG2RAD, zombieList[i].dest, 0))
+                {
+                    collidedZombies.Add(zombieList[i]);
+                }
+            }
+
+            player.gun.Shoot(collidedZombies);
+        }
+
     }
 }

@@ -1,8 +1,9 @@
 ﻿using EndRun.Guns;
 using Raylib_cs;
+using System.Configuration;
 using System.Numerics;
 
-namespace EndRun
+namespace EndRun.Entities
 {
     public class Player
     {
@@ -13,8 +14,10 @@ namespace EndRun
         public Vector2 origin = new Vector2(0);
         public Gun gun = new HandGun(10);
 
+        //overriding dest
+        
 
-
+        
         private float vel = 5f; //speed of player
         private Rectangle src; //sprite source rect
         private Rectangle bounds; //game bounds
@@ -25,7 +28,7 @@ namespace EndRun
         private bool left = false;
         private bool right = false;
 
-        public Player(string spriteSheetLocation, int health, in Rectangle bounds)
+        public Player(string spriteSheetLocation, int health, in Rectangle bounds) : base()
         {
             texture = Raylib.LoadTexture(spriteSheetLocation); //load player texture
             origin = new Vector2(texture.Width / 2, texture.Height / 2);
@@ -34,6 +37,7 @@ namespace EndRun
             dest = new Rectangle(pos, texture.Width, texture.Height); //set up texture dest rect
             this.bounds = bounds; //set game bounds
             this.health = health; //set health
+            health = 3;
         }
 
         public void Update()
@@ -51,7 +55,6 @@ namespace EndRun
             //actions
             gun.Update(pos + origin);
             Move();
-            Shoot();
 
             //set position of dest rect
             
@@ -69,6 +72,7 @@ namespace EndRun
         public void RemoveHealth()
         {
             health--;
+            Console.WriteLine("damage");
         }
 
         public void Input()
@@ -92,11 +96,11 @@ namespace EndRun
             }
         }
 
-        void Shoot()
+        public void Shoot()
         {
 
         }
-        void Move()
+        public void Move()
         {
             lastPos = pos;
             Vector2 dis = new Vector2(0);
@@ -129,7 +133,6 @@ namespace EndRun
                 dest.X = pos.X;
             }
 
-            Console.WriteLine(pos);
         }
     }
 }
