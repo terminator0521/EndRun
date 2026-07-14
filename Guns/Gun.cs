@@ -3,12 +3,13 @@ using Raylib_cs;
 using System.Collections;
 using System.IO.Packaging;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace EndRun.Guns
 {
     public class Gun : IDisposable
     {
-        public virtual Rectangle laser {get; set;}
+        public virtual Rectangle laser { get; set; }
         public virtual float AimLaserWidth { get; set; }
         public bool Aiming;
         public float distance;
@@ -54,8 +55,34 @@ namespace EndRun.Guns
             Console.WriteLine("freed texture");
         }
 
-        public virtual void Shoot(ArrayList zombies)
+        public virtual void Shoot(List<Zombie> zombies)
         {
+            Zombie? zombie = null;
+
+            if (Raylib.IsMouseButtonPressed(MouseButton.Left))
+            {
+                Console.WriteLine(zombies.Count);
+                if (zombies.Count == 1)
+                { 
+                    zombie = zombies[0]; 
+                }
+                else if (zombies.Count != 0)
+                {
+                    for (int i = 1; i < zombies.Count; i++)
+                    {
+                        if (zombies[i].distance < zombies[i - 1].distance)
+                        {
+                            zombie = zombies[i];
+                        }
+                        else
+                        {
+                            zombie = zombies[i - 1];
+                        }
+                    }
+                }
+
+                zombie?.Kill();
+            }
         }
     }
 }

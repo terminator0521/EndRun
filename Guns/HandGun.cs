@@ -19,17 +19,5 @@ namespace EndRun.Guns
             this.ammo = ammo;
             AimLaserWidth = 4f;
         }
-
-        public override void Shoot(ArrayList zombies)
-        {
-            if (Raylib.IsMouseButtonPressed(MouseButton.Left))
-            {
-                if (zombies.Count > 0)
-                {
-                    ((Zombie)zombies[0]).Kill();
-                    Console.WriteLine("killded");
-                }
-            }
-        }
     }
 }

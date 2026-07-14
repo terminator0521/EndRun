@@ -15,9 +15,11 @@ namespace EndRun
         //static Zombie[] zombie = new Zombie[8]; //zombie objects
         static Rectangle gameBounds; //game bounds
         static int distance; //travelled distance on screen
+        static int realDistance; //total travelled distance (screen + interval)
+
+        //timer
         static int interval; //interval of time
         static int maxInterval; //max interval of time
-        static int realDistance; //total travelled distance (screen + interval)
 
         static SortedList<int, Zombie> zombieList = new SortedList<int, Zombie>();
 
@@ -44,7 +46,7 @@ namespace EndRun
             gameBounds = new Rectangle(0, 80, Raylib.GetScreenWidth(), Raylib.GetScreenHeight() - 160); //set game bounds
             distance = 0; //set default distance travelled to 0;
             player = new Player("Assets/Player.png", 1, gameBounds); //add player 
-            zombieCount = 1; //# of zombies
+            zombieCount = 8; //# of zombies
 
             for (int i = 0; i < zombieCount; i++)
             {
@@ -143,7 +145,7 @@ namespace EndRun
         public static void CollisionChecks()
         {
 
-            ArrayList collidedZombies = new ArrayList();
+            List<Zombie> collidedZombies = new List<Zombie>();
 
             for (int i = 0; i < zombieCount; i++)
             {
