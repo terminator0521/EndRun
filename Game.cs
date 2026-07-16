@@ -23,10 +23,18 @@ namespace EndRun
 
         static SortedList<int, Zombie> zombieList = new SortedList<int, Zombie>();
 
-        //max amount of entities
+        //difficulties
+        static Difficulties difficulty; //current difficulty
+
+        readonly static Difficulties a = new Difficulties(5f, 4, 0, 0);
+        readonly static Difficulties b = new Difficulties(3f, 6, 0, 0);
+        readonly static Difficulties c = new Difficulties(1f, 8, 0, 0);
+
+        //entity counts values
         static int zombieCount;
         static int batCount;
         static int bugCount;
+
 
         //state enum
         enum States
@@ -43,7 +51,7 @@ namespace EndRun
             Raygui.GuiSetStyle(0, Raygui.TEXT_SIZE, 32); //set text size
             currentState = (int)States.menu; //start in menu
             maxInterval = 60;
-            gameBounds = new Rectangle(0, 80, Raylib.GetScreenWidth(), Raylib.GetScreenHeight() - 160); //set game bounds
+            gameBounds = new Rectangle(0, 40, Raylib.GetScreenWidth(), Raylib.GetScreenHeight() - 160); //set game bounds
             distance = 0; //set default distance travelled to 0;
             player = new Player("Assets/Player.png", 1, gameBounds); //add player 
             zombieCount = 8; //# of zombies
@@ -82,6 +90,24 @@ namespace EndRun
                     }
                     break;
                 case States.play:
+                    Console.WriteLine(difficulty.spawnTime);
+                    //check distance to change difficulty
+                    if (distance == 0 && !difficulty.Equals(a))
+                    {
+                        difficulty = a;
+                        SetDifficulty(difficulty);
+                    }
+                    else if(distance == 200 && !difficulty.Equals(b))
+                    {
+                        difficulty = b;
+                        SetDifficulty(difficulty);
+                    }
+                    else if (distance == 500 && !difficulty.Equals(c))
+                    {
+                        difficulty = c;
+                        SetDifficulty(difficulty);
+                    }
+
                     //update distance
                     realDistance = 0;
                     if (interval < maxInterval)
@@ -91,9 +117,9 @@ namespace EndRun
                     else
                     {
                         interval = 0;
-                        distance++;
+                        distance += 10;
                     }
-                    realDistance = distance + ((int)player.pos.X / 100);
+                    realDistance = distance + ((int)player.pos.X / 100 * 10);
 
                     //player updates
                     player.Update();
@@ -156,6 +182,18 @@ namespace EndRun
             }
 
             player.gun.Shoot(collidedZombies);
+        }
+
+        public static void SetDifficulty(Difficulties level)
+        {
+            zombieCount = level.zombieCount;
+            batCount = level.batCount;
+            bugCount = level.bugCount;
+
+            for (int i = 0; i < zombieCount; i++)
+            {
+                zombieList[i].DownTime = level.spawnTime;
+            }
         }
 
     }

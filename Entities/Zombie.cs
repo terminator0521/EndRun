@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Xaml;
 
@@ -9,17 +10,27 @@ namespace EndRun.Entities
 {
     public class Zombie
     {
-        public Texture2D texture;
+        private Texture2D texture;
         private Rectangle src; //texture source rectangle
+
         public Rectangle dest; //dest rect
         public Vector2 pos; //current pos
+        public Vector2 originalPos; //original position
         public Vector2 dis; //displacement
         public float distance; //distance between player and entity
         public float angle; //angle between player and entity 
         public float ratio; //cos ratio between player and entity
         public float vel = 1f; //entity velocity
-        bool killed = false;
+        bool killed = false; //killed or not?
+        
+        private float downTime = 3f * 60f; //default value incase not set
 
+        private float interval;
+
+        public float DownTime //set downtime value in seconds
+        {
+            set { downTime = value * 60f; }
+        }
        
         public Zombie(int spawnPoint)
         {
@@ -27,15 +38,18 @@ namespace EndRun.Entities
             {
                 0 => new Vector2(460, 100),
                 1 => new Vector2(920, 100),
-                2 => new Vector2(460, 600),
-                3 => new Vector2(920, 600),
-                4 => new Vector2(60, 510),
-                5 => new Vector2(1200, 510),
+                2 => new Vector2(460, 540),
+                3 => new Vector2(920, 540),
+                4 => new Vector2(60, 480),
+                5 => new Vector2(1200, 480),
                 6 => new Vector2(60, 260),
                 7 => new Vector2(1200, 260),
+                _ => throw new NotImplementedException(),
             };
 
-            dest = new Rectangle(pos, 40, 40);
+            originalPos = pos; //set original pos
+
+            dest = new Rectangle(pos, 40, 40); //create rectangle
         }
 
         public void Update(Vector2 playerPos)
@@ -58,7 +72,7 @@ namespace EndRun.Entities
             }
             else
             {
-                pos = new Vector2(-200);
+                WaitForRespawn();
             }
 
 
@@ -73,8 +87,22 @@ namespace EndRun.Entities
 
         public void Kill()
         {
-            killed = true;
+            killed = true; //set killed to true
+            pos = new Vector2(-200); //move zombie offscreen
         }
 
+        public void WaitForRespawn()
+        {
+            if(interval < downTime)
+            {
+                interval++; //increment counter
+            }
+            else
+            {
+                interval = 0; //reset counter
+                killed = false; //set killed to false
+                pos = originalPos; //reset position to original position
+            }
+        }
     }
 }
