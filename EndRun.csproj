@@ -14,8 +14,4 @@
       <PackageReference Include="Raylib-cs" Version="7.0.2" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Melees\" />
-    </ItemGroup>
-
 </Project>

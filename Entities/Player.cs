@@ -1,4 +1,5 @@
 ﻿using EndRun.Guns;
+using EndRun.Melees;
 using Raylib_cs;
 using System.Configuration;
 using System.Numerics;
@@ -7,17 +8,20 @@ namespace EndRun.Entities
 {
     public class Player
     {
-        public Texture2D texture;
+        public Texture2D texture; //player sprite
         public Vector2 pos = new Vector2(0); //player position
         public Vector2 lastPos = new Vector2(0); //player's last position
+        public Vector2 dis = new Vector2(0); //player displacement vector
         public Rectangle dest; //sprite dest rect
         public Vector2 origin = new Vector2(0);
-        public Gun gun = new HandGun(10);
+        public Gun gun; //players gun
+        public Melee melee; //player melee
+        public int selectedSlot; //selected slot
 
-        //overriding dest
-        
+        //collided object lists
+        List<Zombie> zombielist;
 
-        
+
         private float vel = 5f; //speed of player
         private Rectangle src; //sprite source rect
         private Rectangle bounds; //game bounds
@@ -38,6 +42,9 @@ namespace EndRun.Entities
             this.bounds = bounds; //set game bounds
             this.health = health; //set health
             health = 3;
+            selectedSlot = 1;
+            gun = new HandGun(5);
+            melee = new Katana();
         }
 
         public void Update()
@@ -54,25 +61,32 @@ namespace EndRun.Entities
 
             //actions
             gun.Update(pos + origin);
+            melee.Update(pos + origin + dis);
             Move();
 
-            //set position of dest rect
-            
         }
 
         public void Draw()
         {
+            //draw weapons
+            switch (selectedSlot)
+            {
+                case 0:
+                    melee.Draw();
+                    break;
+                case 1:
+                    gun.Draw();
+                    break;
+            }
+
             //draw player sprite
             Raylib.DrawTexturePro(texture, src, dest, new Vector2(0), 0, Color.White);
-
-            gun.Draw();
         }
 
         //decrement health by 1
         public void RemoveHealth()
         {
             health--;
-            Console.WriteLine("damage");
         }
 
         public void Input()
@@ -94,16 +108,27 @@ namespace EndRun.Entities
             {
                 left = true;
             }
+
+            if (Raylib.IsMouseButtonPressed(MouseButton.Left))
+            {
+                Console.WriteLine(zombielist.Count);
+                switch (selectedSlot)
+                {
+                    case 0:
+                        melee.Use(zombielist);
+                        break;
+                    case 1:
+                        gun.Shoot(zombielist);
+                        break;
+                }
+            }
+
         }
 
-        public void Shoot()
-        {
-
-        }
         public void Move()
         {
             lastPos = pos;
-            Vector2 dis = new Vector2(0);
+            dis = new Vector2(0);
 
             //initial vector2 change
             dis.X = ((right ? 1 : 0) + (left ? -1 : 0)) * vel;
@@ -133,6 +158,11 @@ namespace EndRun.Entities
                 dest.X = pos.X;
             }
 
+        }
+
+        public void UpdateCollidedObjects(List<Zombie> zombies)
+        {
+            zombielist = zombies;
         }
     }
 }

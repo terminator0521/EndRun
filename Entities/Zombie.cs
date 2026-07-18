@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows.Documents;
 using System.Xaml;
 
 namespace EndRun.Entities
@@ -12,10 +13,9 @@ namespace EndRun.Entities
     {
         private Texture2D texture;
         private Rectangle src; //texture source rectangle
-
+        private Random random;
         public Rectangle dest; //dest rect
         public Vector2 pos; //current pos
-        public Vector2 originalPos; //original position
         public Vector2 dis; //displacement
         public float distance; //distance between player and entity
         public float angle; //angle between player and entity 
@@ -32,22 +32,9 @@ namespace EndRun.Entities
             set { downTime = value * 60f; }
         }
        
-        public Zombie(int spawnPoint)
+        public Zombie(ref Random spawn)
         {
-            pos = spawnPoint switch
-            {
-                0 => new Vector2(460, 100),
-                1 => new Vector2(920, 100),
-                2 => new Vector2(460, 540),
-                3 => new Vector2(920, 540),
-                4 => new Vector2(60, 480),
-                5 => new Vector2(1200, 480),
-                6 => new Vector2(60, 260),
-                7 => new Vector2(1200, 260),
-                _ => throw new NotImplementedException(),
-            };
-
-            originalPos = pos; //set original pos
+            random = spawn;
 
             dest = new Rectangle(pos, 40, 40); //create rectangle
         }
@@ -101,7 +88,18 @@ namespace EndRun.Entities
             {
                 interval = 0; //reset counter
                 killed = false; //set killed to false
-                pos = originalPos; //reset position to original position
+                pos = random.Next(8) switch //random pos
+                {
+                    4 => new Vector2(220, -20),
+                    0 => new Vector2(520, -20),
+                    1 => new Vector2(820, -20),
+                    7 => new Vector2(1120, -20),
+                    5 => new Vector2(220, 650),
+                    2 => new Vector2(520, 650),
+                    3 => new Vector2(820, 650),
+                    6 => new Vector2(1120, 650),
+                    _ => throw new NotImplementedException(),
+                };
             }
         }
     }

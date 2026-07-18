@@ -11,7 +11,7 @@ namespace EndRun.Guns
     {
         public int ammo;
         public override float AimLaserWidth { get; set; }
-        public override Rectangle laser { get ; set; }
+        public override Rectangle Laser { get ; set; }
 
 
         public HandGun(int ammo)
@@ -19,5 +19,6 @@ namespace EndRun.Guns
             this.ammo = ammo;
             AimLaserWidth = 4f;
         }
+
     }
 }

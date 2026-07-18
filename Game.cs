@@ -2,14 +2,14 @@ using Raylib_cs;
 using raygui_cs;
 
 using EndRun.Entities;
-using System.Collections;
-using EndRun.Guns;
-using System.Windows.Media.Animation;
+using System.Windows.Controls;
 
 namespace EndRun
 {
     internal static class Game
     {
+        static Random random = new Random((int)System.DateTime.Now.TimeOfDay.TotalNanoseconds); //random generator
+
         static int currentState; //current state
         static Player player; //player object
         //static Zombie[] zombie = new Zombie[8]; //zombie objects
@@ -47,18 +47,18 @@ namespace EndRun
         {
             Raylib.SetConfigFlags(ConfigFlags.HighDpiWindow);
             Raylib.SetTargetFPS(60); //set fps
-            Raylib.InitWindow(1280, 720, "EndRun"); //init window
+            Raylib.InitWindow(1280, 900, "EndRun"); //init window
             Raygui.GuiSetStyle(0, Raygui.TEXT_SIZE, 32); //set text size
             currentState = (int)States.menu; //start in menu
             maxInterval = 60;
-            gameBounds = new Rectangle(0, 40, Raylib.GetScreenWidth(), Raylib.GetScreenHeight() - 160); //set game bounds
+            gameBounds = new Rectangle(0, 40, Raylib.GetScreenWidth(), 570); //set game bounds
             distance = 0; //set default distance travelled to 0;
             player = new Player("Assets/Player.png", 1, gameBounds); //add player 
             zombieCount = 8; //# of zombies
 
             for (int i = 0; i < zombieCount; i++)
             {
-                zombieList.Add(i, new Zombie(i));
+                zombieList.Add(i, new Zombie(ref random));
             }
 
 
@@ -90,14 +90,13 @@ namespace EndRun
                     }
                     break;
                 case States.play:
-                    Console.WriteLine(difficulty.spawnTime);
                     //check distance to change difficulty
                     if (distance == 0 && !difficulty.Equals(a))
                     {
                         difficulty = a;
                         SetDifficulty(difficulty);
                     }
-                    else if(distance == 200 && !difficulty.Equals(b))
+                    else if (distance == 200 && !difficulty.Equals(b))
                     {
                         difficulty = b;
                         SetDifficulty(difficulty);
@@ -175,13 +174,18 @@ namespace EndRun
 
             for (int i = 0; i < zombieCount; i++)
             {
-                if (Functions.CheckCollisionsQuad(player.gun.laser, player.gun.angle * Raylib.DEG2RAD, zombieList[i].dest, 0))
+
+                if (Raylib.CheckCollisionCircleRec(player.melee.Center, player.melee.Radius, zombieList[i].dest) && player.selectedSlot == 0)
+                {
+                    collidedZombies.Add(zombieList[i]);
+                }
+                else if (Functions.CheckCollisionsQuad(player.gun.Laser, player.gun.angle * Raylib.DEG2RAD, zombieList[i].dest, 0) && player.selectedSlot == 1)
                 {
                     collidedZombies.Add(zombieList[i]);
                 }
             }
 
-            player.gun.Shoot(collidedZombies);
+            player.UpdateCollidedObjects(collidedZombies);
         }
 
         public static void SetDifficulty(Difficulties level)
