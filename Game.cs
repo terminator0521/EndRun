@@ -21,7 +21,7 @@ namespace EndRun
         static int interval; //interval of time
         static int maxInterval; //max interval of time
 
-        static SortedList<int, Zombie> zombieList = new SortedList<int, Zombie>();
+        static SortedList<int, Entity> zombieList = new SortedList<int, Entity>();
 
         //difficulties
         static Difficulties difficulty; //current difficulty
@@ -35,6 +35,7 @@ namespace EndRun
         static int batCount;
         static int bugCount;
 
+        static User user;
 
         //state enum
         enum States
@@ -51,14 +52,14 @@ namespace EndRun
             Raygui.GuiSetStyle(0, Raygui.TEXT_SIZE, 32); //set text size
             currentState = (int)States.menu; //start in menu
             maxInterval = 60;
-            gameBounds = new Rectangle(0, 40, Raylib.GetScreenWidth(), 570); //set game bounds
+            gameBounds = new Rectangle(0, 40, Raylib.GetScreenWidth(), 530); //set game bounds
             distance = 0; //set default distance travelled to 0;
             player = new Player("Assets/Player.png", 1, gameBounds); //add player 
             zombieCount = 8; //# of zombies
-
+            user = new User(ref player);
             for (int i = 0; i < zombieCount; i++)
             {
-                zombieList.Add(i, new Zombie(ref random));
+                zombieList.Add(i, new Zombie(ref random, 40, 40));
             }
 
 
@@ -120,9 +121,13 @@ namespace EndRun
                     }
                     realDistance = distance + ((int)player.pos.X / 100 * 10);
 
+
+                    //gui updates and inputs
+                    user.Update(distance);
+                    user.Input();
+
                     //player updates
                     player.Update();
-
 
                     //entity updates
                     for (int i = 0; i < zombieCount; i++)
@@ -163,29 +168,35 @@ namespace EndRun
 
                     //draw player
                     player.Draw();
+
+                    //draw gui
+                    user.Draw();
                     break;
+
             }
         }
 
         public static void CollisionChecks()
         {
 
-            List<Zombie> collidedZombies = new List<Zombie>();
+            List<Entity> collidedEntities = new List<Entity>();
 
             for (int i = 0; i < zombieCount; i++)
             {
-
-                if (Raylib.CheckCollisionCircleRec(player.melee.Center, player.melee.Radius, zombieList[i].dest) && player.selectedSlot == 0)
+                if (Raylib.CheckCollisionRecs(gameBounds, zombieList[i].Dest)) //zombies out of bounds cannot be shot
                 {
-                    collidedZombies.Add(zombieList[i]);
-                }
-                else if (Functions.CheckCollisionsQuad(player.gun.Laser, player.gun.angle * Raylib.DEG2RAD, zombieList[i].dest, 0) && player.selectedSlot == 1)
-                {
-                    collidedZombies.Add(zombieList[i]);
+                    if (Raylib.CheckCollisionCircleRec(player.melee.Center, player.melee.Radius, zombieList[i].Dest) && player.selectedSlot == 0)
+                    {
+                        collidedEntities.Add(zombieList[i]);
+                    }
+                    else if (Functions.CheckCollisionsQuad(player.gun.Laser, player.gun.angle * Raylib.DEG2RAD, zombieList[i].Dest, 0) && player.selectedSlot == 1)
+                    {
+                        collidedEntities.Add(zombieList[i]);
+                    }
                 }
             }
 
-            player.UpdateCollidedObjects(collidedZombies);
+            player.UpdateCollidedObjects(collidedEntities);
         }
 
         public static void SetDifficulty(Difficulties level)

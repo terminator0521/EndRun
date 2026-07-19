@@ -19,18 +19,18 @@ namespace EndRun.Entities
         public int selectedSlot; //selected slot
 
         //collided object lists
-        List<Zombie> zombielist;
+        public List<Entity> collidedObjects;
 
 
         private float vel = 5f; //speed of player
         private Rectangle src; //sprite source rect
         private Rectangle bounds; //game bounds
-        private int health = 0;
+        public int health = 0;
 
-        private bool up = false;
-        private bool down = false;
-        private bool left = false;
-        private bool right = false;
+        public bool up = false;
+        public bool down = false;
+        public bool left = false;
+        public bool right = false;
 
         public Player(string spriteSheetLocation, int health, in Rectangle bounds) : base()
         {
@@ -49,21 +49,19 @@ namespace EndRun.Entities
 
         public void Update()
         {
+            //actions
+            gun.Update(pos + origin + dis);
+            melee.Update(pos + origin + dis);
+            Move();
 
+
+            health++;
+            
             //reset movement bools
             up = false;
             down = false;
             left = false;
             right = false;
-
-            //take inputs
-            Input();
-
-            //actions
-            gun.Update(pos + origin);
-            melee.Update(pos + origin + dis);
-            Move();
-
         }
 
         public void Draw()
@@ -87,42 +85,6 @@ namespace EndRun.Entities
         public void RemoveHealth()
         {
             health--;
-        }
-
-        public void Input()
-        {
-            //movement
-            if (Raylib.IsKeyDown(KeyboardKey.W))
-            {
-                up = true;
-            }
-            if (Raylib.IsKeyDown(KeyboardKey.S))
-            {
-                down = true;
-            }
-            if (Raylib.IsKeyDown(KeyboardKey.D))
-            {
-                right = true;
-            }
-            if (Raylib.IsKeyDown(KeyboardKey.A))
-            {
-                left = true;
-            }
-
-            if (Raylib.IsMouseButtonPressed(MouseButton.Left))
-            {
-                Console.WriteLine(zombielist.Count);
-                switch (selectedSlot)
-                {
-                    case 0:
-                        melee.Use(zombielist);
-                        break;
-                    case 1:
-                        gun.Shoot(zombielist);
-                        break;
-                }
-            }
-
         }
 
         public void Move()
@@ -160,9 +122,9 @@ namespace EndRun.Entities
 
         }
 
-        public void UpdateCollidedObjects(List<Zombie> zombies)
+        public void UpdateCollidedObjects(List<Entity> collided)
         {
-            zombielist = zombies;
+            collidedObjects = collided;
         }
     }
 }

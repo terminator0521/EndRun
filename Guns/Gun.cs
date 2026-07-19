@@ -53,9 +53,9 @@ namespace EndRun.Guns
             Console.WriteLine("freed texture");
         }
 
-        public virtual void Shoot(List<Zombie> zombies)
+        public virtual void Shoot(List<Entity> zombies)
         {
-            Zombie? zombie = null;
+            Entity? zombie = null;
 
             if (zombies.Count == 1)
             {

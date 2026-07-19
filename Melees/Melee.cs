@@ -8,20 +8,21 @@ namespace EndRun.Melees
     
     public class Melee
     {
+        public float thinkness = 4;
         public virtual float Radius { get; set; }
         public virtual Color Highlight { get; set; }
         public virtual float Damage { get; set; }
         public virtual Texture2D Texture { get; set; }
         public virtual Vector2 Center { get; set; }
 
-        public virtual void Use(List<Zombie> zombies)
+        public virtual void Use(List<Entity> zombies)
         {
             
         }
 
         public virtual void Draw()
         {
-            Raylib.DrawCircleV(Center, Radius, Highlight);
+            Raylib.DrawRing(Center, Radius - thinkness, Radius, 0, 360, 16, Highlight);
 
         }
 
