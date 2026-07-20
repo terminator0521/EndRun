@@ -26,15 +26,15 @@ namespace EndRun
 
         public void Draw()
         {
-            Raylib.DrawRectangle(0, 610, 1280, 290, Color.Gray);
+            Raylib.DrawRectangle(0, 660, 1280, 240, Color.Gray);
 
             for (int i = 0; i < 3; i++)
             {
-                Raylib.DrawRectangle(60 + (170 * i), 650, 150, 200, Color.White);
-                Raylib.DrawText((1 + i).ToString(), 70 + (170 * i), 815, 30, Color.Black);
+                Raylib.DrawRectangle(20 + (170 * i), 680, 150, 200, Color.White);
+                Raylib.DrawText((1 + i).ToString(), 25 + (170 * i), 850, 30, Color.Black);
             }
 
-            Raylib.DrawRectangleLinesEx(new Rectangle(60 + (170 * selectedSlot), 650, 150, 200), 4, Color.Black);
+            Raylib.DrawRectangleLinesEx(new Rectangle(20 + (170 * selectedSlot), 680, 150, 200), 4, Color.Black);
         }
 
         public void Input()

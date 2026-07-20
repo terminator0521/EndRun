@@ -65,7 +65,7 @@ namespace EndRun.Guns
             {
                 for (int i = 1; i < zombies.Count; i++)
                 {
-                    if (zombies[i].distance < zombies[i - 1].distance)
+                    if (zombies[i].Distance < zombies[i - 1].Distance)
                     {
                         zombie = zombies[i];
                     }

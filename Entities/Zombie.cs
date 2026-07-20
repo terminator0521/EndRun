@@ -16,6 +16,8 @@ namespace EndRun.Entities
         override public Rectangle Dest { get; set; } //dest rect
         override protected int Height { get; set; }
         override protected int Width { get; set; }
+        override protected float Vel { get; set; } = 1f; //entity velocity
+
 
         public Zombie(ref Random spawn, int width, int height) : base(ref spawn)
         {
@@ -29,21 +31,21 @@ namespace EndRun.Entities
         override public void Update(Vector2 playerPos)
         {
             //distance between player and entity
-            distance = Vector2.Distance(pos, playerPos);
+            Distance = Vector2.Distance(pos, playerPos);
 
             //find trig ratio between player & entity
-            ratio = (playerPos.X - pos.X) / distance;
+            ratio = (playerPos.X - pos.X) / Distance;
             angle = MathF.Acos(ratio);
 
             //find displacement needed
-            dis.Y = vel * MathF.Sin(angle) * (pos.Y < playerPos.Y ? 1 : -1);
-            dis.X = vel * MathF.Cos(angle);
+            dis.Y = Vel * MathF.Sin(angle) * (pos.Y < playerPos.Y ? 1 : -1);
+            dis.X = Vel * MathF.Cos(angle);
 
             //update positions and run killed? logic
             base.Update(playerPos);
         }
 
-        public override void Respawn()
+        protected override void Respawn()
         {
             if (WaitForRespawn())
             {

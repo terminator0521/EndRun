@@ -3,6 +3,7 @@ using raygui_cs;
 
 using EndRun.Entities;
 using System.Windows.Controls;
+using Microsoft.Win32.SafeHandles;
 
 namespace EndRun
 {
@@ -21,7 +22,7 @@ namespace EndRun
         static int interval; //interval of time
         static int maxInterval; //max interval of time
 
-        static SortedList<int, Entity> zombieList = new SortedList<int, Entity>();
+        static List<Entity> entityList = new List<Entity>();
 
         //difficulties
         static Difficulties difficulty; //current difficulty
@@ -52,16 +53,17 @@ namespace EndRun
             Raygui.GuiSetStyle(0, Raygui.TEXT_SIZE, 32); //set text size
             currentState = (int)States.menu; //start in menu
             maxInterval = 60;
-            gameBounds = new Rectangle(0, 40, Raylib.GetScreenWidth(), 530); //set game bounds
+            gameBounds = new Rectangle(0, 80, Raylib.GetScreenWidth(), 500); //set game bounds
             distance = 0; //set default distance travelled to 0;
             player = new Player("Assets/Player.png", 1, gameBounds); //add player 
-            zombieCount = 8; //# of zombies
+            SetDifficulty(a); //pre-set all difficulty settings to default
             user = new User(ref player);
             for (int i = 0; i < zombieCount; i++)
             {
-                zombieList.Add(i, new Zombie(ref random, 40, 40));
+                entityList.Add(new Zombie(ref random, 40, 40));
             }
 
+            entityList.Add(new Bat(ref random, 80, 30, ref gameBounds));
 
 
             while (!Raylib.WindowShouldClose())
@@ -130,9 +132,9 @@ namespace EndRun
                     player.Update();
 
                     //entity updates
-                    for (int i = 0; i < zombieCount; i++)
+                    for (int i = 0; i < entityList.Count; i++)
                     {
-                        zombieList[i].Update(player.pos);
+                        entityList[i].Update(player.pos);
                     }
 
                     //collisions
@@ -161,9 +163,9 @@ namespace EndRun
                     Raylib.DrawRectangleRec(gameBounds, Color.Beige);
 
                     //draw entity
-                    for (int i = 0; i < zombieCount; i++)
+                    for (int i = 0; i < entityList.Count; i++)
                     {
-                        zombieList[i].Draw();
+                        entityList[i].Draw();
                     }
 
                     //draw player
@@ -181,17 +183,17 @@ namespace EndRun
 
             List<Entity> collidedEntities = new List<Entity>();
 
-            for (int i = 0; i < zombieCount; i++)
+            for (int i = 0; i < entityList.Count; i++)
             {
-                if (Raylib.CheckCollisionRecs(gameBounds, zombieList[i].Dest)) //zombies out of bounds cannot be shot
+                if (Raylib.CheckCollisionRecs(gameBounds, entityList[i].Dest)) //zombies out of bounds cannot be shot
                 {
-                    if (Raylib.CheckCollisionCircleRec(player.melee.Center, player.melee.Radius, zombieList[i].Dest) && player.selectedSlot == 0)
+                    if (Raylib.CheckCollisionCircleRec(player.melee.Center, player.melee.Radius, entityList[i].Dest) && player.selectedSlot == 0)
                     {
-                        collidedEntities.Add(zombieList[i]);
+                        collidedEntities.Add(entityList[i]);
                     }
-                    else if (Functions.CheckCollisionsQuad(player.gun.Laser, player.gun.angle * Raylib.DEG2RAD, zombieList[i].Dest, 0) && player.selectedSlot == 1)
+                    else if (Functions.CheckCollisionsQuad(player.gun.Laser, player.gun.angle * Raylib.DEG2RAD, entityList[i].Dest, 0) && player.selectedSlot == 1)
                     {
-                        collidedEntities.Add(zombieList[i]);
+                        collidedEntities.Add(entityList[i]);
                     }
                 }
             }
@@ -205,9 +207,16 @@ namespace EndRun
             batCount = level.batCount;
             bugCount = level.bugCount;
 
-            for (int i = 0; i < zombieCount; i++)
+            for (int i = 0; i < entityList.Count; i++)
             {
-                zombieList[i].DownTime = level.spawnTime;
+                if(entityList[i] is Zombie zombie)
+                {
+                    zombie.DownTime = level.spawnTime;
+                }
+                else if (entityList[i] is Bat bat)
+                {
+                    bat.DownTime = level.spawnTime;
+                }
             }
         }
 

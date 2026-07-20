@@ -17,18 +17,18 @@ namespace EndRun.Entities
         virtual public Rectangle Dest { get; set; } //dest rect
         virtual protected int Height { get; set; }
         virtual protected int Width { get; set; }
-        
+        virtual protected float Vel { get; set; } = 1f; //entity velocity
+
         public Vector2 pos; //current pos
         public Vector2 dis; //displacement
-        public float distance; //distance between player and entity
+        public float Distance { get; set; } //distance between player and entity
         public float angle; //angle between player and entity 
         public float ratio; //cos ratio between player and entity
-        public float vel = 1f; //entity velocity
         protected bool killed = false; //killed or not?
         
-        protected float downTime = 3f * 60f; //default value incase not set
+        protected float downTime = 3 * 60f; //default value incase not set
 
-        protected float interval;
+        protected float downTimeInterval;
 
         public float DownTime //set downtime value in seconds
         {
@@ -71,21 +71,21 @@ namespace EndRun.Entities
 
         virtual public bool WaitForRespawn()
         {
-            if(interval < downTime)
+            if(downTimeInterval < downTime)
             {
-                interval++; //increment counter
+                downTimeInterval++; //increment counter
                 return false;
             }
             else
             {
-                interval = 0; //reset counter
+                downTimeInterval = 0; //reset counter
                 killed = false; //set killed to false
                 
                 return true;
             }
         }
 
-        public virtual void Respawn()
+        protected virtual void Respawn()
         {
             //meant to be overriden
         }
