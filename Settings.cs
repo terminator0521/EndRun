@@ -10,13 +10,17 @@ namespace EndRun
     {
         public readonly float spawnTime;
         public readonly int zombieCount;
+        public readonly float batWaitTime;
         public readonly int batCount;
+        public readonly float bugWaitTime;
         public readonly int bugCount;
-        public Difficulties(float spawnTime, int zombieCount, int batCount, int bugCount)
+        public Difficulties(float spawnTime, int zombieCount, float batWaitTime, int batCount, float bugWaitTime, int bugCount)
         {
             this.spawnTime = spawnTime;
             this.zombieCount = zombieCount;
+            this.batWaitTime = batWaitTime;
             this.batCount = batCount;
+            this.bugWaitTime = bugWaitTime;
             this.bugCount = bugCount;
         }
     }

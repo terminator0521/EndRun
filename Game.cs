@@ -9,8 +9,6 @@ namespace EndRun
 {
     internal static class Game
     {
-        static Random random = new Random((int)System.DateTime.Now.TimeOfDay.TotalNanoseconds); //random generator
-
         static int currentState; //current state
         static Player player; //player object
         //static Zombie[] zombie = new Zombie[8]; //zombie objects
@@ -27,9 +25,9 @@ namespace EndRun
         //difficulties
         static Difficulties difficulty; //current difficulty
 
-        readonly static Difficulties a = new Difficulties(5f, 4, 0, 0);
-        readonly static Difficulties b = new Difficulties(3f, 6, 0, 0);
-        readonly static Difficulties c = new Difficulties(1f, 8, 0, 0);
+        readonly static Difficulties a = new Difficulties(5f, 4, 3f, 1, 0, 0);
+        readonly static Difficulties b = new Difficulties(3f, 6, 3f, 2, 0, 0);
+        readonly static Difficulties c = new Difficulties(1f, 8, 2f, 4, 0, 0);
 
         //entity counts values
         static int zombieCount;
@@ -58,13 +56,15 @@ namespace EndRun
             player = new Player("Assets/Player.png", 1, gameBounds); //add player 
             SetDifficulty(a); //pre-set all difficulty settings to default
             user = new User(ref player);
+
             for (int i = 0; i < zombieCount; i++)
             {
-                entityList.Add(new Zombie(ref random, 40, 40));
+                entityList.Add(new Zombie(40, 40));
             }
-
-            entityList.Add(new Bat(ref random, 80, 30, ref gameBounds));
-
+            for (int i = 0; i < zombieCount; i++)
+            {
+                entityList.Add(new Bat(80, 30));
+            }
 
             while (!Raylib.WindowShouldClose())
             {
@@ -207,15 +207,18 @@ namespace EndRun
             batCount = level.batCount;
             bugCount = level.bugCount;
 
+
             for (int i = 0; i < entityList.Count; i++)
             {
-                if(entityList[i] is Zombie zombie)
+                
+                if (entityList[i] is Zombie zombie)
                 {
                     zombie.DownTime = level.spawnTime;
                 }
                 else if (entityList[i] is Bat bat)
                 {
                     bat.DownTime = level.spawnTime;
+                    bat.WaitTime = level.spawnTime;
                 }
             }
         }

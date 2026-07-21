@@ -60,7 +60,6 @@ namespace EndRun
             //use
             if (Raylib.IsMouseButtonPressed(MouseButton.Left))
             {
-                Console.WriteLine(player.collidedObjects.Count);
                 switch (selectedSlot)
                 {
                     case 0:

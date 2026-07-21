@@ -19,11 +19,11 @@ namespace EndRun.Entities
         override protected float Vel { get; set; } = 1f; //entity velocity
 
 
-        public Zombie(ref Random spawn, int width, int height) : base(ref spawn)
+        public Zombie(int width, int height)
         {
             Height = height;
             Width = width;
-            random = spawn;
+            Respawn();
 
             Dest = new Rectangle(0, 0, Width, Height);
         }
@@ -49,7 +49,8 @@ namespace EndRun.Entities
         {
             if (WaitForRespawn())
             {
-                pos = random.Next(8) switch //random pos
+                Console.WriteLine("ran");
+                pos = Random.Shared.Next(8) switch //random pos
                 {
                     4 => new Vector2(220, -40),
                     0 => new Vector2(520, -40),
