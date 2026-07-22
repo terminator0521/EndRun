@@ -57,11 +57,11 @@ namespace EndRun
             SetDifficulty(a); //pre-set all difficulty settings to default
             user = new User(ref player);
 
-            for (int i = 0; i < zombieCount; i++)
-            {
-                entityList.Add(new Zombie(40, 40));
-            }
-            for (int i = 0; i < zombieCount; i++)
+            //for (int i = 0; i < zombieCount; i++)
+            //{
+            //    entityList.Add(new Zombie(40, 40));
+            //}
+            for (int i = 0; i < batCount; i++)
             {
                 entityList.Add(new Bat(80, 30));
             }

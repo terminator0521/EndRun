@@ -76,6 +76,11 @@ namespace EndRun.Entities
             }
             else if (attacking) //if currently attacking
             {
+                if (dis == new Vector2(0))
+                {
+                    attacking = false; //fix 0 displacement on run
+                }
+
                 base.Update(playerPos); //change position by displacement vector2
             }
 
@@ -111,12 +116,12 @@ namespace EndRun.Entities
 
                 pos = Random.Shared.Next(6) switch //random pos
                 {
-                    0 => new Vector2(100, 20),
-                    1 => new Vector2(630, 20),
-                    2 => new Vector2(1180, 20),
-                    3 => new Vector2(100, 680),
-                    4 => new Vector2(630, 680),
-                    5 => new Vector2(1180, 680),
+                    0 => new Vector2(100, 40),
+                    1 => new Vector2(630, 40),
+                    2 => new Vector2(1180, 40),
+                    3 => new Vector2(100, 600),
+                    4 => new Vector2(630, 600),
+                    5 => new Vector2(1180, 600),
                     _ => throw new NotImplementedException(),
                 };
             }
