@@ -146,6 +146,7 @@ namespace EndRun
                                 currentDifficulty++;
                                 SetDifficulty(difficulties[currentDifficulty]);
                                 currentLevel++;
+                                distance -= realDistance;
                             }
                         }
                     }
