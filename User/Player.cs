@@ -1,18 +1,18 @@
-﻿using EndRun.Guns;
-using EndRun.Melees;
+﻿using EndRun.Entities;
+using EndRun.weapons.Guns;
+using EndRun.weapons.Melees;
 using Raylib_cs;
-using System.Configuration;
 using System.Numerics;
 
-namespace EndRun.Entities
+namespace EndRun.User
 {
-    public class Player
+    public class Player : Entity
     {
         public Texture2D texture; //player sprite
-        public Vector2 pos = new Vector2(0); //player position
+        //public Vector2 pos = new Vector2(0); //player position
         public Vector2 lastPos = new Vector2(0); //player's last position
-        public Vector2 dis = new Vector2(0); //player displacement vector
-        public Rectangle dest; //sprite dest rect
+        //override public Vector2 dis = new Vector2(0); //player displacement vector
+        public Rectangle Dest = new Rectangle(); //sprite dest rect
         public Vector2 origin = new Vector2(0);
         public Gun gun; //players gun
         public Melee melee; //player melee
@@ -38,13 +38,14 @@ namespace EndRun.Entities
             origin = new Vector2(texture.Width / 2, texture.Height / 2);
             pos = new Vector2(200, 200);
             src = new Rectangle(0, 0, texture.Width, texture.Height); //set up texture src rect
-            dest = new Rectangle(pos, texture.Width, texture.Height); //set up texture dest rect
+            Dest = new Rectangle(pos, texture.Width, texture.Height); //set up texture dest rect
             this.bounds = bounds; //set game bounds
             this.health = health; //set health
             health = 3;
             selectedSlot = 1;
             gun = new HandGun(5);
             melee = new Katana();
+            collidedObjects = new List<Entity>();
         }
 
         public void Update()
@@ -78,7 +79,7 @@ namespace EndRun.Entities
             }
 
             //draw player sprite
-            Raylib.DrawTexturePro(texture, src, dest, new Vector2(0), 0, Color.White);
+            Raylib.DrawTexturePro(texture, src, Dest, new Vector2(0), 0, Color.White);
         }
 
         //decrement health by 1
@@ -102,22 +103,22 @@ namespace EndRun.Entities
 
             //add displacement to y-pos
             pos.Y += dis.Y;
-            dest.Y = pos.Y;
+            Dest.Y = pos.Y;
 
-            if (Functions.CheckCollisionEdges(dest, bounds))
+            if (Functions.CheckCollisionEdges(Dest, bounds))
             {
                 pos.Y = lastPos.Y;
-                dest.Y = pos.Y;
+                Dest.Y = pos.Y;
             }
 
             //add displacement to x-pos
             pos.X += dis.X;
-            dest.X = pos.X;
+            Dest.X = pos.X;
 
-            if (Functions.CheckCollisionEdges(dest, bounds))
+            if (Functions.CheckCollisionEdges(Dest, bounds))
             {
                 pos.X = lastPos.X;
-                dest.X = pos.X;
+                Dest.X = pos.X;
             }
 
         }

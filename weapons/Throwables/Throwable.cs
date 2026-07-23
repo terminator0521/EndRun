@@ -4,7 +4,7 @@ using System.Numerics;
 using System.Text;
 using Raylib_cs;
 
-namespace EndRun.Throwable
+namespace EndRun.weapons.Throwables
 {
     internal class Throwable : IDisposable
     {

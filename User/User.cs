@@ -1,10 +1,7 @@
-﻿using EndRun.Entities;
-using EndRun.Guns;
-using EndRun.Melees;
+﻿
 using Raylib_cs;
-using System.Windows.Media.Media3D;
 
-namespace EndRun
+namespace EndRun.User
 {
     public class User
     {

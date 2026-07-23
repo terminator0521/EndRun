@@ -45,7 +45,7 @@ namespace EndRun.Entities
             Dest = new Rectangle(-200, 0, Width, Height);
         }
 
-        public override void Update(Vector2 playerPos)
+        override public void Update(Vector2 playerPos)
         {
             //wait phase
             if (!attacking) //wait phase starts when attack is finished

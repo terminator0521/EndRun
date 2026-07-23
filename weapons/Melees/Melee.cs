@@ -3,7 +3,7 @@ using Raylib_cs;
 using System.IO.Pipelines;
 using System.Numerics;
 
-namespace EndRun.Melees
+namespace EndRun.weapons.Melees
 {
     
     public class Melee

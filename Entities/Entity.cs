@@ -24,7 +24,7 @@ namespace EndRun.Entities
         public float angle; //angle between player and entity 
         public float ratio; //cos ratio between player and entity
         protected bool killed = true; //killed or not?
-        
+
         protected float downTime = 3 * 60f; //default value incase not set
         protected float downTimeInterval;
 
@@ -40,6 +40,7 @@ namespace EndRun.Entities
 
         virtual public void Update(Vector2 playerPos)
         {
+
             //pos updates
             if (!killed)
             {
@@ -51,7 +52,7 @@ namespace EndRun.Entities
             }
 
 
-            Dest = new Rectangle(pos.X, pos.Y, Width, Height);
+            Dest = new Rectangle(pos.X + (Width / 2), pos.Y + (Height / 2), Width, Height);
         }
 
         public void Draw()
@@ -67,7 +68,7 @@ namespace EndRun.Entities
 
         virtual protected bool WaitForRespawn()
         {
-            if(downTimeInterval < downTime)
+            if (downTimeInterval < downTime)
             {
                 downTimeInterval++; //increment counter
                 return false;
@@ -76,7 +77,7 @@ namespace EndRun.Entities
             {
                 downTimeInterval = 0; //reset counter
                 killed = false; //set killed to false
-                
+
                 return true;
             }
         }

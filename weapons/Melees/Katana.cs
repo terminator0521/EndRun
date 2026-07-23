@@ -6,7 +6,7 @@ using System.Data;
 using System.Numerics;
 using System.Text;
 
-namespace EndRun.Melees
+namespace EndRun.weapons.Melees
 {
     public class Katana : Melee
     {

@@ -1,10 +1,5 @@
 ﻿using Raylib_cs;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Numerics;
-using System.Text;
-using System.Windows.Documents;
 
 namespace EndRun.Entities
 {

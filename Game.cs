@@ -2,8 +2,7 @@ using Raylib_cs;
 using raygui_cs;
 
 using EndRun.Entities;
-using System.Windows.Controls;
-using Microsoft.Win32.SafeHandles;
+using EndRun.User;
 
 namespace EndRun
 {
@@ -25,16 +24,16 @@ namespace EndRun
         //difficulties
         static Difficulties difficulty; //current difficulty
 
-        readonly static Difficulties a = new Difficulties(5f, 4, 3f, 1, 0, 0);
-        readonly static Difficulties b = new Difficulties(3f, 6, 3f, 2, 0, 0);
-        readonly static Difficulties c = new Difficulties(1f, 8, 2f, 4, 0, 0);
+        readonly static Difficulties a = new Difficulties(5f, 4, 3f, 1, 4f, 1);
+        readonly static Difficulties b = new Difficulties(3f, 6, 3f, 2, 3f, 1);
+        readonly static Difficulties c = new Difficulties(1f, 8, 2f, 4, 1f, 2);
 
         //entity counts values
         static int zombieCount;
         static int batCount;
         static int bugCount;
 
-        static User user;
+        static User.User user;
 
         //state enum
         enum States
@@ -55,15 +54,19 @@ namespace EndRun
             distance = 0; //set default distance travelled to 0;
             player = new Player("Assets/Player.png", 1, gameBounds); //add player 
             SetDifficulty(a); //pre-set all difficulty settings to default
-            user = new User(ref player);
+            user = new User.User(ref player);
 
             //for (int i = 0; i < zombieCount; i++)
             //{
             //    entityList.Add(new Zombie(40, 40));
             //}
-            for (int i = 0; i < batCount; i++)
+            //for (int i = 0; i < batCount; i++)
+            //{
+            //    entityList.Add(new Bat(80, 30));
+            //}
+            for (int i = 0; i < bugCount; i++)
             {
-                entityList.Add(new Bat(80, 30));
+                entityList.Add(new Bug(20, 20, ref gameBounds));
             }
 
             while (!Raylib.WindowShouldClose())
@@ -134,7 +137,7 @@ namespace EndRun
                     //entity updates
                     for (int i = 0; i < entityList.Count; i++)
                     {
-                        entityList[i].Update(player.pos);
+                        entityList[i].Update(player.pos + player.origin);
                     }
 
                     //collisions
@@ -206,7 +209,7 @@ namespace EndRun
             zombieCount = level.zombieCount;
             batCount = level.batCount;
             bugCount = level.bugCount;
-
+            Console.WriteLine(bugCount);
 
             for (int i = 0; i < entityList.Count; i++)
             {
@@ -218,7 +221,12 @@ namespace EndRun
                 else if (entityList[i] is Bat bat)
                 {
                     bat.DownTime = level.spawnTime;
-                    bat.WaitTime = level.spawnTime;
+                    bat.WaitTime = level.batWaitTime;
+                }
+                else if (entityList[i] is Bug bug)
+                {
+                    bug.DownTime = level.spawnTime;
+                    bug.WaitTime = level.bugWaitTime;
                 }
             }
         }

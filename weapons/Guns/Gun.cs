@@ -2,7 +2,7 @@
 using Raylib_cs;
 using System.Numerics;
 
-namespace EndRun.Guns
+namespace EndRun.weapons.Guns
 {
     public class Gun : IDisposable
     {
