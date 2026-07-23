@@ -53,25 +53,25 @@ namespace EndRun.weapons.Guns
             Console.WriteLine("freed texture");
         }
 
-        public virtual void Shoot(List<Entity> zombies)
+        public virtual void Shoot(List<Entity> entities)
         {
             Entity? zombie = null;
 
-            if (zombies.Count == 1)
+            if (entities.Count == 1)
             {
-                zombie = zombies[0];
+                zombie = entities[0];
             }
             else
             {
-                for (int i = 1; i < zombies.Count; i++)
+                for (int i = 1; i < entities.Count; i++)
                 {
-                    if (zombies[i].Distance < zombies[i - 1].Distance)
+                    if (entities[i].Distance < entities[i - 1].Distance)
                     {
-                        zombie = zombies[i];
+                        zombie = entities[i];
                     }
                     else
                     {
-                        zombie = zombies[i - 1];
+                        zombie = entities[i - 1];
                     }
                 }
             }

@@ -136,8 +136,6 @@ namespace EndRun.Entities
             {
                 Waiting();
             }
-
-            Console.WriteLine(dis);
         }
 
         protected override void Respawn()

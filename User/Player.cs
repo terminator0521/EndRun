@@ -6,12 +6,12 @@ using System.Numerics;
 
 namespace EndRun.User
 {
-    public class Player : Entity
+    public class Player
     {
         public Texture2D texture; //player sprite
-        //public Vector2 pos = new Vector2(0); //player position
+        public Vector2 pos = new Vector2(0); //player position
         public Vector2 lastPos = new Vector2(0); //player's last position
-        //override public Vector2 dis = new Vector2(0); //player displacement vector
+        public Vector2 dis = new Vector2(0); //player displacement vector
         public Rectangle Dest = new Rectangle(); //sprite dest rect
         public Vector2 origin = new Vector2(0);
         public Gun gun; //players gun

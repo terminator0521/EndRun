@@ -3,6 +3,7 @@ using raygui_cs;
 
 using EndRun.Entities;
 using EndRun.User;
+using System.Diagnostics.Eventing.Reader;
 
 namespace EndRun
 {
@@ -10,11 +11,16 @@ namespace EndRun
     {
         static int currentState; //current state
         static Player player; //player object
-        //static Zombie[] zombie = new Zombie[8]; //zombie objects
         static Rectangle gameBounds; //game bounds
+        static Rectangle continueBounds; //rectangle that allows player to proceed
         static int distance; //travelled distance on screen
         static int realDistance; //total travelled distance (screen + interval)
-
+        static int currentLevel; //current level
+        static bool atCheckpoint = false;
+        static int[] levelDistances =
+        {
+            50, 1000, 2000, 4000, 7000
+        };
         //timer
         static int interval; //interval of time
         static int maxInterval; //max interval of time
@@ -23,10 +29,14 @@ namespace EndRun
 
         //difficulties
         static Difficulties difficulty; //current difficulty
+        static int currentDifficulty = 0;
+        readonly static Difficulties[] difficulties =
+        {
 
-        readonly static Difficulties a = new Difficulties(5f, 4, 3f, 1, 4f, 1);
-        readonly static Difficulties b = new Difficulties(3f, 6, 3f, 2, 3f, 1);
-        readonly static Difficulties c = new Difficulties(1f, 8, 2f, 4, 1f, 2);
+            new Difficulties(5f, 4, 3f, 1, 4f, 1),
+            new Difficulties(3f, 6, 3f, 2, 3f, 1),
+            new Difficulties(1f, 8, 2f, 4, 1f, 2),
+        };
 
         //entity counts values
         static int zombieCount;
@@ -41,6 +51,7 @@ namespace EndRun
             menu,
             play,
             gameover,
+            end
         }
         public static void Main()
         {
@@ -51,23 +62,11 @@ namespace EndRun
             currentState = (int)States.menu; //start in menu
             maxInterval = 60;
             gameBounds = new Rectangle(0, 80, Raylib.GetScreenWidth(), 500); //set game bounds
+            continueBounds = new Rectangle(1200, 80, 80, 500);
             distance = 0; //set default distance travelled to 0;
             player = new Player("Assets/Player.png", 1, gameBounds); //add player 
-            SetDifficulty(a); //pre-set all difficulty settings to default
             user = new User.User(ref player);
-
-            //for (int i = 0; i < zombieCount; i++)
-            //{
-            //    entityList.Add(new Zombie(40, 40));
-            //}
-            //for (int i = 0; i < batCount; i++)
-            //{
-            //    entityList.Add(new Bat(80, 30));
-            //}
-            for (int i = 0; i < bugCount; i++)
-            {
-                entityList.Add(new Bug(20, 20, ref gameBounds));
-            }
+            currentLevel = 0;
 
             while (!Raylib.WindowShouldClose())
             {
@@ -89,6 +88,7 @@ namespace EndRun
                     {
                         currentState = (int)States.play; //change state to play
                         distance = 0; //reset distance to 0
+                        SetDifficulty(difficulties[0]);
                     }
                     else if (Raygui.GuiButton(new Rectangle(650, 300, 230, 80), "Quit") == 1)
                     {
@@ -96,36 +96,25 @@ namespace EndRun
                     }
                     break;
                 case States.play:
-                    //check distance to change difficulty
-                    if (distance == 0 && !difficulty.Equals(a))
-                    {
-                        difficulty = a;
-                        SetDifficulty(difficulty);
-                    }
-                    else if (distance == 200 && !difficulty.Equals(b))
-                    {
-                        difficulty = b;
-                        SetDifficulty(difficulty);
-                    }
-                    else if (distance == 500 && !difficulty.Equals(c))
-                    {
-                        difficulty = c;
-                        SetDifficulty(difficulty);
-                    }
-
                     //update distance
-                    realDistance = 0;
-                    if (interval < maxInterval)
+                    if (realDistance < levelDistances[currentLevel])
                     {
-                        interval++;
+                        realDistance = 0;
+                        if (interval < maxInterval)
+                        {
+                            interval++;
+                        }
+                        else
+                        {
+                            interval = 0;
+                            distance += 10;
+                        }
+                        realDistance = distance + ((int)player.pos.X / 100 * 10);
                     }
-                    else
+                    else if (!atCheckpoint)
                     {
-                        interval = 0;
-                        distance += 10;
+                        atCheckpoint = true;
                     }
-                    realDistance = distance + ((int)player.pos.X / 100 * 10);
-
 
                     //gui updates and inputs
                     user.Update(distance);
@@ -134,17 +123,44 @@ namespace EndRun
                     //player updates
                     player.Update();
 
-                    //entity updates
-                    for (int i = 0; i < entityList.Count; i++)
-                    {
-                        entityList[i].Update(player.pos + player.origin);
-                    }
+
 
                     //collisions
                     CollisionChecks();
+
+                    if (atCheckpoint) //at checkpoint
+                    {
+                        for (int i = 0; i < entityList.Count; i++)
+                        {
+                            entityList[i].Kill();
+                        }
+
+                        entityList.Clear(); //clear entities
+
+                        if (Raylib.CheckCollisionRecs(player.Dest, continueBounds))
+                        {
+                            atCheckpoint = false;
+                            if (currentDifficulty < difficulties.Length)
+                            {
+                                Console.WriteLine(currentDifficulty);
+                                currentDifficulty++;
+                                SetDifficulty(difficulties[currentDifficulty]);
+                                currentLevel++;
+                            }
+                        }
+                    }
+                    else //still heading towards checkpoint
+                    {
+                        //entity updates
+                        for (int i = 0; i < entityList.Count; i++)
+                        {
+                            entityList[i].Update(player.pos + player.origin);
+                        }
+                    }
                     break;
             }
         }
+
 
         public static void Draw()
         {
@@ -159,6 +175,7 @@ namespace EndRun
                     //no logic
                     break;
                 case States.play:
+
                     //draw distance travelled
                     Raylib.DrawText(realDistance.ToString(), 10, 30, 18, Color.Black);
 
@@ -176,6 +193,13 @@ namespace EndRun
 
                     //draw gui
                     user.Draw();
+
+                    if (atCheckpoint) //if check point reached
+                    {
+                        Raylib.DrawText("You have reached a checkpoint", 60, 400, 48, Color.Black);
+                        Raylib.DrawText("Proceed to right side of screen to continue", 60, 500, 48, Color.Black);
+                        Raylib.DrawRectangleRec(continueBounds, Color.Red);
+                    }
                     break;
 
             }
@@ -188,7 +212,7 @@ namespace EndRun
 
             for (int i = 0; i < entityList.Count; i++)
             {
-                if (Raylib.CheckCollisionRecs(gameBounds, entityList[i].Dest)) //zombies out of bounds cannot be shot
+                if (Raylib.CheckCollisionRecs(gameBounds, entityList[i].Dest)) //zombies out of bounds cannot be attacked
                 {
                     if (Raylib.CheckCollisionCircleRec(player.melee.Center, player.melee.Radius, entityList[i].Dest) && player.selectedSlot == 0)
                     {
@@ -199,6 +223,11 @@ namespace EndRun
                         collidedEntities.Add(entityList[i]);
                     }
                 }
+                
+                if (Raylib.CheckCollisionRecs(player.Dest, entityList[i].Dest)) //game over if player collides with entity
+                {
+                    currentState = (int)States.menu;
+                }
             }
 
             player.UpdateCollidedObjects(collidedEntities);
@@ -206,14 +235,14 @@ namespace EndRun
 
         public static void SetDifficulty(Difficulties level)
         {
+            //set locals 
             zombieCount = level.zombieCount;
             batCount = level.batCount;
             bugCount = level.bugCount;
-            Console.WriteLine(bugCount);
 
             for (int i = 0; i < entityList.Count; i++)
             {
-                
+
                 if (entityList[i] is Zombie zombie)
                 {
                     zombie.DownTime = level.spawnTime;
@@ -229,6 +258,23 @@ namespace EndRun
                     bug.WaitTime = level.bugWaitTime;
                 }
             }
+
+            //reset list
+            entityList.Clear();
+
+            for (int i = 0; i < zombieCount; i++)
+            {
+                entityList.Add(new Zombie(40, 40));
+            }
+            for (int i = 0; i < batCount; i++)
+            {
+                entityList.Add(new Bat(80, 30));
+            }
+            for (int i = 0; i < bugCount; i++)
+            {
+                entityList.Add(new Bug(20, 20, ref gameBounds));
+            }
+
         }
 
     }

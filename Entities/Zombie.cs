@@ -44,7 +44,6 @@ namespace EndRun.Entities
         {
             if (WaitForRespawn())
             {
-                Console.WriteLine("ran");
                 pos = Random.Shared.Next(8) switch //random pos
                 {
                     4 => new Vector2(220, -40),
