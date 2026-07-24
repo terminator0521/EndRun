@@ -24,7 +24,7 @@ namespace EndRun.Entities
         private bool waiting = false;
         public float WaitTime
         {
-            set { waitTime = value ; }
+            set { waitTime = value; }
         }
 
         //next move directions
@@ -51,6 +51,14 @@ namespace EndRun.Entities
 
         override public void Update(Vector2 playerPos)
         {
+            Console.WriteLine(killed);
+            //if killed
+            if (killed)
+            {
+                attacking = false;
+                waiting = false;
+            }
+
             //first spawn in movement
             if (settingUp)
             {
@@ -128,6 +136,7 @@ namespace EndRun.Entities
                     break;
             }
 
+
             if (!waiting)
             {
                 base.Update(playerPos); //update pos
@@ -140,6 +149,8 @@ namespace EndRun.Entities
 
         protected override void Respawn()
         {
+            pos = new Vector2(-200);
+
             if (WaitForRespawn())
             {
 

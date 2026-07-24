@@ -202,7 +202,9 @@ namespace EndRun
                         Raylib.DrawRectangleRec(continueBounds, Color.Red);
                     }
                     break;
-
+                case States.gameover:
+                    Raylib.DrawText("Game Over", 425, 105, 90, Color.Black);
+                    break;
             }
         }
 
@@ -227,7 +229,7 @@ namespace EndRun
                 
                 if (Raylib.CheckCollisionRecs(player.Dest, entityList[i].Dest)) //game over if player collides with entity
                 {
-                    currentState = (int)States.menu;
+                    currentState = (int)States.gameover;
                 }
             }
 
