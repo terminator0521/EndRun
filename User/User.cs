@@ -7,8 +7,8 @@ namespace EndRun.User
     {
         Player player;
         private int selectedSlot;
-        private int health;
-        private int distance;
+        public int distance;
+        public int score;
         public User(ref Player player)
         {
             this.player = player;
@@ -17,8 +17,8 @@ namespace EndRun.User
         public void Update(int distance)
         {
             this.distance = distance;
+            score = player.score;
             selectedSlot = player.selectedSlot;
-            health = player.health;
         }
 
         public void Draw()
@@ -38,7 +38,7 @@ namespace EndRun.User
             Raylib.DrawText("Distance: ", 580, 700, 40, Color.Black);
             Raylib.DrawText("Score: ", 950, 700, 40, Color.Black);
             Raylib.DrawText(distance.ToString() + " Studs", 580, 780, 40, Color.Black);
-            Raylib.DrawText(player.score.ToString(), 950, 780, 40, Color.Black);
+            Raylib.DrawText(score.ToString(), 950, 780, 40, Color.Black);
         }
 
         public void Input()

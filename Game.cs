@@ -216,6 +216,8 @@ namespace EndRun
                     break;
                 case States.gameover:
                     Raylib.DrawText("Game Over", 425, 105, 90, Color.Black);
+                    Raylib.DrawText("Final Distance: \n \t" + user.distance.ToString() + " Studs", 250, 550, 48, Color.Black);
+                    Raylib.DrawText("Final Score: \n \t" + user.score.ToString(), 690, 550, 48, Color.Black);
                     break;
             }
         }
@@ -238,7 +240,7 @@ namespace EndRun
                         collidedEntities.Add(entityList[i]);
                     }
                 }
-                
+
                 if (Raylib.CheckCollisionRecs(player.Dest, entityList[i].Dest)) //game over if player collides with entity
                 {
                     currentState = (int)States.gameover;
