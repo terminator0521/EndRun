@@ -36,7 +36,6 @@ namespace EndRun.User
         {
             texture = Raylib.LoadTexture(spriteSheetLocation); //load player texture
             origin = new Vector2(texture.Width / 2, texture.Height / 2);
-            pos = new Vector2(200, 200);
             src = new Rectangle(0, 0, texture.Width, texture.Height); //set up texture src rect
             Dest = new Rectangle(pos, texture.Width, texture.Height); //set up texture dest rect
             this.bounds = bounds; //set game bounds
@@ -126,6 +125,12 @@ namespace EndRun.User
         public void UpdateCollidedObjects(List<Entity> collided)
         {
             collidedObjects = collided;
+        }
+
+        public void ResetState()
+        {
+            pos = new Vector2(50, (bounds.Height / 2) - (Dest.Height / 2));
+            selectedSlot = 0;
         }
     }
 }

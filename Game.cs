@@ -4,6 +4,7 @@ using raygui_cs;
 using EndRun.Entities;
 using EndRun.User;
 using System.Diagnostics.Eventing.Reader;
+using System.Windows.Input;
 
 namespace EndRun
 {
@@ -84,13 +85,12 @@ namespace EndRun
             switch ((States)currentState)
             {
                 case States.menu:
-                    if (Raygui.GuiButton(new Rectangle(400, 300, 230, 80), "Start") == 1)
+                    if (Raygui.GuiButton(new Rectangle(400, 400, 230, 80), "Start") == 1)
                     {
+                        Reset(); //reset game states
                         currentState = (int)States.play; //change state to play
-                        distance = 0; //reset distance to 0
-                        SetDifficulty(difficulties[0]);
                     }
-                    else if (Raygui.GuiButton(new Rectangle(650, 300, 230, 80), "Quit") == 1)
+                    else if (Raygui.GuiButton(new Rectangle(650, 400, 230, 80), "Quit") == 1)
                     {
                         Environment.Exit(0); //exit application
                     }
@@ -137,7 +137,7 @@ namespace EndRun
 
                         entityList.Clear(); //clear entities
 
-                        if (Raylib.CheckCollisionRecs(player.Dest, continueBounds))
+                        if (Raylib.CheckCollisionRecs(player.Dest, continueBounds)) //if at continue area
                         {
                             atCheckpoint = false;
                             if (currentDifficulty < difficulties.Length)
@@ -147,6 +147,7 @@ namespace EndRun
                                 SetDifficulty(difficulties[currentDifficulty]);
                                 currentLevel++;
                                 distance -= realDistance;
+                                player.ResetState();
                             }
                         }
                     }
@@ -157,6 +158,17 @@ namespace EndRun
                         {
                             entityList[i].Update(player.pos + player.origin);
                         }
+                    }
+                    break;
+                case States.gameover:
+                    if (Raygui.GuiButton(new Rectangle(400, 300, 230, 80), "Retry") == 1)
+                    {
+                        Reset(); //reset game states
+                        currentState = (int)States.play; //change state to play
+                    }
+                    else if (Raygui.GuiButton(new Rectangle(650, 300, 230, 80), "Exit") == 1)
+                    {
+                        currentState = (int)States.menu; //change state to play
                     }
                     break;
             }
@@ -173,7 +185,7 @@ namespace EndRun
             switch ((States)currentState)
             {
                 case States.menu:
-                    //no logic
+                    Raylib.DrawText("End Run", 525, 200, 56, Color.Black);
                     break;
                 case States.play:
 
@@ -278,6 +290,15 @@ namespace EndRun
                 entityList.Add(new Bug(20, 20, ref gameBounds));
             }
 
+        }
+
+        public static void Reset()
+        {
+            distance = 0; //reset distance to 0
+            realDistance = 0; //reset real distance to 0
+            interval = 0; //reset timer for distance tracking to 0
+            SetDifficulty(difficulties[0]);
+            player.ResetState();
         }
 
     }
