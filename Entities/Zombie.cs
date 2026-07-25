@@ -5,9 +5,9 @@ namespace EndRun.Entities
 {
     public class Zombie : Entity
     {
+        override public int Score { get; set; } = 20;
         override protected Texture2D Texture { get; set; }
         override protected Rectangle Src { get; set; } //texture source rectangle
-
         override public Rectangle Dest { get; set; } //dest rect
         override protected int Height { get; set; }
         override protected int Width { get; set; }

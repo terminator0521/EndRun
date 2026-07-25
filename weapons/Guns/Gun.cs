@@ -1,6 +1,7 @@
 ﻿using EndRun.Entities;
 using Raylib_cs;
 using System.Numerics;
+using System.Threading.Tasks.Sources;
 
 namespace EndRun.weapons.Guns
 {
@@ -13,10 +14,11 @@ namespace EndRun.weapons.Guns
         public float distance;
         public float angle;
         public Vector2 playerOriginPos;
+        private Entity? entity;
+        public int scoreGain;
 
-        public void Update(Vector2 playerOriginPos)
+        public int Update(Vector2 playerOriginPos)
         {
-
             this.playerOriginPos = playerOriginPos;
 
             if (Raylib.IsMouseButtonDown(MouseButton.Right))
@@ -30,6 +32,13 @@ namespace EndRun.weapons.Guns
                 Laser = new Rectangle(0, 0, 0, 0);
             }
 
+            if (entity is not null) //return score gain
+            {
+                scoreGain = entity.Score;
+                entity = null;
+                return scoreGain;
+            }
+            else { return 0; }
         }
         public void Draw()
         {
@@ -55,11 +64,11 @@ namespace EndRun.weapons.Guns
 
         public virtual void Shoot(List<Entity> entities)
         {
-            Entity? zombie = null;
+            entity = null;
 
             if (entities.Count == 1)
             {
-                zombie = entities[0];
+                entity = entities[0];
             }
             else
             {
@@ -67,16 +76,16 @@ namespace EndRun.weapons.Guns
                 {
                     if (entities[i].Distance < entities[i - 1].Distance)
                     {
-                        zombie = entities[i];
+                        entity = entities[i];
                     }
                     else
                     {
-                        zombie = entities[i - 1];
+                        entity = entities[i - 1];
                     }
                 }
             }
 
-            zombie?.Kill();
+            entity?.Kill();
 
         }
     }

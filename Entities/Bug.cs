@@ -9,6 +9,7 @@ namespace EndRun.Entities
 {
     public class Bug : Entity
     {
+        override public int Score { get; set; } = 40;
         override protected Texture2D Texture { get; set; }
         override protected Rectangle Src { get; set; } //texture source rectangle
         override public Rectangle Dest { get; set; } //dest rect

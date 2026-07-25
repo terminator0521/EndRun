@@ -24,6 +24,8 @@ namespace EndRun.User
         public void Draw()
         {
             Raylib.DrawRectangle(0, 660, 1280, 240, Color.Gray);
+            Raylib.DrawRectangle(540, 680, 350, 200, Color.White);
+            Raylib.DrawRectangle(910, 680, 350, 200, Color.White);
 
             for (int i = 0; i < 3; i++)
             {
@@ -32,6 +34,11 @@ namespace EndRun.User
             }
 
             Raylib.DrawRectangleLinesEx(new Rectangle(20 + (170 * selectedSlot), 680, 150, 200), 4, Color.Black);
+
+            Raylib.DrawText("Distance: ", 580, 700, 40, Color.Black);
+            Raylib.DrawText("Score: ", 950, 700, 40, Color.Black);
+            Raylib.DrawText(distance.ToString() + " Studs", 580, 780, 40, Color.Black);
+            Raylib.DrawText(player.score.ToString(), 950, 780, 40, Color.Black);
         }
 
         public void Input()

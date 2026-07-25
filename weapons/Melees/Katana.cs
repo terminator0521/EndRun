@@ -15,18 +15,20 @@ namespace EndRun.weapons.Melees
         public override float Damage { get; set; } = 20;
         public override Texture2D Texture { get; set; }
         public override Vector2 Center { get; set; }
-        public override void Use(List<Entity> zombies)
+        public override void Use(List<Entity> entity)
         {
             if (Raylib.IsMouseButtonPressed(MouseButton.Left))
             {
-                for (int i = 0; i < zombies.Count; i++)
+                for (int i = 0; i < entity.Count; i++)
                 {
-                    if (Raylib.CheckCollisionCircleRec(Center, Radius, zombies[i].Dest))
+                    if (Raylib.CheckCollisionCircleRec(Center, Radius, entity[i].Dest))
                     {
-                        zombies[i]?.Kill();
+                        entity[i]?.Kill();
+                        this.entity = entity[i];
                     }
                 }
             }
+
         }
     }
 }

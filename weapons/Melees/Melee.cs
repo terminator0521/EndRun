@@ -14,8 +14,9 @@ namespace EndRun.weapons.Melees
         public virtual float Damage { get; set; }
         public virtual Texture2D Texture { get; set; }
         public virtual Vector2 Center { get; set; }
-
-        public virtual void Use(List<Entity> zombies)
+        protected Entity? entity;
+        public int scoreGain;
+        public virtual void Use(List<Entity> entity)
         {
             
         }
@@ -26,9 +27,16 @@ namespace EndRun.weapons.Melees
 
         }
 
-        public virtual void Update(Vector2 pos)
+        public virtual int Update(Vector2 pos)
         {
             Center = pos;
+            if (entity is not null) //return score gain
+            {
+                scoreGain = entity.Score;
+                entity = null;
+                return scoreGain;
+            }
+            else { return 0; }
         }
 
 

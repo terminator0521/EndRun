@@ -17,7 +17,7 @@ namespace EndRun.User
         public Gun gun; //players gun
         public Melee melee; //player melee
         public int selectedSlot; //selected slot
-
+        public int score;
         //collided object lists
         public List<Entity> collidedObjects;
 
@@ -40,18 +40,18 @@ namespace EndRun.User
             Dest = new Rectangle(pos, texture.Width, texture.Height); //set up texture dest rect
             this.bounds = bounds; //set game bounds
             this.health = health; //set health
-            health = 3;
             selectedSlot = 1;
             gun = new HandGun(5);
             melee = new Katana();
             collidedObjects = new List<Entity>();
+            ResetState();
         }
 
         public void Update()
         {
             //actions
-            gun.Update(pos + origin + dis);
-            melee.Update(pos + origin + dis);
+            score += gun.Update(pos + origin + dis);
+            score += melee.Update(pos + origin + dis);
             Move();
 
 
@@ -79,12 +79,6 @@ namespace EndRun.User
 
             //draw player sprite
             Raylib.DrawTexturePro(texture, src, Dest, new Vector2(0), 0, Color.White);
-        }
-
-        //decrement health by 1
-        public void RemoveHealth()
-        {
-            health--;
         }
 
         public void Move()
@@ -129,8 +123,14 @@ namespace EndRun.User
 
         public void ResetState()
         {
-            pos = new Vector2(50, (bounds.Height / 2) - (Dest.Height / 2));
             selectedSlot = 0;
+            score = 0;
+            ResetPos();
+        }
+
+        public void ResetPos()
+        {
+            pos = new Vector2(50, (bounds.Height / 2) - (Dest.Height / 2));
         }
     }
 }

@@ -117,7 +117,7 @@ namespace EndRun
                     }
 
                     //gui updates and inputs
-                    user.Update(distance);
+                    user.Update(realDistance);
                     user.Input();
 
                     //player updates
@@ -146,9 +146,9 @@ namespace EndRun
                                 currentDifficulty++;
                                 SetDifficulty(difficulties[currentDifficulty]);
                                 currentLevel++;
-                                distance -= realDistance;
-                                player.ResetState();
                             }
+                            distance += realDistance;
+                            player.ResetPos();
                         }
                     }
                     else //still heading towards checkpoint
@@ -299,6 +299,7 @@ namespace EndRun
             interval = 0; //reset timer for distance tracking to 0
             SetDifficulty(difficulties[0]);
             player.ResetState();
+            currentLevel = 0;
         }
 
     }

@@ -11,6 +11,7 @@ namespace EndRun.Entities
 {
     public class Entity
     {
+        virtual public int Score { get;  set; }
         virtual protected Texture2D Texture { get; set; }
         virtual protected Rectangle Src { get; set; } //texture source rectangle
         virtual public Rectangle Dest { get; set; } //dest rect

@@ -5,6 +5,7 @@ namespace EndRun.Entities
 {
     public class Bat : Entity
     {
+        override public int Score { get; set; } = 10;
         override protected Texture2D Texture { get; set; }
         override protected Rectangle Src { get; set; } //texture source rectangle
         override public Rectangle Dest { get; set; } //dest rect
