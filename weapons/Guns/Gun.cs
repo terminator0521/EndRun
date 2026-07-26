@@ -51,7 +51,7 @@ namespace EndRun.weapons.Guns
             Console.WriteLine("freed texture");
         }
 
-        public virtual void Shoot(List<Entity> entities, ref int energy)
+        public virtual void Shoot(ref List<Entity> entities, ref int energy)
         {
             if (energy >= energyUsage)
             {

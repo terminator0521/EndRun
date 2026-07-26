@@ -300,7 +300,6 @@ namespace EndRun
             player.ResetState();
             currentLevel = 0;
             currentDifficulty = 0;
-            player.energy = 0;
         }
 
     }

@@ -74,10 +74,10 @@ namespace EndRun.User
                 switch (selectedSlot)
                 {
                     case 0:
-                        player.melee.Use(player.collidedObjects);
+                        player.melee.Use(ref player.collidedObjects, ref player.energy);
                         break;
                     case 1:
-                        player.gun.Shoot(player.collidedObjects, ref player.energy);
+                        player.gun.Shoot(ref player.collidedObjects, ref player.energy);
                         break;
                 }
             }

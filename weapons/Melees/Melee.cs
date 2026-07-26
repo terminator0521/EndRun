@@ -8,7 +8,6 @@ namespace EndRun.weapons.Melees
     
     public class Melee
     {
-        public float thinkness = 4;
         public virtual float Radius { get; set; }
         public virtual Color Highlight { get; set; }
         public virtual float Damage { get; set; }
@@ -16,14 +15,14 @@ namespace EndRun.weapons.Melees
         public virtual Vector2 Center { get; set; }
         protected Entity? entity;
         public int scoreGain;
-        public virtual void Use(List<Entity> entity)
+        public int energyUsage;
+        public virtual void Use(ref List<Entity> entity, ref int energy)
         {
-            
+            energy -= energyUsage;
         }
 
         public virtual void Draw()
         {
-            Raylib.DrawRing(Center, Radius - thinkness, Radius, 0, 360, 16, Highlight);
 
         }
 

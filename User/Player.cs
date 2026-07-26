@@ -36,6 +36,7 @@ namespace EndRun.User
 
         public Player(string spriteSheetLocation, int health, in Rectangle bounds) : base()
         {
+            energy = 60;
             texture = Raylib.LoadTexture(spriteSheetLocation); //load player texture
             origin = new Vector2(texture.Width / 2, texture.Height / 2);
             src = new Rectangle(0, 0, texture.Width, texture.Height); //set up texture src rect
@@ -43,7 +44,7 @@ namespace EndRun.User
             this.bounds = bounds; //set game bounds
             selectedSlot = 1;
             gun = new HandGun();
-            melee = new Katana();
+            melee = new Blaster();
             collidedObjects = new List<Entity>();
             energyCap = 100 + (energyExtended ? 20 : 0); //set energy cap
             ResetState();
@@ -130,6 +131,7 @@ namespace EndRun.User
         {
             selectedSlot = 0;
             score = 0;
+            energy = 60;
             ResetPos();
         }
 
