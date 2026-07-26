@@ -20,7 +20,7 @@ namespace EndRun.Entities
             Width = width;
             Respawn();
 
-            Dest = new Rectangle(0, 0, Width, Height);
+            Dest = new Rectangle(500, 400, Width, Height);
         }
 
         override public void Update(Vector2 playerPos)

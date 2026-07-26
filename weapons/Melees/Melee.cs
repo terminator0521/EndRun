@@ -12,7 +12,9 @@ namespace EndRun.weapons.Melees
         public virtual Color Highlight { get; set; }
         public virtual float Damage { get; set; }
         public virtual Texture2D Texture { get; set; }
-        public virtual Vector2 Center { get; set; }
+
+        public Vector2 center;
+
         protected Entity? entity;
         public int scoreGain;
         public int energyUsage;
@@ -28,7 +30,7 @@ namespace EndRun.weapons.Melees
 
         public virtual void Update(Vector2 pos, ref int score)
         {
-            Center = pos;
+            center = pos;
             if (entity is not null) //score gain
             {
                 score += entity.Score;

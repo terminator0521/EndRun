@@ -44,7 +44,7 @@ namespace EndRun.User
             this.bounds = bounds; //set game bounds
             selectedSlot = 1;
             gun = new HandGun();
-            melee = new Blaster();
+            melee = new Katana();
             collidedObjects = new List<Entity>();
             energyCap = 100 + (energyExtended ? 20 : 0); //set energy cap
             ResetState();

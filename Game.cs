@@ -3,8 +3,7 @@ using raygui_cs;
 
 using EndRun.Entities;
 using EndRun.User;
-using System.Diagnostics.Eventing.Reader;
-using System.Windows.Input;
+using EndRun.weapons.Melees;
 
 namespace EndRun
 {
@@ -72,7 +71,7 @@ namespace EndRun
             while (!Raylib.WindowShouldClose())
             {
                 Update(); //call updates
-
+                realDistance = 0;
                 Raylib.BeginDrawing(); //start sprite batch
                 Raylib.ClearBackground(Color.LightGray); //clear background
                 Draw(); //call draw
@@ -226,11 +225,21 @@ namespace EndRun
 
             for (int i = 0; i < entityList.Count; i++)
             {
-                if (Raylib.CheckCollisionRecs(gameBounds, entityList[i].Dest)) //zombies out of bounds cannot be attacked
+                if (Raylib.CheckCollisionRecs(gameBounds, entityList[i].Dest) || true) //zombies out of bounds cannot be attacked
                 {
-                    if (Raylib.CheckCollisionCircleRec(player.melee.Center, player.melee.Radius, entityList[i].Dest) && player.selectedSlot == 0)
+                    if (player.selectedSlot == 0)
                     {
-                        collidedEntities.Add(entityList[i]);
+                        if (Raylib.CheckCollisionCircleRec(player.melee.center, player.melee.Radius, entityList[i].Dest) && player.melee is Blaster b)
+                        {
+                            collidedEntities.Add(entityList[i]);
+                        }
+                        else if (player.melee is Katana h)
+                        {
+                            if (Functions.CheckCollisionsQuad(h.guide, -h.angle * Raylib.DEG2RAD, entityList[i].Dest, 0))
+                            {
+                                collidedEntities.Add(entityList[i]);
+                            }
+                        }
                     }
                     else if (Functions.CheckCollisionsQuad(player.gun.Laser, player.gun.angle * Raylib.DEG2RAD, entityList[i].Dest, 0) && player.selectedSlot == 1)
                     {

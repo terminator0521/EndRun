@@ -15,7 +15,7 @@ namespace EndRun
         /// <returns>false if the edges of "inner" are within the bounds of "outter", true otherwise.</returns>
         /// 
         public static bool CheckCollisionEdges(Rectangle inner, Rectangle outter)
-        { 
+        {
             if (inner.X >= outter.X && inner.Y >= outter.Y && inner.X + inner.Width <= outter.X + outter.Width && inner.Y + inner.Height <= outter.Y + outter.Height)
             {
                 return false;
@@ -84,11 +84,17 @@ namespace EndRun
                 {
                     if (Raylib.CheckCollisionLines(lines1[i][0], lines1[i][1], lines2[j][0], lines2[j][1], ref CP))
                     {
-                        return true; 
+                        return true;
                     }
                 }
 
             }
+
+            //for checking what rect looks like in logic
+            //for (int i = 0; i < 4; i++)
+            //{
+            //    Raylib.DrawLineV(lines1[i][0], lines1[i][1], Color.Black);
+            //}
 
             //no lines collided
             return false;

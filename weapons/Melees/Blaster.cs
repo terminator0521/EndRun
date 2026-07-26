@@ -15,7 +15,6 @@ namespace EndRun.weapons.Melees
         public override Color Highlight { get; set; } = Color.White;
         public override float Damage { get; set; } = 20;
         public override Texture2D Texture { get; set; }
-        public override Vector2 Center { get; set; }
 
         public float radius = 60;
 
@@ -32,18 +31,15 @@ namespace EndRun.weapons.Melees
 
                 for (int i = 0; i < entity.Count; i++)
                 {
-                    if (Raylib.CheckCollisionCircleRec(Center, radius, entity[i].Dest))
-                    {
-                        entity[i]?.Kill();
-                        this.entity = entity[i];
-                    }
+                    entity[i]?.Kill();
+                    this.entity = entity[i];
                 }
             }
 
         }
         public override void Draw()
         {
-            Raylib.DrawRing(Center, radius - thinkness, radius, 0, 360, 16, Highlight);
+            Raylib.DrawRing(center, radius - thinkness, radius, 0, 360, 16, Highlight);
         }
     }
 }
