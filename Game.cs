@@ -66,7 +66,7 @@ namespace EndRun
             continueBounds = new Rectangle(1200, 80, 80, 500);
             distance = 0; //set default distance travelled to 0;
             player = new Player("Assets/Player.png", 1, gameBounds); //add player 
-            user = new User.User(ref player);
+            user = new User.User(ref player, ref gameBounds);
             currentLevel = 0;
 
             while (!Raylib.WindowShouldClose())
@@ -117,7 +117,7 @@ namespace EndRun
                     }
 
                     //gui updates and inputs
-                    user.Update(realDistance);
+                    user.Update(ref realDistance);
                     user.Input();
 
                     //player updates
@@ -142,7 +142,6 @@ namespace EndRun
                             atCheckpoint = false;
                             if (currentDifficulty < difficulties.Length)
                             {
-                                Console.WriteLine(currentDifficulty);
                                 currentDifficulty++;
                                 SetDifficulty(difficulties[currentDifficulty]);
                                 currentLevel++;

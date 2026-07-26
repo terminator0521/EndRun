@@ -27,16 +27,14 @@ namespace EndRun.weapons.Melees
 
         }
 
-        public virtual int Update(Vector2 pos)
+        public virtual void Update(Vector2 pos, ref int score)
         {
             Center = pos;
-            if (entity is not null) //return score gain
+            if (entity is not null) //score gain
             {
-                scoreGain = entity.Score;
+                score += entity.Score;
                 entity = null;
-                return scoreGain;
             }
-            else { return 0; }
         }
 
 

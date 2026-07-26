@@ -7,14 +7,16 @@ namespace EndRun.User
     {
         Player player;
         private int selectedSlot;
+        private Rectangle bounds;
         public int distance;
         public int score;
-        public User(ref Player player)
+        public User(ref Player player, ref Rectangle bounds)
         {
             this.player = player;
+            this.bounds = bounds;
         }
 
-        public void Update(int distance)
+        public void Update(ref int distance)
         {
             this.distance = distance;
             score = player.score;
@@ -24,8 +26,9 @@ namespace EndRun.User
         public void Draw()
         {
             Raylib.DrawRectangle(0, 660, 1280, 240, Color.Gray);
-            Raylib.DrawRectangle(540, 680, 350, 200, Color.White);
-            Raylib.DrawRectangle(910, 680, 350, 200, Color.White);
+            Raylib.DrawRectangle(540, 680, 270, 200, Color.White);
+            Raylib.DrawRectangle(820, 680, 170, 200, Color.White);
+            Raylib.DrawRectangle(1000, 680, 260, 200, Color.White);
 
             for (int i = 0; i < 3; i++)
             {
@@ -36,9 +39,13 @@ namespace EndRun.User
             Raylib.DrawRectangleLinesEx(new Rectangle(20 + (170 * selectedSlot), 680, 150, 200), 4, Color.Black);
 
             Raylib.DrawText("Distance: ", 580, 700, 40, Color.Black);
-            Raylib.DrawText("Score: ", 950, 700, 40, Color.Black);
+            Raylib.DrawText("Score: ", 840, 700, 40, Color.Black);
             Raylib.DrawText(distance.ToString() + " Studs", 580, 780, 40, Color.Black);
-            Raylib.DrawText(score.ToString(), 950, 780, 40, Color.Black);
+            Raylib.DrawText(score.ToString(), 840, 780, 40, Color.Black);
+            Raylib.DrawText("Press C to charge", 1015, 830, 24, Color.Black);
+            Raylib.DrawText(player.energy.ToString(), 1035, 720, 50, Color.Black);
+            Raylib.DrawText("/", 1090, 725, 80, Color.Black);
+            Raylib.DrawText(player.energyCap.ToString(), 1135, 755, 50, Color.Black);
         }
 
         public void Input()
@@ -85,6 +92,9 @@ namespace EndRun.User
                     break;
                 case (int)KeyboardKey.Three:
                     player.selectedSlot = 2;
+                    break;
+                case (int)KeyboardKey.C:
+                    player.Recharge();
                     break;
             }
 

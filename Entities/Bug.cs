@@ -52,7 +52,6 @@ namespace EndRun.Entities
 
         override public void Update(Vector2 playerPos)
         {
-            Console.WriteLine(killed);
             //if killed
             if (killed)
             {

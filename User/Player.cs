@@ -18,6 +18,9 @@ namespace EndRun.User
         public Melee melee; //player melee
         public int selectedSlot; //selected slot
         public int score;
+        public int energy;
+        private bool energyExtended = false;
+        public int energyCap = 100; //default energy cap
         //collided object lists
         public List<Entity> collidedObjects;
 
@@ -25,7 +28,6 @@ namespace EndRun.User
         private float vel = 5f; //speed of player
         private Rectangle src; //sprite source rect
         private Rectangle bounds; //game bounds
-        public int health = 0;
 
         public bool up = false;
         public bool down = false;
@@ -39,23 +41,26 @@ namespace EndRun.User
             src = new Rectangle(0, 0, texture.Width, texture.Height); //set up texture src rect
             Dest = new Rectangle(pos, texture.Width, texture.Height); //set up texture dest rect
             this.bounds = bounds; //set game bounds
-            this.health = health; //set health
             selectedSlot = 1;
             gun = new HandGun(5);
             melee = new Katana();
             collidedObjects = new List<Entity>();
+            energyCap = 100 + (energyExtended ? 20 : 0); //set energy cap
             ResetState();
         }
 
         public void Update()
         {
+            //cap energy level
+            if (energy > energyCap)
+            {
+                energy = energyCap;
+            }
+
             //actions
-            score += gun.Update(pos + origin + dis);
-            score += melee.Update(pos + origin + dis);
+            gun.Update(pos + origin + dis, ref score);
+            melee.Update(pos + origin + dis, ref score);
             Move();
-
-
-            health++;
             
             //reset movement bools
             up = false;
@@ -131,6 +136,15 @@ namespace EndRun.User
         public void ResetPos()
         {
             pos = new Vector2(50, (bounds.Height / 2) - (Dest.Height / 2));
+        }
+
+        public void Recharge()
+        {
+            if (score >= 50 & energy < energyCap)
+            {
+                score -= 50;
+                energy++;
+            }
         }
     }
 }

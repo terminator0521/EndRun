@@ -15,9 +15,8 @@ namespace EndRun.weapons.Guns
         public float angle;
         public Vector2 playerOriginPos;
         private Entity? entity;
-        public int scoreGain;
 
-        public int Update(Vector2 playerOriginPos)
+        public void Update(Vector2 playerOriginPos, ref int score)
         {
             this.playerOriginPos = playerOriginPos;
 
@@ -32,13 +31,11 @@ namespace EndRun.weapons.Guns
                 Laser = new Rectangle(0, 0, 0, 0);
             }
 
-            if (entity is not null) //return score gain
+            if (entity is not null) //score gain
             {
-                scoreGain = entity.Score;
+                score += entity.Score;
                 entity = null;
-                return scoreGain;
             }
-            else { return 0; }
         }
         public void Draw()
         {
