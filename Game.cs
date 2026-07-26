@@ -116,14 +116,12 @@ namespace EndRun
                         atCheckpoint = true;
                     }
 
-                    //gui updates and inputs
-                    user.Update(ref realDistance);
-                    user.Input();
-
                     //player updates
                     player.Update();
 
-
+                    //gui updates and inputs
+                    user.Update(ref realDistance);
+                    user.Input();
 
                     //collisions
                     CollisionChecks();
@@ -301,6 +299,8 @@ namespace EndRun
             SetDifficulty(difficulties[0]);
             player.ResetState();
             currentLevel = 0;
+            currentDifficulty = 0;
+            player.energy = 0;
         }
 
     }

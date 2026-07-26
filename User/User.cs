@@ -77,12 +77,23 @@ namespace EndRun.User
                         player.melee.Use(player.collidedObjects);
                         break;
                     case 1:
-                        player.gun.Shoot(player.collidedObjects);
+                        player.gun.Shoot(player.collidedObjects, ref player.energy);
                         break;
                 }
             }
 
-            switch (Raylib.GetKeyPressed())
+            //aim
+            if (Raylib.IsMouseButtonDown(MouseButton.Right))
+            {
+                player.gun.Aiming = true;
+                player.gun.Aim();
+            }
+            if (Raylib.IsMouseButtonUp(MouseButton.Right))
+            {
+                player.gun.Aiming = false;
+            }
+
+                switch (Raylib.GetKeyPressed())
             {
                 case (int)KeyboardKey.One:
                     player.selectedSlot = 0;

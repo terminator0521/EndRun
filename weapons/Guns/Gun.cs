@@ -14,22 +14,15 @@ namespace EndRun.weapons.Guns
         public float distance;
         public float angle;
         public Vector2 playerOriginPos;
+
+        protected int energyUsage;
+
         private Entity? entity;
 
         public void Update(Vector2 playerOriginPos, ref int score)
         {
+            Laser = new Rectangle(0, 0, 0, 0);
             this.playerOriginPos = playerOriginPos;
-
-            if (Raylib.IsMouseButtonDown(MouseButton.Right))
-            {
-                Aiming = true;
-                Aim();
-            }
-            else
-            {
-                Aiming = false;
-                Laser = new Rectangle(0, 0, 0, 0);
-            }
 
             if (entity is not null) //score gain
             {
@@ -47,7 +40,6 @@ namespace EndRun.weapons.Guns
 
         public void Aim()
         {
-
             distance = Vector2.Distance(playerOriginPos, Raylib.GetMousePosition());
             angle = MathF.Atan((playerOriginPos.Y - Raylib.GetMouseY()) / (Raylib.GetMouseX() - playerOriginPos.X));
             angle = (angle * 180 / MathF.PI) + (angle < 0 ? 180 : 0) + (playerOriginPos.Y - Raylib.GetMouseY() <= 0 ? 180 : 0) + (angle == 0 ? 180 : 0);
@@ -59,30 +51,32 @@ namespace EndRun.weapons.Guns
             Console.WriteLine("freed texture");
         }
 
-        public virtual void Shoot(List<Entity> entities)
+        public virtual void Shoot(List<Entity> entities, ref int energy)
         {
-            entity = null;
-
-            if (entities.Count == 1)
+            if (energy >= energyUsage)
             {
-                entity = entities[0];
-            }
-            else
-            {
-                for (int i = 1; i < entities.Count; i++)
+                if (entities.Count == 1)
                 {
-                    if (entities[i].Distance < entities[i - 1].Distance)
+                    entity = entities[0];
+                }
+                else
+                {
+                    for (int i = 1; i < entities.Count; i++)
                     {
-                        entity = entities[i];
-                    }
-                    else
-                    {
-                        entity = entities[i - 1];
+                        if (entities[i].Distance < entities[i - 1].Distance)
+                        {
+                            entity = entities[i];
+                        }
+                        else
+                        {
+                            entity = entities[i - 1];
+                        }
                     }
                 }
-            }
 
-            entity?.Kill();
+                entity?.Kill();
+                energy -= energyUsage;
+            }
 
         }
     }

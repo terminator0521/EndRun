@@ -9,15 +9,14 @@ namespace EndRun.weapons.Guns
 {
     public class HandGun : Gun
     {
-        public int ammo;
         public override float AimLaserWidth { get; set; }
         public override Rectangle Laser { get ; set; }
 
 
-        public HandGun(int ammo)
+        public HandGun()
         {
-            this.ammo = ammo;
             AimLaserWidth = 4f;
+            energyUsage = 2;
         }
 
     }
