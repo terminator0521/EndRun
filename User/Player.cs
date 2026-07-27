@@ -209,6 +209,9 @@ namespace EndRun.User
                         case (int)SlotGun.ballShot:
                             gun = new BallShot(ref bounds);
                             break;
+                        case (int)SlotGun.shotgun:
+                            gun = new Shotgun(ref bounds);
+                            break;
                     }
                     break;
                 case 3:

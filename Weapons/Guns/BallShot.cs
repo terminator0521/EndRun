@@ -70,7 +70,7 @@ namespace EndRun.Weapons.Guns
         public override void Shoot(ref List<Entity> entities, ref int energy)
         {
             
-            if (energy >= energyUsage && !fired)
+            if (energy >= energyUsage && !fired && Aiming)
             {
                 base.Shoot(ref entities, ref energy);
                 fired = true;

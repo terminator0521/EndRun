@@ -40,7 +40,7 @@ namespace EndRun.weapons.Guns
             }
         }
 
-        public void Aim()
+        virtual public void Aim()
         {
             distance = Vector2.Distance(playerOriginPos, Raylib.GetMousePosition());
             angle = MathF.Atan((playerOriginPos.Y - Raylib.GetMouseY()) / (Raylib.GetMouseX() - playerOriginPos.X));
@@ -51,7 +51,7 @@ namespace EndRun.weapons.Guns
             Laser = new Rectangle(center, distance, AimLaserWidth);
         }
 
-        public virtual void Dispose()
+        virtual public void Dispose()
         {
             Console.WriteLine("freed texture");
         }
