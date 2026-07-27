@@ -1,6 +1,7 @@
 ﻿using EndRun.Entities;
 using EndRun.weapons.Guns;
 using EndRun.weapons.Melees;
+using EndRun.Weapons.Guns;
 using Raylib_cs;
 using System.Numerics;
 
@@ -83,8 +84,8 @@ namespace EndRun.User
             }
 
             //actions
-            gun.Update(pos + origin + dis, ref score);
-            melee.Update(pos + origin + dis, ref score);
+            gun?.Update(pos + origin + dis, ref score);
+            melee?.Update(pos + origin + dis, ref score);
             Move();
 
             //reset movement bools
@@ -100,15 +101,17 @@ namespace EndRun.User
             switch (selectedSlot)
             {
                 case 0:
-                    melee.Draw();
+                    melee?.Draw();
                     break;
                 case 1:
-                    gun.Draw();
+                    gun?.Draw();
                     break;
             }
 
             //draw player sprite
             Raylib.DrawTexturePro(texture, src, Dest, new Vector2(0), 0, Color.White);
+            //Raylib.DrawCircleV(pos, 3f, Color.Black);
+            //Raylib.DrawCircleV(gun.center, 3f, Color.Red);
         }
 
         public void Move()
@@ -208,6 +211,9 @@ namespace EndRun.User
                     {
                         case (int)SlotGun.handGun:
                             gun = new HandGun();
+                            break;
+                        case (int)SlotGun.ballShot:
+                            gun = new BallShot(ref bounds);
                             break;
                     }
                     break;

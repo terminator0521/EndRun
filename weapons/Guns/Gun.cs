@@ -2,6 +2,7 @@
 using Raylib_cs;
 using System.Numerics;
 using System.Threading.Tasks.Sources;
+using System.Windows;
 
 namespace EndRun.weapons.Guns
 {
@@ -14,11 +15,12 @@ namespace EndRun.weapons.Guns
         public float distance;
         public float angle;
         public Vector2 playerOriginPos;
+        public Vector2 center;
 
         protected int energyUsage;
         protected Entity? entity;
 
-        public void Update(Vector2 playerOriginPos, ref int score)
+        virtual public void Update(Vector2 playerOriginPos, ref int score)
         {
             Laser = new Rectangle(0, 0, 0, 0);
             this.playerOriginPos = playerOriginPos;
@@ -29,7 +31,7 @@ namespace EndRun.weapons.Guns
                 entity = null;
             }
         }
-        public void Draw()
+        public virtual void Draw()
         {
             if (Aiming)
             {
@@ -42,7 +44,10 @@ namespace EndRun.weapons.Guns
             distance = Vector2.Distance(playerOriginPos, Raylib.GetMousePosition());
             angle = MathF.Atan((playerOriginPos.Y - Raylib.GetMouseY()) / (Raylib.GetMouseX() - playerOriginPos.X));
             angle = (angle * 180 / MathF.PI) + (angle < 0 ? 180 : 0) + (playerOriginPos.Y - Raylib.GetMouseY() <= 0 ? 180 : 0) + (angle == 0 ? 180 : 0);
-            Laser = new Rectangle(playerOriginPos, distance, AimLaserWidth);
+            center = playerOriginPos; //initialize center with player pos
+            center.Y -= (AimLaserWidth / 2) * MathF.Cos(angle * Raylib.DEG2RAD);
+            center.X -= (AimLaserWidth / 2) * MathF.Sin(angle * Raylib.DEG2RAD);
+            Laser = new Rectangle(center, distance, AimLaserWidth);
         }
 
         public virtual void Dispose()
