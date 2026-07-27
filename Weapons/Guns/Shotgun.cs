@@ -10,6 +10,7 @@ namespace EndRun.Weapons.Guns
     {
         override public Texture2D Texture { get; set; }
         public Projectile[] projectiles = new Projectile[5];
+        public bool scored = false;
 
         private float radius = 60f;
         private float thickness = 50f;
@@ -24,6 +25,7 @@ namespace EndRun.Weapons.Guns
             energyUsage = 20;
             
         }
+
         override public void Update(Vector2 playerOriginPos, ref int score)
         {
             this.playerOriginPos = playerOriginPos;
@@ -51,6 +53,8 @@ namespace EndRun.Weapons.Guns
         {
             if (Aiming && energy >= energyUsage && !ProjectilesActive())
             {
+                energy -= energyUsage;
+                scored = false;
                 for (int i = 0; i < projectiles.Length; i++)
                 {
                     projectiles[i].Fire(ref playerOriginPos, ref angle);
@@ -67,7 +71,10 @@ namespace EndRun.Weapons.Guns
 
         override public void Reset()
         {
-            
+            for (int i = 0; i < projectiles.Length; i++)
+            {
+                projectiles[i].Terminate();
+            }
         }
 
         private bool ProjectilesActive()

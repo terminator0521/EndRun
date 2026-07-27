@@ -1,3 +1,4 @@
+using Accessibility;
 using EndRun.Entities;
 using EndRun.User;
 using EndRun.weapons.Guns;
@@ -21,7 +22,7 @@ namespace EndRun
         static bool atCheckpoint = false;
         static int[] levelDistances =
         {
-            50, 100, 150, 200, 250
+            100, 200, 300, 400, 500
         };
         //timer
         static int interval; //interval of time
@@ -339,7 +340,7 @@ namespace EndRun
                 {
                     if (player.selectedSlot == 0)
                     {
-                        if (Raylib.CheckCollisionCircleRec(player.melee.center, player.melee.Radius, entityList[i].Dest) && player.melee is Blaster b)
+                        if (player.melee is Blaster b && Raylib.CheckCollisionCircleRec(player.melee.center, player.melee.Radius, entityList[i].Dest))
                         {
                             collidedEntities.Add(entityList[i]);
                         }
@@ -379,6 +380,22 @@ namespace EndRun
                                 {
                                     player.score += entityList[0].Score;
                                     ballShot.collided = true;
+                                }
+                            }
+                        }
+                        else if (player.gun is Shotgun shotgun)
+                        {
+                            for (int j = 0; j < shotgun.projectiles.Length; j++)
+                            {
+                                if (Raylib.CheckCollisionCircleRec(shotgun.projectiles[j].projectilePos, shotgun.projectiles[j].radius, entityList[i].Dest))
+                                {
+                                    shotgun.projectiles[j].Terminate();
+                                    entityList[i].Kill();
+                                    if(!shotgun.scored)
+                                    {
+                                        player.score += entityList[0].Score;
+                                        shotgun.scored = true;
+                                    }
                                 }
                             }
                         }
