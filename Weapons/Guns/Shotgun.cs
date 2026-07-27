@@ -13,18 +13,25 @@ namespace EndRun.Weapons.Guns
 
         private float radius = 60f;
         private float thickness = 50f;
-
+        private float vel = 20f;
 
         public Shotgun(ref Rectangle bounds)
         {
             for (int i = 0; i < 5; i++)
             {
-                projectiles[i] = new Projectile(-30 + (i * 15), 20, ref bounds);
+                projectiles[i] = new Projectile(-30 + (i * 15), vel, ref bounds);
             }
+            energyUsage = 20;
+            
         }
         override public void Update(Vector2 playerOriginPos, ref int score)
         {
             this.playerOriginPos = playerOriginPos;
+
+            for (int i = 0; i < projectiles.Length; i++)
+            {
+                projectiles[i].Update();
+            }
         }
 
         override public void Draw(ref int selectedSlot)
@@ -33,13 +40,21 @@ namespace EndRun.Weapons.Guns
             {
                 Raylib.DrawRing(playerOriginPos, radius, radius + thickness, angle + 30, angle - 30, 5, Raylib.Fade(Color.White, 0.5f));
             }
+
+            for (int i = 0; i < projectiles.Length; i++)
+            {
+                projectiles[i].Draw();
+            }
         }
 
         override public void Shoot(ref List<Entity> entities, ref int energy)
         {
-            if (Aiming )
+            if (Aiming && energy >= energyUsage && !ProjectilesActive())
             {
-
+                for (int i = 0; i < projectiles.Length; i++)
+                {
+                    projectiles[i].Fire(ref playerOriginPos, ref angle);
+                }
             }
         }
 
@@ -53,6 +68,20 @@ namespace EndRun.Weapons.Guns
         override public void Reset()
         {
             
+        }
+
+        private bool ProjectilesActive()
+        {
+            for (int i = 0; i < projectiles.Length; i++)
+            {
+                if (projectiles[i].active)
+                {
+                    //return true if at least one is active
+                    return true;
+                }
+            }
+            //return false if none are active
+            return false;
         }
     }
 }
