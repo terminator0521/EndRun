@@ -16,8 +16,7 @@ namespace EndRun.weapons.Guns
         public Vector2 playerOriginPos;
 
         protected int energyUsage;
-
-        private Entity? entity;
+        protected Entity? entity;
 
         public void Update(Vector2 playerOriginPos, ref int score)
         {
@@ -53,31 +52,10 @@ namespace EndRun.weapons.Guns
 
         public virtual void Shoot(ref List<Entity> entities, ref int energy)
         {
-            if (energy >= energyUsage && Aiming)
-            {
-                if (entities.Count == 1)
-                {
-                    entity = entities[0];
-                }
-                else
-                {
-                    for (int i = 1; i < entities.Count; i++)
-                    {
-                        if (entities[i].Distance < entities[i - 1].Distance)
-                        {
-                            entity = entities[i];
-                        }
-                        else
-                        {
-                            entity = entities[i - 1];
-                        }
-                    }
-                }
-
-                entity?.Kill();
-                energy -= energyUsage;
-            }
-
+            entity?.Kill();
+            energy -= energyUsage;
         }
+
     }
 }
+
