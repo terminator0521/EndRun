@@ -14,16 +14,40 @@ namespace EndRun.User
         public Vector2 dis = new Vector2(0); //player displacement vector
         public Rectangle Dest = new Rectangle(); //sprite dest rect
         public Vector2 origin = new Vector2(0);
-        public Gun gun; //players gun
-        public Melee melee; //player melee
+        public int gadget;
+        public Melee? melee; //player melee
+        public Gun? gun; //players gun
         public int selectedSlot; //selected slot
         public int score;
         public int energy;
-        private bool energyExtended = false;
-        public int energyCap = 100; //default energy cap
+        public int energyCap; //default energy cap
+        
         //collided object lists
         public List<Entity> collidedObjects;
 
+        enum SlotGadget
+        {
+            powerBank,
+            slides,
+        }
+
+        enum SlotMelee
+        {
+            knife,
+            katana,
+            blaster,
+        }
+        enum SlotGun
+        {
+            handGun,
+            ballShot,
+            shotgun,
+        }
+
+        enum SlotConsumable
+        {
+
+        }
 
         private float vel = 5f; //speed of player
         private Rectangle src; //sprite source rect
@@ -34,8 +58,9 @@ namespace EndRun.User
         public bool left = false;
         public bool right = false;
 
-        public Player(string spriteSheetLocation, int health, in Rectangle bounds) : base()
+        public Player(string spriteSheetLocation, int health, in Rectangle bounds)
         {
+            SetSlot(0, gadget);
             energy = 60;
             texture = Raylib.LoadTexture(spriteSheetLocation); //load player texture
             origin = new Vector2(texture.Width / 2, texture.Height / 2);
@@ -43,15 +68,14 @@ namespace EndRun.User
             Dest = new Rectangle(pos, texture.Width, texture.Height); //set up texture dest rect
             this.bounds = bounds; //set game bounds
             selectedSlot = 1;
-            gun = new HandGun();
-            melee = new Katana();
             collidedObjects = new List<Entity>();
-            energyCap = 100 + (energyExtended ? 20 : 0); //set energy cap
             ResetState();
         }
 
         public void Update()
         {
+            energyCap = 100 + (gadget == (int)SlotGadget.powerBank ? 20 : 0); //set energy cap
+
             //cap energy level
             if (energy > energyCap)
             {
@@ -62,7 +86,7 @@ namespace EndRun.User
             gun.Update(pos + origin + dis, ref score);
             melee.Update(pos + origin + dis, ref score);
             Move();
-            
+
             //reset movement bools
             up = false;
             down = false;
@@ -146,6 +170,52 @@ namespace EndRun.User
             {
                 score -= 50;
                 energy++;
+            }
+        }
+
+        public void SetSlot(int slot, int weapon)
+        {
+
+            switch (slot)
+            {
+                case 0:
+                    switch (weapon)
+                    {
+                        case (int)SlotGadget.powerBank:
+                            gadget = (int)SlotGadget.powerBank;
+                            break;
+                        case (int)SlotGadget.slides:
+                            gadget = (int)SlotGadget.slides;
+                            break;
+                    }
+                    break;
+                case 1:
+                    switch (weapon)
+                    {
+                        case (int)SlotMelee.knife:
+                            melee = new Knife();
+                            break;
+                        case (int)SlotMelee.katana:
+                            melee = new Katana();
+                            break;
+                        case (int)SlotMelee.blaster:
+                            melee = new Blaster();
+                            break;
+                    }
+                    break;
+                case 2:
+                    switch (weapon)
+                    {
+                        case (int)SlotGun.handGun:
+                            gun = new HandGun();
+                            break;
+                    }
+                    break;
+                case 3:
+                    break;
+                default:
+                    Console.WriteLine("nothing set");
+                    break;
             }
         }
     }

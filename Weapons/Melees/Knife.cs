@@ -9,7 +9,7 @@ using System.Windows.Media.Media3D;
 
 namespace EndRun.weapons.Melees
 {
-    public class Katana : Melee
+    public class Knife : Melee
     {
         public override Color Highlight { get; set; }
         public override float Damage { get; set; }
@@ -23,11 +23,11 @@ namespace EndRun.weapons.Melees
         private float offset;
         public float angleD;
 
-        public Katana()
+        public Knife()
         {
-            energyUsage = 15;
-            range = 50;
-            width = 80;
+            energyUsage = 0;
+            range = 30;
+            width = 60;
             guide.Height = width;
             guide.Width = range;
             offset = 30;
@@ -35,14 +35,11 @@ namespace EndRun.weapons.Melees
 
         public override void Use(ref List<Entity> entity, ref int energy)
         {
-            if (energy >= energyUsage)
+            if(entity.Count > 0)
             {
+                entity[0].Kill();
+                this.entity = entity[0];
                 base.Use(ref entity, ref energy);
-                for (int i = 0; i < entity.Count; i++)
-                {
-                    entity[i]?.Kill();
-                    this.entity = entity[i];
-                }
             }
         }
 

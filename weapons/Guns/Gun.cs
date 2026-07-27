@@ -53,7 +53,7 @@ namespace EndRun.weapons.Guns
 
         public virtual void Shoot(ref List<Entity> entities, ref int energy)
         {
-            if (energy >= energyUsage)
+            if (energy >= energyUsage && Aiming)
             {
                 if (entities.Count == 1)
                 {

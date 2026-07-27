@@ -1,9 +1,9 @@
-using Raylib_cs;
-using raygui_cs;
-
 using EndRun.Entities;
 using EndRun.User;
 using EndRun.weapons.Melees;
+using raygui_cs;
+using Raylib_cs;
+using System.Windows.Controls.Primitives;
 
 namespace EndRun
 {
@@ -19,12 +19,13 @@ namespace EndRun
         static bool atCheckpoint = false;
         static int[] levelDistances =
         {
-            50, 1000, 2000, 4000, 7000
+            50, 100, 150, 200, 250
         };
         //timer
         static int interval; //interval of time
         static int maxInterval; //max interval of time
 
+        //entity list
         static List<Entity> entityList = new List<Entity>();
 
         //difficulties
@@ -43,16 +44,35 @@ namespace EndRun
         static int batCount;
         static int bugCount;
 
+        //user interacting object
         static User.User user;
 
         //state enum
         enum States
         {
             menu,
+            setup,
             play,
             gameover,
             end
         }
+
+        //player setup members
+        enum Gadget
+        {
+            powerBank,
+            slides,
+        }
+
+        enum Gun
+        {
+            handGun,
+            ballShot,
+            shotgun,
+        }
+
+        static int selectedGadget;
+        static int selectedStartingWeapon;
         public static void Main()
         {
             Raylib.SetConfigFlags(ConfigFlags.HighDpiWindow);
@@ -71,7 +91,6 @@ namespace EndRun
             while (!Raylib.WindowShouldClose())
             {
                 Update(); //call updates
-                realDistance = 0;
                 Raylib.BeginDrawing(); //start sprite batch
                 Raylib.ClearBackground(Color.LightGray); //clear background
                 Draw(); //call draw
@@ -84,12 +103,12 @@ namespace EndRun
             switch ((States)currentState)
             {
                 case States.menu:
-                    if (Raygui.GuiButton(new Rectangle(400, 400, 230, 80), "Start") == 1)
+                    if (Raygui.GuiButton(new Rectangle(400, 480, 230, 80), "Start") == 1)
                     {
                         Reset(); //reset game states
-                        currentState = (int)States.play; //change state to play
+                        currentState = (int)States.setup; //change state to play
                     }
-                    else if (Raygui.GuiButton(new Rectangle(650, 400, 230, 80), "Quit") == 1)
+                    else if (Raygui.GuiButton(new Rectangle(650, 480, 230, 80), "Quit") == 1)
                     {
                         Environment.Exit(0); //exit application
                     }
@@ -140,10 +159,11 @@ namespace EndRun
                             if (currentDifficulty < difficulties.Length)
                             {
                                 currentDifficulty++;
-                                SetDifficulty(difficulties[currentDifficulty]);
+                                SetDifficulty(difficulties[currentDifficulty - 1]);
                                 currentLevel++;
                             }
-                            distance += realDistance;
+                            distance = 0;
+                            distance = realDistance;
                             player.ResetPos();
                         }
                     }
@@ -182,6 +202,94 @@ namespace EndRun
             {
                 case States.menu:
                     Raylib.DrawText("End Run", 525, 200, 56, Color.Black);
+                    break;
+                case States.setup:
+                    Raylib.DrawText("Setup", 550, 100, 56, Color.Black);
+
+                    Raylib.DrawRectangleLinesEx(new Rectangle(200, 390, 330, 100), 2, Color.Gray);
+                    Raylib.DrawRectangleLinesEx(new Rectangle(730, 390, 330, 100), 2, Color.Gray);
+                    Raygui.GuiSetStyle(0, Raygui.TEXT_SIZE, 48);
+                    Raylib.DrawText("Gadget: ", 250, 310, 60, Color.Black);
+                    Raylib.DrawText("Starting Gun: ", 700, 310, 60, Color.Black);
+                    //switch logics
+                    //gadget
+                    if (Raygui.GuiButton(new Rectangle(130, 390, 60, 100), "<-") == 1)
+                    {
+                        if (selectedGadget != 0)
+                        {
+                            selectedGadget--;
+                        }
+                    }
+                    if (Raygui.GuiButton(new Rectangle(540, 390, 60, 100), "->") == 1)
+                    {
+                        if (selectedGadget != 1)
+                        {
+                            selectedGadget++;
+                        }
+                    }
+
+                    //selected Weapon
+                    if (Raygui.GuiButton(new Rectangle(660, 390, 60, 100), "<-") == 1)
+                    {
+                        if (selectedStartingWeapon != 0)
+                        {
+                            selectedStartingWeapon--;
+                        }
+                    }
+                    if (Raygui.GuiButton(new Rectangle(1070, 390, 60, 100), "->") == 1)
+                    {
+                        if (selectedStartingWeapon != 2)
+                        {
+                            selectedStartingWeapon++;
+                        }
+                    }
+
+                    //selected gadget
+                    switch ((Gadget)selectedGadget)
+                    {
+                        case Gadget.powerBank:
+                            Raylib.DrawText("Power Bank", 240, 420, 40, Color.Black);
+                            break;
+                        case Gadget.slides:
+                            Raylib.DrawText("Slides", 300, 420, 40, Color.Black);
+                            break;
+                    }
+
+                    //selected starting weapon
+                    switch ((Gun)selectedStartingWeapon)
+                    {
+                        case Gun.handGun:
+                            Raylib.DrawText("Handgun", 810, 420, 40, Color.Black);
+                            break;
+                        case Gun.ballShot:
+                            Raylib.DrawText("Ballshot", 810, 420, 40, Color.Black);
+                            break;
+                        case Gun.shotgun:
+                            Raylib.DrawText("Shotgun", 810, 420, 40, Color.Black);
+                            break;
+                    }
+
+                    Raygui.GuiSetStyle(0, Raygui.TEXT_SIZE, 32); //set text size
+
+                    //options
+
+                    if (Raygui.GuiButton(new Rectangle(200, 650, 320, 80), "Back") == 1)
+                    {
+                        currentState = (int)States.menu;
+                    }
+                    if (Raygui.GuiButton(new Rectangle(740, 650, 320, 80), "Begin") == 1)
+                    {
+                        currentState = (int)States.play;
+                        player.gadget = selectedGadget;
+                        player.SetSlot(1, 0);
+                        player.SetSlot(2, selectedStartingWeapon);
+                        Reset();
+                    }
+
+                    ///include
+                    ///selecting staring items
+                    ///selecting gadgets???
+                    ///
                     break;
                 case States.play:
 
@@ -233,11 +341,21 @@ namespace EndRun
                         {
                             collidedEntities.Add(entityList[i]);
                         }
-                        else if (player.melee is Katana h)
+                        else
                         {
-                            if (Functions.CheckCollisionsQuad(h.guide, -h.angle * Raylib.DEG2RAD, entityList[i].Dest, 0))
+                            if (player.melee is Katana k)
                             {
-                                collidedEntities.Add(entityList[i]);
+                                if (Functions.CheckCollisionsQuad(k.guide, -k.angle * Raylib.DEG2RAD, entityList[i].Dest, 0))
+                                {
+                                    collidedEntities.Add(entityList[i]);
+                                }
+                            }
+                            if (player.melee is Knife n)
+                            {
+                                if (Functions.CheckCollisionsQuad(n.guide, -n.angle * Raylib.DEG2RAD, entityList[i].Dest, 0))
+                                {
+                                    collidedEntities.Add(entityList[i]);
+                                }
                             }
                         }
                     }
