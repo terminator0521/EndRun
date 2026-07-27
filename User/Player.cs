@@ -22,7 +22,7 @@ namespace EndRun.User
         public int score;
         public int energy;
         public int energyCap; //default energy cap
-        
+
         //collided object lists
         public List<Entity> collidedObjects;
 
@@ -98,15 +98,8 @@ namespace EndRun.User
         public void Draw()
         {
             //draw weapons
-            switch (selectedSlot)
-            {
-                case 0:
-                    melee?.Draw();
-                    break;
-                case 1:
-                    gun?.Draw();
-                    break;
-            }
+            melee?.Draw(ref selectedSlot);
+            gun?.Draw(ref selectedSlot);
 
             //draw player sprite
             Raylib.DrawTexturePro(texture, src, Dest, new Vector2(0), 0, Color.White);
@@ -160,6 +153,7 @@ namespace EndRun.User
             score = 0;
             energy = 60;
             ResetPos();
+            gun?.Reset();
         }
 
         public void ResetPos()

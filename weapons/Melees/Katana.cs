@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
+using System.Windows.Controls;
 using System.Windows.Media.Media3D;
 
 namespace EndRun.weapons.Melees
@@ -46,9 +47,12 @@ namespace EndRun.weapons.Melees
             }
         }
 
-        public override void Draw()
+        public override void Draw(ref int selectedSlot)
         {
-            Raylib.DrawRectanglePro(guide, new Vector2(0), angle, Raylib.Fade(Color.Blue, 0.3f));
+            if (selectedSlot == 0)
+            {
+                Raylib.DrawRectanglePro(guide, new Vector2(0), angle, Raylib.Fade(Color.Blue, 0.3f));
+            }
         }
 
         public override void Update(Vector2 pos, ref int score)

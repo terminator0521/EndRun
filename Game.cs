@@ -1,6 +1,8 @@
 using EndRun.Entities;
 using EndRun.User;
+using EndRun.weapons.Guns;
 using EndRun.weapons.Melees;
+using EndRun.Weapons.Guns;
 using raygui_cs;
 using Raylib_cs;
 using System.Windows.Controls.Primitives;
@@ -359,9 +361,27 @@ namespace EndRun
                             }
                         }
                     }
-                    else if (Functions.CheckCollisionsQuad(player.gun.Laser, player.gun.angle * Raylib.DEG2RAD, entityList[i].Dest, 0) && player.selectedSlot == 1)
+                    else if (player.selectedSlot == 1)
                     {
-                        collidedEntities.Add(entityList[i]);
+                        if (player.gun is HandGun handGun)
+                        {
+                            if (Functions.CheckCollisionsQuad(handGun.Laser, handGun.angle * Raylib.DEG2RAD, entityList[i].Dest, 0))
+                            {
+                                collidedEntities.Add(entityList[i]);
+                            }
+                        }
+                        else if (player.gun is BallShot ballShot)
+                        {
+                            if (Raylib.CheckCollisionCircleRec(ballShot.ballPos, ballShot.radius, entityList[i].Dest))
+                            {
+                                entityList[i].Kill();
+                                if (!ballShot.collided)
+                                {
+                                    player.score += entityList[0].Score;
+                                    ballShot.collided = true;
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -370,7 +390,6 @@ namespace EndRun
                     currentState = (int)States.gameover;
                 }
             }
-
             player.UpdateCollidedObjects(collidedEntities);
         }
 

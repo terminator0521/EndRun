@@ -23,7 +23,7 @@ namespace EndRun.weapons.Melees
             energy -= energyUsage;
         }
 
-        public virtual void Draw()
+        public virtual void Draw(ref int selectedSlot)
         {
 
         }

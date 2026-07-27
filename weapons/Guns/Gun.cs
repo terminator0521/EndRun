@@ -1,5 +1,6 @@
 ﻿using EndRun.Entities;
 using Raylib_cs;
+using System.Net;
 using System.Numerics;
 using System.Threading.Tasks.Sources;
 using System.Windows;
@@ -31,9 +32,9 @@ namespace EndRun.weapons.Guns
                 entity = null;
             }
         }
-        public virtual void Draw()
+        public virtual void Draw(ref int selectedSlot)
         {
-            if (Aiming)
+            if (Aiming && selectedSlot == 1)
             {
                 Raylib.DrawRectanglePro(Laser, new Vector2(0), -1 * angle, Color.Red);
             }
@@ -60,7 +61,10 @@ namespace EndRun.weapons.Guns
             entity?.Kill();
             energy -= energyUsage;
         }
-
+        virtual public void Reset()
+        {
+            
+        }
     }
 }
 

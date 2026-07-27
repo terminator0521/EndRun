@@ -15,11 +15,12 @@ namespace EndRun.Weapons.Guns
         public float radius;
         public Vector2 ballPos;
         public Vector2 dis;
+        public bool collided = false;
 
         private bool fired;
         private Rectangle bounds;
         private float vel;
-
+        
         public BallShot(ref Rectangle bounds)
         {
             AimLaserWidth = 20f;
@@ -31,13 +32,16 @@ namespace EndRun.Weapons.Guns
 
         override public void Update(Vector2 playerOriginPos, ref int score)
         {
-            //Console.WriteLine(ballPos);
-            Console.WriteLine(fired);
             base.Update(playerOriginPos, ref score);
-
+            if (entity is not null)
+            {
+                score += entity.Score;
+                entity = null;
+            }
             if (!Raylib.CheckCollisionCircleRec(ballPos, radius, bounds))
             {
                 fired = false;
+                collided = false;
                 dis = new Vector2(0);
             }
 
@@ -50,9 +54,12 @@ namespace EndRun.Weapons.Guns
                 ballPos = new Vector2(-radius * 2);
             }
         }
-        override public void Draw()
+        override public void Draw(ref int selectedSlot)
         {
-            base.Draw();
+            if (selectedSlot == 1)
+            {
+                base.Draw(ref selectedSlot);
+            }
 
             if (fired)
             {
@@ -62,7 +69,7 @@ namespace EndRun.Weapons.Guns
 
         public override void Shoot(ref List<Entity> entities, ref int energy)
         {
-
+            
             if (energy >= energyUsage && !fired)
             {
                 base.Shoot(ref entities, ref energy);
@@ -80,7 +87,14 @@ namespace EndRun.Weapons.Guns
                 dis.Y = vel * MathF.Sin(angle) * (playerOriginPos.Y < Raylib.GetMouseY() ? 1 : -1);
 
             }
+        }
 
+        override public void Reset()
+        {
+            fired = false;
+            collided = false;
+            dis = new Vector2(0);
+            ballPos = new Vector2(-2 * radius);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace EndRun.weapons.Melees
 
         public override void Use(ref List<Entity> entity, ref int energy)
         {
-            if(entity.Count > 0)
+            if (entity.Count > 0)
             {
                 entity[0].Kill();
                 this.entity = entity[0];
@@ -43,9 +43,12 @@ namespace EndRun.weapons.Melees
             }
         }
 
-        public override void Draw()
+        public override void Draw(ref int selectedSlot)
         {
-            Raylib.DrawRectanglePro(guide, new Vector2(0), angle, Raylib.Fade(Color.Blue, 0.3f));
+            if (selectedSlot == 0)
+            {
+                Raylib.DrawRectanglePro(guide, new Vector2(0), angle, Raylib.Fade(Color.Blue, 0.3f));
+            }
         }
 
         public override void Update(Vector2 pos, ref int score)

@@ -37,9 +37,12 @@ namespace EndRun.weapons.Melees
             }
 
         }
-        public override void Draw()
+        public override void Draw(ref int selectedSlot)
         {
-            Raylib.DrawRing(center, radius - thinkness, radius, 0, 360, 16, Highlight);
+            if (selectedSlot == 0)
+            {
+                Raylib.DrawRing(center, radius - thinkness, radius, 0, 360, 16, Highlight);
+            }
         }
     }
 }
