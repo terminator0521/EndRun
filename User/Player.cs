@@ -23,13 +23,20 @@ namespace EndRun.User
         public int energy;
         public int energyCap; //default energy cap
 
+        //gadget related
+        readonly private int rechargeRate = 60 * 2;
+        readonly private int rechargeWaitTime = 60 * 3;
+        private int rechargeTimeInterval;
+        bool waited = false;
+
         //collided object lists
         public List<Entity> collidedObjects;
 
         enum SlotGadget
         {
             powerBank,
-            slides,
+            shocker,
+            antiLeak
         }
 
         enum SlotMelee
@@ -43,11 +50,6 @@ namespace EndRun.User
             handGun,
             ballShot,
             shotgun,
-        }
-
-        enum SlotConsumable
-        {
-
         }
 
         private float vel = 5f; //speed of player
@@ -75,7 +77,11 @@ namespace EndRun.User
 
         public void Update()
         {
-            energyCap = 100 + (gadget == (int)SlotGadget.powerBank ? 20 : 0); //set energy cap
+            if (gadget == (int)SlotGadget.antiLeak)
+            {
+                energyRecharge();
+                Console.WriteLine(waited);
+            }
 
             //cap energy level
             if (energy > energyCap)
@@ -149,6 +155,8 @@ namespace EndRun.User
 
         public void ResetState()
         {
+            energyCap = 100 + (gadget == (int)SlotGadget.powerBank ? 20 : 0); //set energy cap
+
             selectedSlot = 0;
             score = 0;
             energy = 60;
@@ -181,8 +189,8 @@ namespace EndRun.User
                         case (int)SlotGadget.powerBank:
                             gadget = (int)SlotGadget.powerBank;
                             break;
-                        case (int)SlotGadget.slides:
-                            gadget = (int)SlotGadget.slides;
+                        case (int)SlotGadget.shocker:
+                            gadget = (int)SlotGadget.shocker;
                             break;
                     }
                     break;
@@ -221,5 +229,52 @@ namespace EndRun.User
                     break;
             }
         }
+
+        private void energyRecharge()
+        {
+            if (up || down || left || right || Raylib.IsMouseButtonPressed(MouseButton.Left))
+            {
+                if (waited)
+                {
+                    waited = false;
+                }
+                if (rechargeTimeInterval != 0)
+                {
+                    rechargeTimeInterval = 0;
+                }
+            }
+            else
+            {
+                Console.WriteLine(rechargeTimeInterval); ;
+                if (!waited)
+                {
+                    if (rechargeTimeInterval < rechargeWaitTime)
+                    {
+                        rechargeTimeInterval++;
+                    }
+                    else
+                    {
+                        rechargeTimeInterval = 0;
+                        waited = true;
+                    }
+                }
+                else
+                {
+                    if (rechargeTimeInterval < rechargeRate)
+                    {
+                        rechargeTimeInterval++;
+                    }
+                    else
+                    {
+                        rechargeTimeInterval = 0;
+
+                        //recharge logic
+                        energy++;
+                    }
+                }
+            }
+        }
+
+        
     }
 }

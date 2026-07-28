@@ -64,7 +64,8 @@ namespace EndRun
         enum Gadget
         {
             powerBank,
-            slides,
+            shocker,
+            antiLeak
         }
 
         enum Gun
@@ -225,7 +226,7 @@ namespace EndRun
                     }
                     if (Raygui.GuiButton(new Rectangle(540, 390, 60, 100), "->") == 1)
                     {
-                        if (selectedGadget != 1)
+                        if (selectedGadget != 2)
                         {
                             selectedGadget++;
                         }
@@ -253,8 +254,11 @@ namespace EndRun
                         case Gadget.powerBank:
                             Raylib.DrawText("Power Bank", 240, 420, 40, Color.Black);
                             break;
-                        case Gadget.slides:
-                            Raylib.DrawText("Slides", 300, 420, 40, Color.Black);
+                        case Gadget.shocker:
+                            Raylib.DrawText("Shocker", 285, 420, 40, Color.Black);
+                            break;
+                        case Gadget.antiLeak:
+                            Raylib.DrawText("Anti-Leak", 265, 420, 40, Color.Black);
                             break;
                     }
 
