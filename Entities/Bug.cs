@@ -46,7 +46,8 @@ namespace EndRun.Entities
             Width = width;
             this.bounds = bounds;
             Respawn();
-
+            Texture = Raylib.LoadTexture("Assets/Bug.png");
+            Src = new Rectangle(0, 10, 64, 44);
             Dest = new Rectangle(pos.X, pos.Y, Width, Height);
         }
 

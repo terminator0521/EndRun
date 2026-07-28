@@ -19,7 +19,8 @@ namespace EndRun.Entities
             Height = height;
             Width = width;
             Respawn();
-
+            Texture = Raylib.LoadTexture("Assets/Zombie.png");
+            Src = new Rectangle(12, 2, 40, 60);
             Dest = new Rectangle(500, 400, Width, Height);
         }
 

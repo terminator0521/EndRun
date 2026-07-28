@@ -461,7 +461,7 @@ namespace EndRun
 
             for (int i = 0; i < zombieCount; i++)
             {
-                entityList.Add(new Zombie(40, 40));
+                entityList.Add(new Zombie(40, 60));
             }
             for (int i = 0; i < batCount; i++)
             {
@@ -469,7 +469,7 @@ namespace EndRun
             }
             for (int i = 0; i < bugCount; i++)
             {
-                entityList.Add(new Bug(20, 20, ref gameBounds));
+                entityList.Add(new Bug(40, 40, ref gameBounds));
             }
 
         }

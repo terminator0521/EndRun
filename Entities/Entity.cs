@@ -58,7 +58,7 @@ namespace EndRun.Entities
 
         public void Draw()
         {
-            Raylib.DrawRectangleLinesEx(Dest, 4, Color.Blue);
+            Raylib.DrawTexturePro(Texture, Src, Dest, new Vector2(0), 0, Color.White);
         }
 
         public void Kill()

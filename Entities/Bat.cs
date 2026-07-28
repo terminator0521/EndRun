@@ -42,7 +42,8 @@ namespace EndRun.Entities
             Height = height;
             Width = width;
             Respawn();
-
+            Texture = Raylib.LoadTexture("Assets/Bat.png");
+            Src = new Rectangle(0, 15, 64, 35);
             Dest = new Rectangle(-200, 0, Width, Height);
         }
 
