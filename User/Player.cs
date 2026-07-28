@@ -3,6 +3,7 @@ using EndRun.weapons.Guns;
 using EndRun.weapons.Melees;
 using EndRun.Weapons.Guns;
 using Raylib_cs;
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 
 namespace EndRun.User
@@ -23,11 +24,17 @@ namespace EndRun.User
         public int energy;
         public int energyCap; //default energy cap
 
-        //gadget related
+        //powerbank related
         readonly private int rechargeRate = 60 * 2;
         readonly private int rechargeWaitTime = 60 * 3;
-        private int rechargeTimeInterval;
+        private int rechargeTimeInterval = 0;
         bool waited = false;
+
+        //shocker related
+        private int shockedWaitTime = 60 * 4;
+        public int shockedTimeInterval = 0;
+        public bool invincible = false;
+        public bool shocked = false; //shocked or nah
 
         //collided object lists
         public List<Entity> collidedObjects;
@@ -77,10 +84,22 @@ namespace EndRun.User
 
         public void Update()
         {
+            if (invincible)
+            {
+                if(shockedTimeInterval < shockedWaitTime)
+                {
+                    shockedTimeInterval++;
+                }
+                else
+                {
+                    invincible = false;
+                    shockedTimeInterval = 0;
+                }
+            }
+
             if (gadget == (int)SlotGadget.antiLeak)
             {
                 energyRecharge();
-                Console.WriteLine(waited);
             }
 
             //cap energy level
@@ -108,9 +127,14 @@ namespace EndRun.User
             gun?.Draw(ref selectedSlot);
 
             //draw player sprite
-            Raylib.DrawTexturePro(texture, src, Dest, new Vector2(0), 0, Color.White);
-            //Raylib.DrawCircleV(pos, 3f, Color.Black);
-            //Raylib.DrawCircleV(gun.center, 3f, Color.Red);
+            if (!invincible)
+            {
+                Raylib.DrawTexturePro(texture, src, Dest, new Vector2(0), 0, Color.White);
+            }
+            else
+            {
+                Raylib.DrawTexturePro(texture, src, Dest, new Vector2(0), 0, Raylib.Fade(Color.White, 0.5f));
+            }
         }
 
         public void Move()
@@ -167,6 +191,9 @@ namespace EndRun.User
         public void ResetPos()
         {
             pos = new Vector2(50, (bounds.Height / 2) - (Dest.Height / 2));
+            shocked = false;
+            shockedTimeInterval = 0;
+            invincible = false;
         }
 
         public void Recharge()
@@ -245,7 +272,6 @@ namespace EndRun.User
             }
             else
             {
-                Console.WriteLine(rechargeTimeInterval); ;
                 if (!waited)
                 {
                     if (rechargeTimeInterval < rechargeWaitTime)
@@ -274,7 +300,11 @@ namespace EndRun.User
                 }
             }
         }
-
-        
+        public void Shock()
+        {
+            energy = 0;
+            shocked = true;
+            invincible = true;
+        }
     }
 }

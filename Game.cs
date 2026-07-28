@@ -406,9 +406,25 @@ namespace EndRun
                     }
                 }
 
-                if (Raylib.CheckCollisionRecs(player.Dest, entityList[i].Dest)) //game over if player collides with entity
+                if (Raylib.CheckCollisionRecs(player.Dest, entityList[i].Dest) && !player.invincible) //game over if player collides with entity
                 {
-                    currentState = (int)States.gameover;
+                    if (player.gadget == (int)Gadget.shocker)
+                    {
+                        if (!player.shocked && player.energy > 0)
+                        {
+                            player.shocked = true;
+                            player.Shock();
+                        }
+                        else
+                        {
+                            currentState = (int)States.gameover;
+                        }
+                    }
+                    else
+                    {
+                        currentState = (int)States.gameover;
+                    }
+                    
                 }
             }
             player.UpdateCollidedObjects(collidedEntities);
