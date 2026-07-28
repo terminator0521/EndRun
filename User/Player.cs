@@ -5,6 +5,7 @@ using EndRun.Weapons.Guns;
 using Raylib_cs;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using System.Windows;
 
 namespace EndRun.User
 {
@@ -80,10 +81,13 @@ namespace EndRun.User
             selectedSlot = 1;
             collidedObjects = new List<Entity>();
             ResetState();
+
         }
 
         public void Update()
-        {
+        { 
+
+
             if (invincible)
             {
                 if(shockedTimeInterval < shockedWaitTime)

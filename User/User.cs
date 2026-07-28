@@ -1,10 +1,20 @@
-﻿
+﻿using System.Numerics;
 using Raylib_cs;
 
 namespace EndRun.User
 {
     public class User
     {
+        //displayed textures
+        Texture2D gun;
+        Texture2D knife;
+        Texture2D device;
+        Texture2D lightning;
+        Texture2D battery;
+
+        //sourcing dest
+        Rectangle src = new Rectangle(0, 0, 64, 64);
+
         Player player;
         private int selectedSlot;
         private Rectangle bounds;
@@ -14,6 +24,11 @@ namespace EndRun.User
         {
             this.player = player;
             this.bounds = bounds;
+            gun = Raylib.LoadTexture("Assets/Gun.png");
+            knife = Raylib.LoadTexture("Assets/Melee.png");
+            device = Raylib.LoadTexture("Assets/Device.png");
+            lightning = Raylib.LoadTexture("Assets/Shock.png");
+            battery = Raylib.LoadTexture("Assets/Battery.png");
         }
 
         public void Update(ref int distance)
@@ -30,13 +45,36 @@ namespace EndRun.User
             Raylib.DrawRectangle(820, 680, 170, 200, Color.White);
             Raylib.DrawRectangle(1000, 680, 260, 200, Color.White);
 
-            for (int i = 0; i < 3; i++)
+            Raylib.DrawText("Gadget", 360, 840, 40, Color.Black);
+
+            Raylib.DrawRectangle(360, 680, 150, 150, Color.White);
+            for (int i = 0; i < 2; i++)
             {
                 Raylib.DrawRectangle(20 + (170 * i), 680, 150, 200, Color.White);
-                Raylib.DrawText((1 + i).ToString(), 25 + (170 * i), 850, 30, Color.Black);
+                Raylib.DrawText((1 + i).ToString(), 30 + (170 * i), 845, 30, Color.Black);
             }
-
             Raylib.DrawRectangleLinesEx(new Rectangle(20 + (170 * selectedSlot), 680, 150, 200), 4, Color.Black);
+
+            //slot 1
+            Raylib.DrawTexturePro(knife, src, new Rectangle(20, 700, 180, 180), new Vector2(0), 0, Color.White);
+
+            //slot 2
+            Raylib.DrawTexturePro(gun, src, new Rectangle(180, 690, 180, 180), new Vector2(0), 0, Color.White);
+
+            //gadget slot
+            switch (player.gadget)
+            {
+                case 0:
+                    Raylib.DrawTexturePro(battery, src, new Rectangle(350, 665, 180, 180), new Vector2(0), 0, Color.White);
+                    break;
+                case 1:
+                    Raylib.DrawTexturePro(lightning, src, new Rectangle(340, 665, 180, 180), new Vector2(0), 0, Color.White);
+                    break;
+                case 2:
+                    Raylib.DrawTexturePro(device, src, new Rectangle(345, 665, 180, 180), new Vector2(0), 0, Color.White);
+                    break;
+
+            }
 
             Raylib.DrawText("Distance: ", 580, 700, 40, Color.Black);
             Raylib.DrawText("Score: ", 840, 700, 40, Color.Black);
@@ -93,16 +131,13 @@ namespace EndRun.User
                 player.gun.Aiming = false;
             }
 
-                switch (Raylib.GetKeyPressed())
+            switch (Raylib.GetKeyPressed())
             {
                 case (int)KeyboardKey.One:
                     player.selectedSlot = 0;
                     break;
                 case (int)KeyboardKey.Two:
                     player.selectedSlot = 1;
-                    break;
-                case (int)KeyboardKey.Three:
-                    player.selectedSlot = 2;
                     break;
                 case (int)KeyboardKey.C:
                     player.Recharge();
