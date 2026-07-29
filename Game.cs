@@ -293,8 +293,8 @@ namespace EndRun
         public static void Draw()
         {
             //draw cursor position for debug purposes
-            Raylib.DrawText(Raylib.GetMouseX() + ", " + Raylib.GetMouseY(), 10, 10, 18, Color.Black);
-            Raylib.DrawText(Raylib.GetFPS().ToString(), 120, 10, 18, Color.Black);
+            //Raylib.DrawText(Raylib.GetMouseX() + ", " + Raylib.GetMouseY(), 10, 10, 18, Color.Black);
+            //Raylib.DrawText(Raylib.GetFPS().ToString(), 120, 10, 18, Color.Black);
 
             switch ((States)currentState)
             {
