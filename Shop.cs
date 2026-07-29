@@ -21,7 +21,7 @@ namespace EndRun
         Rectangle next = new Rectangle(570, 170, 50, 50);
         Rectangle r_Class = new Rectangle(270, 170, 290, 50);
         Rectangle stats = new Rectangle(650, 140, 415, 650);
-        Rectangle buy = new Rectangle(230, 560, 390, 100);
+        Rectangle buy = new Rectangle(230, 600, 390, 100);
 
         Player player;
 
@@ -48,9 +48,9 @@ namespace EndRun
 
         private int[,] weaponCost =
         {
-            {0, 0, 0 },
-            {0, 0, 0 },
-            {0, 0, 0 }
+            {20000, 22000, 20000 },
+            {0, 19000, 22000 },
+            {25000, 30000, 27000 }
         };
 
         private string[,] weaponDescription =
@@ -98,11 +98,17 @@ namespace EndRun
                     //set text size
                     Raygui.GuiSetStyle(Raygui.DEFAULT, Raygui.LIST_ITEMS_HEIGHT, 48);
 
-                    //buy button
-                    if (Raygui.GuiButton(buy, "Buy") == 1)
+                    //buy button and insufficent score message
+                    
+                    if (player.score < weaponCost[selectedClass, selectedIndex])
+                    {
+                        Raylib.DrawText("Insufficent Score", 260, 600, 36, Color.Red);
+                    }
+                    else if (Raygui.GuiButton(buy, "Buy") == 1)
                     {
                         Buy();
                     }
+
                     //class selection
                     Raylib.DrawRectangleRec(r_Class, Color.LightGray);
                     Raylib.DrawRectangleLinesEx(r_Class, 2, Color.Gray);
@@ -143,6 +149,7 @@ namespace EndRun
                     Raylib.DrawText($"Energy Usage: {weaponEnergyUsage[selectedClass, selectedIndex]}", 680, 280, 32, Color.Black);
                     Raylib.DrawText($"Cost: {weaponCost[selectedClass, selectedIndex]}", 680, 380, 32, Color.Black);
                     Raylib.DrawText($"Description:\n {weaponDescription[selectedClass, selectedIndex]}", 680, 480, 32, Color.Black);
+                    
                 }
 
 

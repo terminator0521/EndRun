@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Ricky Xu\\Desktop\\Projects\\EndRun\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|c:\\users\\ricky xu\\desktop\\projects\\endrun\\weapons\\melees\\knife.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|solutionrelative:weapons\\melees\\knife.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|c:\\users\\ricky xu\\desktop\\projects\\endrun\\weapons\\melees\\katana.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|solutionrelative:weapons\\melees\\katana.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|c:\\users\\ricky xu\\desktop\\projects\\endrun\\shop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|solutionrelative:shop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|c:\\users\\ricky xu\\desktop\\projects\\endrun\\weapons\\projectile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|solutionrelative:weapons\\projectile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|c:\\users\\ricky xu\\desktop\\projects\\endrun\\settings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|solutionrelative:settings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|c:\\users\\ricky xu\\desktop\\projects\\endrun\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -23,24 +23,24 @@
       "RelativeMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|solutionrelative:weapons\\guns\\gun.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|c:\\users\\ricky xu\\desktop\\projects\\endrun\\weapons\\guns\\ballshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|solutionrelative:weapons\\guns\\ballshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|c:\\users\\ricky xu\\desktop\\projects\\endrun\\user\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|solutionrelative:user\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|c:\\users\\ricky xu\\desktop\\projects\\endrun\\weapons\\melees\\knife.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|solutionrelative:weapons\\melees\\knife.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|c:\\users\\ricky xu\\desktop\\projects\\endrun\\weapons\\melees\\katana.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|solutionrelative:weapons\\melees\\katana.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|c:\\users\\ricky xu\\desktop\\projects\\endrun\\user\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|solutionrelative:user\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|c:\\users\\ricky xu\\desktop\\projects\\endrun\\shop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|solutionrelative:shop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|c:\\users\\ricky xu\\desktop\\projects\\endrun\\settings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|solutionrelative:settings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|c:\\users\\ricky xu\\desktop\\projects\\endrun\\weapons\\guns\\ballshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|solutionrelative:weapons\\guns\\ballshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|c:\\users\\ricky xu\\desktop\\projects\\endrun\\weapons\\guns\\handgun.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -54,24 +54,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 254,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 7,
               "Title": "Knife.cs",
               "DocumentMoniker": "C:\\Users\\Ricky Xu\\Desktop\\Projects\\EndRun\\Weapons\\Melees\\Knife.cs",
               "RelativeDocumentMoniker": "Weapons\\Melees\\Knife.cs",
               "ToolTip": "C:\\Users\\Ricky Xu\\Desktop\\Projects\\EndRun\\Weapons\\Melees\\Knife.cs",
               "RelativeToolTip": "Weapons\\Melees\\Knife.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAowB0AAAAWAAAAAAAAAA==",
+              "ViewState": "AgIAACMAAAAAq0GY2708wB0AAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-29T02:27:00.262Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 8,
               "Title": "Katana.cs",
               "DocumentMoniker": "C:\\Users\\Ricky Xu\\Desktop\\Projects\\EndRun\\Weapons\\Melees\\Katana.cs",
               "RelativeDocumentMoniker": "Weapons\\Melees\\Katana.cs",
@@ -79,12 +79,11 @@
               "RelativeToolTip": "Weapons\\Melees\\Katana.cs",
               "ViewState": "AgIAABIAAAAAgB9j7lq4vx4AAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-29T02:26:51.937Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-29T02:26:51.937Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Projectile.cs",
               "DocumentMoniker": "C:\\Users\\Ricky Xu\\Desktop\\Projects\\EndRun\\Weapons\\Projectile.cs",
               "RelativeDocumentMoniker": "Weapons\\Projectile.cs",
@@ -97,7 +96,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 2,
               "Title": "Settings.cs",
               "DocumentMoniker": "C:\\Users\\Ricky Xu\\Desktop\\Projects\\EndRun\\Settings.cs",
               "RelativeDocumentMoniker": "Settings.cs",
@@ -110,20 +109,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Player.cs",
               "DocumentMoniker": "C:\\Users\\Ricky Xu\\Desktop\\Projects\\EndRun\\User\\Player.cs",
               "RelativeDocumentMoniker": "User\\Player.cs",
               "ToolTip": "C:\\Users\\Ricky Xu\\Desktop\\Projects\\EndRun\\User\\Player.cs",
               "RelativeToolTip": "User\\Player.cs",
-              "ViewState": "AgIAAD4AAAAAwHebN7okwIEAAAAWAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-29T02:18:34.724Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\Ricky Xu\\Desktop\\Projects\\EndRun\\User\\User.cs",
               "RelativeDocumentMoniker": "User\\User.cs",
@@ -131,8 +130,7 @@
               "RelativeToolTip": "User\\User.cs",
               "ViewState": "AgIAAEQAAAAAoDjVWhjqv5IAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-29T01:42:53.713Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-29T01:42:53.713Z"
             },
             {
               "$type": "Document",
@@ -162,7 +160,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 5,
               "Title": "BallShot.cs",
               "DocumentMoniker": "C:\\Users\\Ricky Xu\\Desktop\\Projects\\EndRun\\Weapons\\Guns\\BallShot.cs",
               "RelativeDocumentMoniker": "Weapons\\Guns\\BallShot.cs",
@@ -183,18 +181,17 @@
               "RelativeToolTip": "Weapons\\Guns\\HandGun.cs",
               "ViewState": "AgIAAAsAAAAAIDGzz2OgvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-29T01:05:48.122Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-29T01:05:48.122Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 0,
               "Title": "Shop.cs",
               "DocumentMoniker": "C:\\Users\\Ricky Xu\\Desktop\\Projects\\EndRun\\Shop.cs",
               "RelativeDocumentMoniker": "Shop.cs",
               "ToolTip": "C:\\Users\\Ricky Xu\\Desktop\\Projects\\EndRun\\Shop.cs",
               "RelativeToolTip": "Shop.cs",
-              "ViewState": "AgIAAGsAAADAfXGpSm8mwHgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAFAAAAAACS3r/j0kwGgAAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-28T21:31:23.701Z",
               "EditorCaption": ""
