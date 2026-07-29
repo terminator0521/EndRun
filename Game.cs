@@ -11,12 +11,7 @@ using System.Windows.Markup.Localizer;
 
 /*  TODO
  * 
- *  - build shop
- *      - tooltips on ENERGY USAGE, AND COST
- *  - build ending
- *      - congrats screen
- *      - final score
- *      - kills?
+ * just need a help page
  *  - readme
  */
 
@@ -69,7 +64,8 @@ namespace EndRun
             setup,
             play,
             gameover,
-            end
+            end,
+            info
         }
 
         //player setup members
@@ -129,6 +125,10 @@ namespace EndRun
                     else if (Raygui.GuiButton(new Rectangle(650, 480, 230, 80), "Quit") == 1)
                     {
                         Environment.Exit(0); //exit application
+                    }
+                    else if (Raygui.GuiButton(new Rectangle (400, 570, 480, 80), "Info/Help") == 1)
+                    {
+                        currentState = (int)States.info;
                     }
                     break;
                 case States.setup:
@@ -401,7 +401,7 @@ namespace EndRun
 
             for (int i = 0; i < entityList.Count; i++)
             {
-                if (Raylib.CheckCollisionRecs(gameBounds, entityList[i].Dest) || true) //zombies out of bounds cannot be attacked
+                if (Raylib.CheckCollisionRecs(gameBounds, entityList[i].Dest)) //zombies out of bounds cannot be attacked
                 {
                     if (player.selectedSlot == 0)
                     {
