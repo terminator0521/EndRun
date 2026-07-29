@@ -367,14 +367,14 @@ namespace EndRun
                             {
                                 if (Functions.CheckCollisionsQuad(k.guide, -k.angle * Raylib.DEG2RAD, entityList[i].Dest, 0))
                                 {
-                                    collidedEntities.Add(entityList[i]);
+                                    entityList[i].Kill();
                                 }
                             }
                             if (player.melee is Knife n)
                             {
                                 if (Functions.CheckCollisionsQuad(n.guide, -n.angle * Raylib.DEG2RAD, entityList[i].Dest, 0))
                                 {
-                                    collidedEntities.Add(entityList[i]);
+                                    entityList[i].Kill();
                                 }
                             }
                         }
