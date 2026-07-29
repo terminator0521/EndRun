@@ -53,7 +53,7 @@ namespace EndRun
             {25000, 30000, 27000 }
         };
 
-        private string[,] weaponDescription =
+        public string[,] weaponDescription =
         {
             {
                 "A portable\nbattery pack that\nholds condenced\nplasmic energy.",

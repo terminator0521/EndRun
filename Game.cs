@@ -5,9 +5,8 @@ using EndRun.weapons.Melees;
 using EndRun.Weapons.Guns;
 using raygui_cs;
 using Raylib_cs;
-using System.Numerics;
+using RayGUI_cs;
 using System.Windows.Controls;
-using System.Windows.Markup.Localizer;
 
 /*  TODO
  * 
@@ -30,9 +29,47 @@ namespace EndRun
         static bool atCheckpoint = false;
         static int[] levelDistances =
         {
-            100, 200, 300, 400, 500
+            4000, 8000, 13000, 20000, 30000
         };
 
+        //help/info
+        static int page = 0;
+        static int width = 220;
+        static int height = 100;
+
+        static string[,] topics =
+        {
+            {"Zombie", "Bat", "Bug" },
+            {"Power Bank", "Shocker", "Anti-Leak" },
+            {"Knife", "Katana", "Blaster" },
+            {"Hand Gun", "Ball Shot", "Shotgun" }
+        };
+
+        static Rectangle[,] boxes = new Rectangle[4, 3];
+
+        static public string[,] descriptions =
+        {
+            {
+                "A glitched robot who blindly follows you",
+                "A robotic bird who tracks your position before quickly\nmaking a small move closer to you.",
+                "A bug with a damaged tracking system that quickly gets\nto you through moving either horizontally\nor vertically."
+            },
+            {
+                "A portable battery pack that holds condenced\nplasmic energy.",
+                "A generator that generates a one time shock\nwhich prevent electronics from powering down due\nto insufficent power output.",
+                "A device that modifies energyflow to prevent\nextra power from flowing towards unused\ncomponents and parts."
+            },
+            {
+                "Short-ranged and zero energy knife that is\nconvenient to bring." ,
+                "6 feel long katana that slices atoms apart.",
+                "Looks like the ground pounders you see\nconstruction workers use to flaten the ground.\nShocks anything aroundyou and is very light"
+            },
+            {
+                "A self-defense pistol issued to families with who\nlived near warzones.",
+                "A light-weight cannon that fires energy spheres\nthat disintegrates eveything it touches.",
+                "A shotgun prototype created by a government\nfunded weapon company that fires energy\nspheres that spread out."
+            }
+        };
         //timer
         static int interval; //interval of time
         static int maxInterval; //max interval of time
@@ -90,8 +127,9 @@ namespace EndRun
             Raylib.SetConfigFlags(ConfigFlags.HighDpiWindow);
             Raylib.SetTargetFPS(60); //set fps
             Raylib.InitWindow(1280, 900, "EndRun"); //init window
+            Raygui.GuiEnableTooltip();
             Raygui.GuiSetStyle(0, Raygui.TEXT_SIZE, 32); //set text size
-            currentState = (int)States.end; //start in menu
+            currentState = (int)States.menu; //start in menu
             maxInterval = 60;
             gameBounds = new Rectangle(0, 80, Raylib.GetScreenWidth(), 500); //set game bounds
             continueBounds = new Rectangle(1200, 80, 80, 500);
@@ -100,6 +138,15 @@ namespace EndRun
             user = new User.User(ref player, ref gameBounds);
             currentLevel = 0;
             shop = new Shop(ref player);
+
+            //topic rectangles 
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    boxes[i, j] = new Rectangle(75 + (305 * i), 490 + (j * 130), width, height);
+                }
+            }
 
             Console.WriteLine(currentState);
             while (!Raylib.WindowShouldClose())
@@ -126,17 +173,13 @@ namespace EndRun
                     {
                         Environment.Exit(0); //exit application
                     }
-                    else if (Raygui.GuiButton(new Rectangle (400, 570, 480, 80), "Info/Help") == 1)
+                    else if (Raygui.GuiButton(new Rectangle(400, 570, 480, 80), "Info/Help") == 1)
                     {
                         currentState = (int)States.info;
                     }
                     break;
                 case States.setup:
-                    if (Raylib.CheckCollisionPointRec(Raylib.GetMousePosition(), new Rectangle(860, 380, 128, 128)))
-                    {
-
-                    }
-                        break;
+                    break;
                 case States.play:
                     //update distance
                     if (realDistance < levelDistances[currentLevel])
@@ -232,6 +275,15 @@ namespace EndRun
                     if (Raygui.GuiButton(new Rectangle(470, 300, 300, 80), "Retry") == 1)
                     {
                         currentState = (int)States.menu; //change state to menu
+                    }
+                    break;
+                case States.info:
+                    for (int i = 0; i < 4; i++)
+                    {
+                        for (int j = 0; j < 3; j++)
+                        {
+
+                        }
                     }
                     break;
             }
@@ -336,11 +388,6 @@ namespace EndRun
                         player.SetSlot(2, selectedStartingWeapon);
                         Reset();
                     }
-
-                    ///include
-                    ///selecting staring items
-                    ///selecting gadgets???
-                    ///
                     break;
                 case States.play:
 
@@ -388,6 +435,86 @@ namespace EndRun
                     Raylib.DrawText("Final Score: \n \t" + user.score.ToString(), 480, 550, 48, Color.Black);
 
                     //currentState = (int)States.gameover;
+                    break;
+                case States.info:
+                    Raygui.GuiSetStyle(0, Raygui.TEXT_SIZE, 24);
+
+                    if (page == 1) //first page
+                    {
+                        //title
+                        Raylib.DrawText("INFO", 560, 70, 56, Color.Black);
+
+                        //page button
+                        if (Raygui.GuiButton(new Rectangle(1020, 70, 200, 80), "Prev Page") == 1)
+                        {
+                            page--;
+                        }
+
+                        //info
+                        Raygui.GuiGroupBox(new Rectangle(60, 220, 1160, 200), "Info");
+                        Raylib.DrawText("Hover over a topic for more info", 350, 150, 36, Color.Black);
+
+                        //Entites
+                        Raygui.GuiGroupBox(new Rectangle(60, 470, 250, 400), "Entites");
+
+                        //Gadgets
+                        Raygui.GuiGroupBox(new Rectangle(365, 470, 250, 400), "Gadgets");
+
+                        //Melees
+                        Raygui.GuiGroupBox(new Rectangle(665, 470, 250, 400), "Melees");
+
+                        //Guns
+                        Raygui.GuiGroupBox(new Rectangle(970, 470, 250, 400), "Guns");
+
+                        //draw boxes
+                        for (int i = 0; i < 4; i++)
+                        {
+                            for (int j = 0; j < 3; j++)
+                            {
+                                //draw buttons
+                                Raygui.GuiButton(boxes[i, j], topics[i, j]);
+
+                                //draw tooltips
+                                if (Raylib.CheckCollisionPointRec(Raylib.GetMousePosition(), boxes[i, j]))
+                                {
+                                    ToolTip(descriptions[i, j], new Rectangle(60, 220, 1160, 200));
+                                }
+                            }
+                        }
+                    }
+                    else if (page == 0) //second page
+                    {
+                        //upper
+                        Raygui.GuiGroupBox(new Rectangle(40, 180, 580, 310), "Controls");
+                        Raygui.GuiGroupBox(new Rectangle(660, 180, 580, 310), "How to Play");
+
+                        Raygui.GuiDrawText("WASD -> Move around\nC -> Charge Energy\nE -> Shop\nRMB -> Aim\nLMB -> Shoot", new Rectangle(40, 180, 580, 310), 1, Color.DarkGray);
+                        Raygui.GuiDrawText("Move through the caves,\nkill any entity that's a threat to you,\nand survive till the end.", new Rectangle(660, 180, 580, 310), 1, Color.DarkGray);
+
+                        //lower
+                        Raygui.GuiGroupBox(new Rectangle(40, 540, 380, 310), "Score");
+                        Raygui.GuiGroupBox(new Rectangle(450, 540, 380, 310), "Energy");
+                        Raygui.GuiGroupBox(new Rectangle(860, 540, 380, 310), "Checkpoints");
+
+                        Raygui.GuiDrawText("Every entity has different\nbehaviours (see next page),\nhealth and scoring. Killing them with\nthe same entity with a different\nweapon does not change how\nmuch score you gain. Save it up,\nyou'll need it!", new Rectangle(40, 540, 380, 310), 1, Color.DarkGray);
+                        Raygui.GuiDrawText("You have both active and passive\nweapons. Every single weapon has\na different energy consumption\nper use! But you can recharge 1\nenergy by trading in 50 scores.\nSo don't be too crazy with\nattacking, and make every\nattack count!", new Rectangle(350, 540, 580, 310), 1, Color.DarkGray);
+                        Raygui.GuiDrawText("Every once a while, you'll reach a\ncheckpoint. That would be the time\nto use your score to trade for\nsome weapons and gadgets.\nNo entities will spawn so take\nyour time!", new Rectangle(760, 540, 580, 310), 1, Color.DarkGray);
+
+                        //page button
+                        if (Raygui.GuiButton(new Rectangle(1020, 70, 200, 80), "Next Page") == 1)
+                        {
+                            page++;
+                        }
+                        
+                        //title
+                        Raylib.DrawText("How to Play", 460, 70, 56, Color.Black);
+                    }
+
+                    //back button
+                    if (Raygui.GuiButton(new Rectangle(60, 70, 200, 80), "Back") == 1)
+                    {
+                        currentState = (int)States.menu;
+                    }
                     break;
             }
             //global shop
@@ -546,5 +673,11 @@ namespace EndRun
             currentDifficulty = 0;
         }
 
+        public static void ToolTip(string text, Rectangle box)
+        {
+            Raygui.GuiSetStyle(0, Raygui.TEXT_SIZE, 36);
+            Raygui.GuiDrawText(text, box, 1, Color.DarkGray);
+            Raygui.GuiSetStyle(0, Raygui.TEXT_SIZE, 24);
+        }
     }
 }
