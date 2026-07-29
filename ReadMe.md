@@ -8,7 +8,18 @@ This is my second time coding a game with **C#** and **Raylib**, as well as my f
 
 
 
-### How it is Made
+## Screenshots
+
+
+
+![Game Menu](./screenshots/menu.PNG)
+![Game Menu](./screenshots/ingame.PNG)
+![Game Menu](./screenshots/checkpoint.PNG)
+![Game Menu](./screenshots/gameover_screen.PNG)
+
+
+
+## How it is Made
 
 
 
@@ -29,7 +40,7 @@ All artwork seen in the game was created by me through Aseprite.
 
 
 
-### About the Game
+## About the Game
 
 
 
@@ -45,7 +56,7 @@ refills. However, you are one hit in this game, meaning that it is instant death
 
 
 
-### How to run game
+## How to run game
 
 
 
@@ -55,7 +66,7 @@ refills. However, you are one hit in this game, meaning that it is instant death
 
 
 
-### AI Disclosure
+## AI Disclosure
 
 
 
@@ -65,7 +76,7 @@ to generate pieces of code that directly changes how the game works.
 
 
 
-### Final Mentions
+## Final Mentions
 
 
 
