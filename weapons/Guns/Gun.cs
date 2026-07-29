@@ -24,7 +24,6 @@ namespace EndRun.weapons.Guns
 
         virtual public void Update(Vector2 playerOriginPos, ref int score)
         {
-            Console.WriteLine(energyUsage);
             Laser = new Rectangle(0, 0, 0, 0);
             this.playerOriginPos = playerOriginPos;
 

@@ -188,7 +188,7 @@ namespace EndRun
                         //entity updates
                         for (int i = 0; i < entityList.Count; i++)
                         {
-                            entityList[i].Update(player.pos + player.origin);
+                            entityList[i].Update(player.pos);
                         }
                     }
                     break;
