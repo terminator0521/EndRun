@@ -43,11 +43,9 @@ namespace EndRun
         static List<Entity> entityList = new List<Entity>();
 
         //difficulties
-        static Difficulties difficulty; //current difficulty
         static int currentDifficulty = 0;
         readonly static Difficulties[] difficulties =
         {
-
             new Difficulties(5f, 4, 3f, 1, 4f, 1),
             new Difficulties(3f, 6, 3f, 2, 3f, 1),
             new Difficulties(1f, 8, 2f, 4, 1f, 2),
@@ -116,6 +114,7 @@ namespace EndRun
 
         public static void Update()
         {
+            Console.WriteLine(currentDifficulty + 1);
             switch ((States)currentState)
             {
                 case States.menu:
@@ -133,21 +132,29 @@ namespace EndRun
                     //update distance
                     if (realDistance < levelDistances[currentLevel])
                     {
-                        realDistance = 0;
-                        if (interval < maxInterval)
+                        if (!atCheckpoint)
                         {
-                            interval++;
+                            realDistance = 0;
+                            if (interval < maxInterval)
+                            {
+                                interval++;
+                            }
+                            else
+                            {
+                                interval = 0;
+                                distance += 10;
+                            }
+                            realDistance = distance + ((int)player.pos.X / 100 * 10);
                         }
                         else
                         {
                             interval = 0;
-                            distance += 10;
                         }
-                        realDistance = distance + ((int)player.pos.X / 100 * 10);
                     }
                     else if (!atCheckpoint)
                     {
                         atCheckpoint = true;
+                        if (currentLevel != levelDistances.Length - 1) currentLevel++;
                     }
 
                     //player updates
@@ -172,12 +179,15 @@ namespace EndRun
                         if (Raylib.CheckCollisionRecs(player.Dest, continueBounds)) //if at continue area
                         {
                             atCheckpoint = false;
-                            if (currentDifficulty < difficulties.Length)
+                            if (currentDifficulty < difficulties.Length - 1)
                             {
                                 currentDifficulty++;
-                                SetDifficulty(difficulties[currentDifficulty - 1]);
-                                currentLevel++;
                             }
+                            else
+                            {
+                                Console.WriteLine("end");
+                            }
+                            SetDifficulty(difficulties[currentDifficulty]);
                             distance = 0;
                             distance = realDistance;
                             player.ResetPos();
@@ -185,10 +195,12 @@ namespace EndRun
                     }
                     else //still heading towards checkpoint
                     {
+                        Console.WriteLine(entityList.Count);
                         //entity updates
                         for (int i = 0; i < entityList.Count; i++)
                         {
                             entityList[i].Update(player.pos);
+
                         }
                     }
                     break;
