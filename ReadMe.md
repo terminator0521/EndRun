@@ -12,10 +12,10 @@ This is my second time coding a game with **C#** and **Raylib**, as well as my f
 
 
 
-![Game Menu](./screenshots/menu.PNG)
-![Game Menu](./screenshots/ingame.PNG)
-![Game Menu](./screenshots/checkpoint.PNG)
-![Game Menu](./screenshots/gameover_screen.PNG)
+![Game menu](./screenshots/menu.PNG)
+![In-game looks](./screenshots/ingame.PNG)
+![Checkpoint](./screenshots/checkpoint.PNG)
+![Game over screen](./screenshots/gameover_screen.PNG)
 
 
 
