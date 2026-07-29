@@ -168,6 +168,7 @@ namespace EndRun
             if (player.score >= weaponCost[selectedClass, selectedIndex])
             {
                 player.SetSlot(selectedClass, selectedIndex);
+                player.score -= weaponCost[selectedClass, selectedIndex];
             }
         }
     }

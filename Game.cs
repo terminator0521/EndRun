@@ -6,6 +6,7 @@ using EndRun.Weapons.Guns;
 using raygui_cs;
 using Raylib_cs;
 using System.Windows.Controls;
+using System.Windows.Markup.Localizer;
 
 /*  TODO
  * 
@@ -93,7 +94,7 @@ namespace EndRun
             Raylib.SetTargetFPS(60); //set fps
             Raylib.InitWindow(1280, 900, "EndRun"); //init window
             Raygui.GuiSetStyle(0, Raygui.TEXT_SIZE, 32); //set text size
-            currentState = (int)States.menu; //start in menu
+            currentState = (int)States.end; //start in menu
             maxInterval = 60;
             gameBounds = new Rectangle(0, 80, Raylib.GetScreenWidth(), 500); //set game bounds
             continueBounds = new Rectangle(1200, 80, 80, 500);
@@ -103,6 +104,7 @@ namespace EndRun
             currentLevel = 0;
             shop = new Shop(ref player);
 
+            Console.WriteLine(currentState);
             while (!Raylib.WindowShouldClose())
             {
                 Update(); //call updates
@@ -115,7 +117,6 @@ namespace EndRun
 
         public static void Update()
         {
-            Console.WriteLine((States)currentState);
             switch ((States)currentState)
             {
                 case States.menu:
@@ -218,6 +219,12 @@ namespace EndRun
                     else if (Raygui.GuiButton(new Rectangle(650, 300, 230, 80), "Exit") == 1)
                     {
                         currentState = (int)States.menu; //change state to play
+                    }
+                    break;
+                case States.end:
+                    if(Raygui.GuiButton(new Rectangle(470, 300, 300, 80), "Retry") == 1)
+                    {
+                        currentState = (int)States.menu; //change state to menu
                     }
                     break;
             }
@@ -366,6 +373,12 @@ namespace EndRun
                     Raylib.DrawText("Game Over", 425, 105, 90, Color.Black);
                     Raylib.DrawText("Final Distance: \n \t" + user.distance.ToString() + " Studs", 250, 550, 48, Color.Black);
                     Raylib.DrawText("Final Score: \n \t" + user.score.ToString(), 690, 550, 48, Color.Black);
+                    break;
+                case States.end:
+                    Raylib.DrawText("Finish!", 490, 105, 90, Color.Black);
+                    Raylib.DrawText("Final Score: \n \t" + user.score.ToString(), 480, 550, 48, Color.Black);
+
+                    //currentState = (int)States.gameover;
                     break;
             }
             //global shop

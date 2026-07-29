@@ -9,6 +9,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|c:\\users\\ricky xu\\desktop\\projects\\endrun\\user\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|solutionrelative:user\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|c:\\users\\ricky xu\\desktop\\projects\\endrun\\shop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60D9FD3B-7837-4F95-A2C7-8E4855473261}|EndRun.csproj|solutionrelative:shop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,11 +22,28 @@
       "DocumentGroups": [
         {
           "DockedWidth": 254,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Shop.cs",
+              "DocumentMoniker": "C:\\Users\\Ricky Xu\\Desktop\\Projects\\EndRun\\Shop.cs",
+              "RelativeDocumentMoniker": "Shop.cs",
+              "ToolTip": "C:\\Users\\Ricky Xu\\Desktop\\Projects\\EndRun\\Shop.cs",
+              "RelativeToolTip": "Shop.cs",
+              "ViewState": "AgIAAJ4AAAAA4PKRlBQMwK0AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-29T05:30:43.02Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -32,7 +53,7 @@
               "RelativeDocumentMoniker": "User\\Player.cs",
               "ToolTip": "C:\\Users\\Ricky Xu\\Desktop\\Projects\\EndRun\\User\\Player.cs",
               "RelativeToolTip": "User\\Player.cs",
-              "ViewState": "AgIAALsAAAAAAAAAAAAYwMQAAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAANkAAAAAMm2q7lkbwMQAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-29T05:18:00.989Z",
               "EditorCaption": ""
@@ -45,7 +66,7 @@
               "RelativeDocumentMoniker": "Game.cs",
               "ToolTip": "C:\\Users\\Ricky Xu\\Desktop\\Projects\\EndRun\\Game.cs",
               "RelativeToolTip": "Game.cs",
-              "ViewState": "AgIAAGUBAAAAgH6wjA2zv2EBAABiAAAAAAAAAA==",
+              "ViewState": "AgIAANEAAAAAHtRFCpUkwOAAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-29T01:38:06.629Z",
               "EditorCaption": ""
