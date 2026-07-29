@@ -194,7 +194,7 @@ namespace EndRun.User
 
         public void ResetPos()
         {
-            pos = new Vector2(50, (bounds.Height / 2) - (Dest.Height / 2));
+            pos = new Vector2(140, (bounds.Height / 2) - (Dest.Height / 2));
             shocked = false;
             shockedTimeInterval = 0;
             invincible = false;

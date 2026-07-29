@@ -5,6 +5,7 @@ using EndRun.weapons.Melees;
 using EndRun.Weapons.Guns;
 using raygui_cs;
 using Raylib_cs;
+using System.Windows.Controls;
 
 /*  TODO
  * 
@@ -114,6 +115,7 @@ namespace EndRun
 
         public static void Update()
         {
+            Console.WriteLine((States)currentState);
             switch ((States)currentState)
             {
                 case States.menu:
@@ -141,7 +143,7 @@ namespace EndRun
                             else
                             {
                                 interval = 0;
-                                distance += 10;
+                                distance += 50;
                             }
                             realDistance = distance + ((int)player.pos.X / 100 * 10);
                         }
@@ -153,7 +155,6 @@ namespace EndRun
                     else if (!atCheckpoint)
                     {
                         atCheckpoint = true;
-                        if (currentLevel != levelDistances.Length - 1) currentLevel++;
                     }
 
                     //player updates
@@ -168,28 +169,34 @@ namespace EndRun
 
                     if (atCheckpoint) //at checkpoint
                     {
-                        for (int i = 0; i < entityList.Count; i++)
                         {
-                            entityList[i].Kill();
-                        }
-
-                        entityList.Clear(); //clear entities
-
-                        if (Raylib.CheckCollisionRecs(player.Dest, continueBounds)) //if at continue area
-                        {
-                            atCheckpoint = false;
-                            if (currentDifficulty < difficulties.Length - 1)
+                            for (int i = 0; i < entityList.Count; i++)
                             {
-                                currentDifficulty++;
+                                entityList[i].Kill();
                             }
-                            else
+
+                            entityList.Clear(); //clear entities
+
+                            if (Raylib.CheckCollisionRecs(player.Dest, continueBounds)) //if at continue area
                             {
-                                Console.WriteLine("end");
+                                if (currentLevel == levelDistances.Length - 1)
+                                {
+                                    currentState = (int)States.end;
+                                }
+                                else
+                                {
+                                    currentLevel++;
+                                    atCheckpoint = false;
+                                    if (currentDifficulty < difficulties.Length - 1)
+                                    {
+                                        currentDifficulty++;
+                                    }
+                                    SetDifficulty(difficulties[currentDifficulty]);
+                                    distance = 0;
+                                    distance = realDistance;
+                                    player.ResetPos();
+                                }
                             }
-                            SetDifficulty(difficulties[currentDifficulty]);
-                            distance = 0;
-                            distance = realDistance;
-                            player.ResetPos();
                         }
                     }
                     else //still heading towards checkpoint
@@ -341,7 +348,16 @@ namespace EndRun
 
                     if (atCheckpoint) //if check point reached
                     {
-                        Raylib.DrawText("You have reached a checkpoint", 60, 400, 48, Color.Black);
+                        Console.WriteLine(currentLevel);
+                        if (currentLevel == levelDistances.Length - 1)
+                        {
+                            Raylib.DrawText("You have reached the end", 60, 400, 48, Color.Black);
+                        }
+                        else
+                        {
+                            Raylib.DrawText("You have reached a checkpoint", 60, 400, 48, Color.Black);
+                        }
+
                         Raylib.DrawText("Proceed to right side of screen to continue", 60, 500, 48, Color.Black);
                         Raylib.DrawRectangleRec(continueBounds, Color.Red);
                     }
