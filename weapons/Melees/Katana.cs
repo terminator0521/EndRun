@@ -28,7 +28,7 @@ namespace EndRun.weapons.Melees
         {
             energyUsage = 15;
             range = 50;
-            width = 80;
+            width = 100;
             guide.Height = width;
             guide.Width = range;
             offset = 30;

@@ -1,4 +1,5 @@
 ﻿using EndRun.Entities;
+using EndRun.Weapons;
 using Raylib_cs;
 using System.Net;
 using System.Numerics;
@@ -7,7 +8,7 @@ using System.Windows;
 
 namespace EndRun.weapons.Guns
 {
-    public class Gun : IDisposable
+    public class Gun : Weapon, IDisposable
     {
         public virtual Rectangle Laser { get; set; }
         public virtual float AimLaserWidth { get; set; }
@@ -23,6 +24,7 @@ namespace EndRun.weapons.Guns
 
         virtual public void Update(Vector2 playerOriginPos, ref int score)
         {
+            Console.WriteLine(energyUsage);
             Laser = new Rectangle(0, 0, 0, 0);
             this.playerOriginPos = playerOriginPos;
 

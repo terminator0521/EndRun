@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using EndRun.Weapons;
 using Raylib_cs;
 
 namespace EndRun.User
@@ -86,7 +87,7 @@ namespace EndRun.User
             Raylib.DrawText(player.energyCap.ToString(), 1135, 755, 50, Color.Black);
         }
 
-        public void Input()
+        public void Input(ref bool shop, ref bool checkpoint)
         {
             //movement
             if (Raylib.IsKeyDown(KeyboardKey.W))
@@ -142,8 +143,15 @@ namespace EndRun.User
                 case (int)KeyboardKey.C:
                     player.Recharge();
                     break;
+                case (int)KeyboardKey.E:
+                    if (checkpoint)
+                    {
+                        shop = !shop;
+                    }
+                    break;
             }
 
         }
+
     }
 }

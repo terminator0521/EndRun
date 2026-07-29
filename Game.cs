@@ -1,4 +1,3 @@
-using Accessibility;
 using EndRun.Entities;
 using EndRun.User;
 using EndRun.weapons.Guns;
@@ -6,12 +5,23 @@ using EndRun.weapons.Melees;
 using EndRun.Weapons.Guns;
 using raygui_cs;
 using Raylib_cs;
-using System.Windows.Controls.Primitives;
+
+/*  TODO
+ * 
+ *  - build shop
+ *      - tooltips on ENERGY USAGE, AND COST
+ *  - build ending
+ *      - congrats screen
+ *      - final score
+ *      - kills?
+ *  - readme
+ */
 
 namespace EndRun
 {
     internal static class Game
     {
+        static Shop shop; //shop
         static int currentState; //current state
         static Player player; //player object
         static Rectangle gameBounds; //game bounds
@@ -24,6 +34,7 @@ namespace EndRun
         {
             100, 200, 300, 400, 500
         };
+
         //timer
         static int interval; //interval of time
         static int maxInterval; //max interval of time
@@ -91,6 +102,7 @@ namespace EndRun
             player = new Player("Assets/Player.png", 1, gameBounds); //add player 
             user = new User.User(ref player, ref gameBounds);
             currentLevel = 0;
+            shop = new Shop(ref player);
 
             while (!Raylib.WindowShouldClose())
             {
@@ -143,7 +155,7 @@ namespace EndRun
 
                     //gui updates and inputs
                     user.Update(ref realDistance);
-                    user.Input();
+                    user.Input(ref shop.open, ref atCheckpoint);
 
                     //collisions
                     CollisionChecks();
@@ -200,7 +212,6 @@ namespace EndRun
             //draw cursor position for debug purposes
             Raylib.DrawText(Raylib.GetMouseX() + ", " + Raylib.GetMouseY(), 10, 10, 18, Color.Black);
             Raylib.DrawText(Raylib.GetFPS().ToString(), 120, 10, 18, Color.Black);
-
 
             switch ((States)currentState)
             {
@@ -331,6 +342,8 @@ namespace EndRun
                     Raylib.DrawText("Final Score: \n \t" + user.score.ToString(), 690, 550, 48, Color.Black);
                     break;
             }
+            //global shop
+            shop.Draw(ref currentState, ref atCheckpoint);
         }
 
         public static void CollisionChecks()
@@ -395,7 +408,7 @@ namespace EndRun
                                 {
                                     shotgun.projectiles[j].Terminate();
                                     entityList[i].Kill();
-                                    if(!shotgun.scored)
+                                    if (!shotgun.scored)
                                     {
                                         player.score += entityList[0].Score;
                                         shotgun.scored = true;
@@ -424,7 +437,7 @@ namespace EndRun
                     {
                         currentState = (int)States.gameover;
                     }
-                    
+
                 }
             }
             player.UpdateCollidedObjects(collidedEntities);

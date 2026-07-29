@@ -10,18 +10,54 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <None Remove="Assets\Bat.png" />
+      <None Remove="Assets\Battery.png" />
+      <None Remove="Assets\Bug.png" />
+      <None Remove="Assets\Device.png" />
+      <None Remove="Assets\Gun.png" />
+      <None Remove="Assets\Melee.png" />
+      <None Remove="Assets\Player-sheet.png" />
       <None Remove="Assets\Player.png" />
+      <None Remove="Assets\Shock.png" />
+      <None Remove="Assets\Zombie.png" />
     </ItemGroup>
 
     <ItemGroup>
+      <Content Include="Assets\Bat.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\Battery.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\Bug.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\Device.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\Gun.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\Melee.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\Player-sheet.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
       <Content Include="Assets\Player.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\Shock.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\Zombie.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="Raygui-cs-creeperlv" Version="1.0.0" />
-      <PackageReference Include="Raylib-cs" Version="7.0.2" />
+      <PackageReference Include="Raylib-cs" Version="8.0.0" />
     </ItemGroup>
 
 </Project>
