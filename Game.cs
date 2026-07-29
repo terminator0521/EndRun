@@ -5,6 +5,7 @@ using EndRun.weapons.Melees;
 using EndRun.Weapons.Guns;
 using raygui_cs;
 using Raylib_cs;
+using System.Numerics;
 using System.Windows.Controls;
 using System.Windows.Markup.Localizer;
 
@@ -130,6 +131,12 @@ namespace EndRun
                         Environment.Exit(0); //exit application
                     }
                     break;
+                case States.setup:
+                    if (Raylib.CheckCollisionPointRec(Raylib.GetMousePosition(), new Rectangle(860, 380, 128, 128)))
+                    {
+
+                    }
+                        break;
                 case States.play:
                     //update distance
                     if (realDistance < levelDistances[currentLevel])
@@ -222,7 +229,7 @@ namespace EndRun
                     }
                     break;
                 case States.end:
-                    if(Raygui.GuiButton(new Rectangle(470, 300, 300, 80), "Retry") == 1)
+                    if (Raygui.GuiButton(new Rectangle(470, 300, 300, 80), "Retry") == 1)
                     {
                         currentState = (int)States.menu; //change state to menu
                     }
@@ -244,22 +251,24 @@ namespace EndRun
                     break;
                 case States.setup:
                     Raylib.DrawText("Setup", 550, 100, 56, Color.Black);
-
-                    Raylib.DrawRectangleLinesEx(new Rectangle(200, 390, 330, 100), 2, Color.Gray);
-                    Raylib.DrawRectangleLinesEx(new Rectangle(730, 390, 330, 100), 2, Color.Gray);
+                    //Raylib.DrawText("Starting Melee:", 710, 280, 60, Color.Black);
+                    //Raylib.DrawTexturePro(user.knife, user.src, new Rectangle(860, 380, 128, 128), new Vector2(0), 0, Color.White);
+                    //Raylib.DrawRectangleLinesEx(new Rectangle(860, 380, 128, 128), 2, Color.Gray);
+                    Raylib.DrawRectangleLinesEx(new Rectangle(200, 340, 330, 100), 2, Color.Gray);
+                    Raylib.DrawRectangleLinesEx(new Rectangle(200, 600, 330, 100), 2, Color.Gray);
                     Raygui.GuiSetStyle(0, Raygui.TEXT_SIZE, 48);
-                    Raylib.DrawText("Gadget: ", 250, 310, 60, Color.Black);
-                    Raylib.DrawText("Starting Gun: ", 700, 310, 60, Color.Black);
+                    Raylib.DrawText("Gadget: ", 250, 260, 60, Color.Black);
+                    Raylib.DrawText("Starting Gun: ", 170, 520, 60, Color.Black);
                     //switch logics
                     //gadget
-                    if (Raygui.GuiButton(new Rectangle(130, 390, 60, 100), "<-") == 1)
+                    if (Raygui.GuiButton(new Rectangle(130, 340, 60, 100), "<-") == 1)
                     {
                         if (selectedGadget != 0)
                         {
                             selectedGadget--;
                         }
                     }
-                    if (Raygui.GuiButton(new Rectangle(540, 390, 60, 100), "->") == 1)
+                    if (Raygui.GuiButton(new Rectangle(540, 340, 60, 100), "->") == 1)
                     {
                         if (selectedGadget != 2)
                         {
@@ -268,14 +277,14 @@ namespace EndRun
                     }
 
                     //selected Weapon
-                    if (Raygui.GuiButton(new Rectangle(660, 390, 60, 100), "<-") == 1)
+                    if (Raygui.GuiButton(new Rectangle(130, 600, 60, 100), "<-") == 1)
                     {
                         if (selectedStartingWeapon != 0)
                         {
                             selectedStartingWeapon--;
                         }
                     }
-                    if (Raygui.GuiButton(new Rectangle(1070, 390, 60, 100), "->") == 1)
+                    if (Raygui.GuiButton(new Rectangle(540, 600, 60, 100), "->") == 1)
                     {
                         if (selectedStartingWeapon != 2)
                         {
@@ -287,13 +296,13 @@ namespace EndRun
                     switch ((Gadget)selectedGadget)
                     {
                         case Gadget.powerBank:
-                            Raylib.DrawText("Power Bank", 240, 420, 40, Color.Black);
+                            Raylib.DrawText("Power Bank", 240, 370, 40, Color.Black);
                             break;
                         case Gadget.shocker:
-                            Raylib.DrawText("Shocker", 285, 420, 40, Color.Black);
+                            Raylib.DrawText("Shocker", 285, 370, 40, Color.Black);
                             break;
                         case Gadget.antiLeak:
-                            Raylib.DrawText("Anti-Leak", 265, 420, 40, Color.Black);
+                            Raylib.DrawText("Anti-Leak", 265, 370, 40, Color.Black);
                             break;
                     }
 
@@ -301,13 +310,13 @@ namespace EndRun
                     switch ((Gun)selectedStartingWeapon)
                     {
                         case Gun.handGun:
-                            Raylib.DrawText("Handgun", 810, 420, 40, Color.Black);
+                            Raylib.DrawText("Handgun", 280, 630, 40, Color.Black);
                             break;
                         case Gun.ballShot:
-                            Raylib.DrawText("Ballshot", 810, 420, 40, Color.Black);
+                            Raylib.DrawText("Ballshot", 280, 630, 40, Color.Black);
                             break;
                         case Gun.shotgun:
-                            Raylib.DrawText("Shotgun", 810, 420, 40, Color.Black);
+                            Raylib.DrawText("Shotgun", 280, 630, 40, Color.Black);
                             break;
                     }
 
@@ -315,11 +324,11 @@ namespace EndRun
 
                     //options
 
-                    if (Raygui.GuiButton(new Rectangle(200, 650, 320, 80), "Back") == 1)
+                    if (Raygui.GuiButton(new Rectangle(770, 540, 320, 80), "Back") == 1)
                     {
                         currentState = (int)States.menu;
                     }
-                    if (Raygui.GuiButton(new Rectangle(740, 650, 320, 80), "Begin") == 1)
+                    if (Raygui.GuiButton(new Rectangle(770, 380, 320, 80), "Begin") == 1)
                     {
                         currentState = (int)States.play;
                         player.gadget = selectedGadget;

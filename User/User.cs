@@ -7,14 +7,14 @@ namespace EndRun.User
     public class User
     {
         //displayed textures
-        Texture2D gun;
-        Texture2D knife;
-        Texture2D device;
-        Texture2D lightning;
-        Texture2D battery;
+        private Texture2D gun;
+        public Texture2D knife;
+        private Texture2D device;
+        private Texture2D lightning;
+        private Texture2D battery;
 
         //sourcing dest
-        Rectangle src = new Rectangle(0, 0, 64, 64);
+        public Rectangle src = new Rectangle(0, 0, 64, 64);
 
         Player player;
         private int selectedSlot;
