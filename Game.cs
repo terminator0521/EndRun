@@ -114,7 +114,6 @@ namespace EndRun
 
         public static void Update()
         {
-            Console.WriteLine(currentDifficulty + 1);
             switch ((States)currentState)
             {
                 case States.menu:
@@ -195,7 +194,6 @@ namespace EndRun
                     }
                     else //still heading towards checkpoint
                     {
-                        Console.WriteLine(entityList.Count);
                         //entity updates
                         for (int i = 0; i < entityList.Count; i++)
                         {

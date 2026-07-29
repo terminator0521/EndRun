@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace EndRun.weapons.Guns
 {
-    public class Gun : Weapon, IDisposable
+    public class Gun : IDisposable
     {
         public virtual Rectangle Laser { get; set; }
         public virtual float AimLaserWidth { get; set; }

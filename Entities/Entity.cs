@@ -65,8 +65,6 @@ namespace EndRun.Entities
         {
             killed = true; //set killed to true
             pos = new Vector2(-200); //move entity offscreen
-            Console.WriteLine("killed");
-
         }
 
         virtual protected bool WaitForRespawn()
