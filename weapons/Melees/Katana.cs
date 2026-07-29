@@ -39,11 +39,8 @@ namespace EndRun.weapons.Melees
             if (energy >= energyUsage)
             {
                 base.Use(ref entity, ref energy);
-                for (int i = 0; i < entity.Count; i++)
-                {
-                    entity[i]?.Kill();
-                    this.entity = entity[i];
-                }
+                entity[0]?.Kill();
+                this.entity = entity[0];
             }
         }
 
