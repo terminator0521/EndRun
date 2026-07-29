@@ -391,9 +391,6 @@ namespace EndRun
                     break;
                 case States.play:
 
-                    //draw distance travelled
-                    Raylib.DrawText(realDistance.ToString(), 10, 30, 18, Color.Black);
-
                     //draw bounds
                     Raylib.DrawRectangleRec(gameBounds, Color.Beige);
 
