@@ -60,7 +60,7 @@ namespace EndRun.User
             shotgun,
         }
 
-        private float vel = 5f; //speed of player
+        private float vel = 3f; //speed of player
         private Rectangle src; //sprite source rect
         private Rectangle bounds; //game bounds
 

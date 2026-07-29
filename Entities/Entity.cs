@@ -41,7 +41,6 @@ namespace EndRun.Entities
 
         virtual public void Update(Vector2 playerPos)
         {
-            Console.WriteLine(playerPos);
             //pos updates
             if (!killed)
             {

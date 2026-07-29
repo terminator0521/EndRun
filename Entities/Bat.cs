@@ -11,7 +11,7 @@ namespace EndRun.Entities
         override public Rectangle Dest { get; set; } //dest rect
         override protected int Height { get; set; }
         override protected int Width { get; set; }
-        override protected float Vel { get; set; } = 1f; //entity velocity
+        override protected float Vel { get; set; } = 3f; //entity velocity
 
 
         private bool attacking = true; //is attacking player 
