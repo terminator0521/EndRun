@@ -2,9 +2,7 @@
 
 
 
-This is my second time coding a game with **C#** and **Raylib**, as well as my first time using concepts like **trigonometry**,
-
-**polymorphism**, and **GUI functions** in a game.
+This is my second time coding a game with **C#** and **Raylib**, as well as my first time using concepts like **trigonometry**, **polymorphism**, and **GUI functions** in a game.
 
 
 
@@ -44,15 +42,7 @@ All artwork seen in the game was created by me through Aseprite.
 
 
 
-This is a top-down survival shooter game, with the main goal of reaching the end of the cave where there are
-
-entities trying to kill you.
-
-
-
-In order to survive, you must carefully spend the score you gain from killing the entites on equipment and energy
-
-refills. However, you are one hit in this game, meaning that it is instant death if you make a mistake.
+This is a top-down survival shooter game, with the main goal of reaching the end of the cave where there areentities trying to kill you. In order to survive, you must carefully spend the score you gain from killing the entites on equipment and energy refills. However, you are one hit in this game, meaning that it is instant death if you make a mistake.
 
 
 
@@ -70,9 +60,7 @@ refills. However, you are one hit in this game, meaning that it is instant death
 
 
 
-AI was only used for troubleshooting code and for me to learn how to use the Raygui library used. No Ai was used
-
-to generate pieces of code that directly changes how the game works.
+AI was only used for troubleshooting code and for me to learn how to use the Raygui library used. No Ai was used to generate pieces of code that directly changes how the game works.
 
 
 
@@ -80,7 +68,5 @@ to generate pieces of code that directly changes how the game works.
 
 
 
-Once you get the game open, click on the Info/Help button in the menu to learn about the game mechanics. And once
-
-you are done with that, enjoy the game.
+Once you get the game open, click on the Info/Help button in the menu to learn about the game mechanics. And once you are done with that, enjoy the game.
 
